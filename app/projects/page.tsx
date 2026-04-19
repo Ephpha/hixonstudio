@@ -114,7 +114,7 @@ export default function ProjectsPage() {
         >
           {wip.map((p) => (
             <div key={p.name} className="project-card" style={{ opacity: 0 }}>
-              {p.name === "Duxy" ? <DuxyCard project={p} /> : <ProjectCard project={p} />}
+              <ProjectCard project={p} />
             </div>
           ))}
         </div>
