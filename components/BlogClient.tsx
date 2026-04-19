@@ -59,7 +59,7 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
         </p>
       </div>
 
-      <div ref={listRef} className="flex flex-col gap-12">
+      <div ref={listRef} className="flex flex-col gap-12" style={{ paddingBottom: "180px" }}>
         {posts.map((post) => (
           <Link
             key={post.slug}
@@ -102,6 +102,32 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
             </p>
           </Link>
         ))}
+      </div>
+
+      {/* Creation of Adam — bottom decoration */}
+      <div style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: "flex",
+        justifyContent: "center",
+        pointerEvents: "none",
+        zIndex: 0,
+      }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/creation-of-adam.jpg"
+          alt=""
+          style={{
+            width: "clamp(420px, 55vw, 720px)",
+            opacity: 0.18,
+            filter: "grayscale(100%)",
+            maskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+            WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+            userSelect: "none",
+          }}
+        />
       </div>
     </div>
   );
