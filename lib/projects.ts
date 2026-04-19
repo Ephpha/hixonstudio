@@ -54,7 +54,7 @@ export const projects: Project[] = [
     domain: "duxy.tech",
     url: "https://duxy.tech",
     description:
-      "An AI voice companion running as a desktop app — designed to feel less like a chatbot, more like a presence.",
+      "A desktop AI companion that follows your cursor, points out things on your screen, and talks to you — less like a chatbot, more like a co-pilot that actually lives on your machine.",
     tags: ["Electron", "TypeScript", "AI", "React"],
     status: "in-progress",
   },

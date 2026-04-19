@@ -219,6 +219,15 @@ export default function DuxyCard({ project }: { project: Project }) {
       <div className="p-6" style={{ position: "relative", zIndex: 2 }}>
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-2.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.logo ?? `https://www.google.com/s2/favicons?domain=${project.domain}&sz=64`}
+              alt=""
+              width={32}
+              height={32}
+              className="rounded"
+              style={{ opacity: 0.92 }}
+            />
             <h3 className="text-lg" style={{
               fontFamily: "Fraunces, Georgia, serif",
               fontStyle: "italic",
