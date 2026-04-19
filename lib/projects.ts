@@ -10,7 +10,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "Dianavhealth",
+    name: "DiaNavHealth",
     domain: "dianavhealth.com",
     url: "https://dianavhealth.com",
     logo: "/logos/dianavhealth.png",
