@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProjectCard from "@/components/ProjectCard";
+import DuxyCard from "@/components/DuxyCard";
 import { projects } from "@/lib/projects";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -113,7 +114,7 @@ export default function ProjectsPage() {
         >
           {wip.map((p) => (
             <div key={p.name} className="project-card" style={{ opacity: 0 }}>
-              <ProjectCard project={p} />
+              {p.name === "Duxy" ? <DuxyCard project={p} /> : <ProjectCard project={p} />}
             </div>
           ))}
         </div>
