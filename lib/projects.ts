@@ -13,6 +13,7 @@ export const projects: Project[] = [
     name: "Dianavhealth",
     domain: "dianavhealth.com",
     url: "https://dianavhealth.com",
+    logo: "/logos/dianavhealth.png",
     description:
       "A health-focused platform built to make wellness information accessible and actionable.",
     tags: ["Web", "Health", "React"],
