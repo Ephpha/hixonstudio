@@ -23,6 +23,7 @@ export const projects: Project[] = [
     name: "Ephpha",
     domain: "ephpha.ai",
     url: "https://ephpha.ai",
+    logo: "/logos/ephpha.png",
     description:
       "AI-powered tools and experiments — a living lab for ideas at the edge of the intelligence space.",
     tags: ["AI", "Next.js", "TypeScript"],
