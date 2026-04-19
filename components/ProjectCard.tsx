@@ -5,7 +5,7 @@ import gsap from "gsap";
 import type { Project } from "@/lib/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLAnchorElement>(null);
 
   function handleMouseEnter() {
     gsap.to(cardRef.current, {
@@ -26,17 +26,23 @@ export default function ProjectCard({ project }: { project: Project }) {
   }
 
   return (
-    <div
+    <a
       ref={cardRef}
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="p-6 rounded-xl"
+      className="group p-6 rounded-xl flex flex-col"
       style={{
         background: "rgba(255,255,255,0.02)",
         border: "1px solid rgba(255,255,255,0.08)",
-        cursor: "default",
+        cursor: "pointer",
+        textDecoration: "none",
+        display: "block",
       }}
     >
+      {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -73,6 +79,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         </span>
       </div>
 
+      {/* Description */}
       <p
         className="text-sm mb-5"
         style={{ color: "rgba(255,255,255,0.42)", lineHeight: 1.65 }}
@@ -80,7 +87,8 @@ export default function ProjectCard({ project }: { project: Project }) {
         {project.description}
       </p>
 
-      <div className="flex items-center justify-between">
+      {/* Footer */}
+      <div className="flex items-center justify-between mt-auto">
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
@@ -97,17 +105,29 @@ export default function ProjectCard({ project }: { project: Project }) {
             </span>
           ))}
         </div>
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm transition-colors hover:text-white ml-3 shrink-0"
-          style={{ color: "rgba(255,255,255,0.28)" }}
-          onClick={(e) => e.stopPropagation()}
+
+        {/* Visit link — visible on hover */}
+        <span
+          className="text-xs ml-3 shrink-0 flex items-center gap-1 transition-all duration-200"
+          style={{
+            fontFamily: "Fraunces, Georgia, serif",
+            fontStyle: "italic",
+            color: "rgba(255,255,255,0.28)",
+            opacity: 0,
+          }}
+          ref={(el) => {
+            if (!el) return;
+            const card = cardRef.current;
+            if (!card) return;
+            const show = () => { el.style.opacity = "1"; el.style.color = "rgba(255,255,255,0.75)"; };
+            const hide = () => { el.style.opacity = "0"; };
+            card.addEventListener("mouseenter", show);
+            card.addEventListener("mouseleave", hide);
+          }}
         >
-          ↗
-        </a>
+          Visit ↗
+        </span>
       </div>
-    </div>
+    </a>
   );
 }
