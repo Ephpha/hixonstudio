@@ -43,6 +43,7 @@ export const projects: Project[] = [
     name: "Pluit",
     domain: "pluit.cloud",
     url: "https://pluit.cloud",
+    logo: "/logos/pluit.png",
     description:
       "Cloud storage with a clean, opinionated interface I actually want to use every day.",
     tags: ["Next.js", "Supabase", "Storage"],
