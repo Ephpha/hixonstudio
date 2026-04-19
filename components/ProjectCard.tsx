@@ -43,10 +43,10 @@ export default function ProjectCard({ project }: { project: Project }) {
           <img
             src={project.logo ?? `https://www.google.com/s2/favicons?domain=${project.domain}&sz=64`}
             alt=""
-            width={20}
-            height={20}
+            width={32}
+            height={32}
             className="rounded"
-            style={{ opacity: 0.85 }}
+            style={{ opacity: 0.92 }}
           />
           <h3
             className="text-lg"
