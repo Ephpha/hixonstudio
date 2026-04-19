@@ -35,7 +35,7 @@ export const projects: Project[] = [
     url: "https://noxservo.com",
     logo: "/logos/noxservo.png",
     description:
-      "My personal dev studio and hub — where the projects, experiments, and tools live.",
+      "A simple search engine built around saving energy — dark by design, like the nostalgic Blackle, but made for today.",
     tags: ["React", "Vite", "Tailwind"],
     status: "live",
   },
