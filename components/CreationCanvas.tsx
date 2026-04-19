@@ -12,34 +12,44 @@ type Particle = {
   brightness: number;
 };
 
-function linePoints(
+// Solid tube — particles distributed in an oval cross-section along a line
+function tube(
   x1: number, y1: number,
   x2: number, y2: number,
   n: number,
-  scatter: number,
-  bright = 0.6
+  halfW: number,       // half-width of the limb in pct units
+  bright: number,
+  glowChance = 0.2
 ): Particle[] {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const len = Math.sqrt(dx * dx + dy * dy) || 1;
+  const nx = -dy / len;
+  const ny = dx / len;
+
   return Array.from({ length: n }, () => {
     const t = Math.random();
-    const sx = (Math.random() - 0.5) * scatter;
-    const sy = (Math.random() - 0.5) * scatter;
+    // fill cross-section with square-root distribution (denser at center)
+    const r = (Math.random() * 2 - 1) * halfW;
     return {
-      xPct: x1 + (x2 - x1) * t + sx,
-      yPct: y1 + (y2 - y1) * t + sy,
-      radius: Math.random() * 0.75 + 0.3,
-      speed: Math.random() * 0.35 + 0.15,
+      xPct: x1 + dx * t + nx * r,
+      yPct: y1 + dy * t + ny * r,
+      radius: 1.4 + Math.random() * 2.2,
+      speed: Math.random() * 0.3 + 0.12,
       phase: Math.random() * Math.PI * 2,
-      glow: Math.random() < 0.08,
-      brightness: bright + Math.random() * 0.35,
+      glow: Math.random() < glowChance,
+      brightness: bright * (0.72 + Math.random() * 0.28),
     };
   });
 }
 
-function ovalPoints(
+// Dense filled oval (palm / knuckle areas)
+function oval(
   cx: number, cy: number,
   rx: number, ry: number,
   n: number,
-  bright = 0.68
+  bright: number,
+  glowChance = 0.28
 ): Particle[] {
   return Array.from({ length: n }, () => {
     const angle = Math.random() * Math.PI * 2;
@@ -47,11 +57,11 @@ function ovalPoints(
     return {
       xPct: cx + Math.cos(angle) * rx * r,
       yPct: cy + Math.sin(angle) * ry * r,
-      radius: Math.random() * 0.85 + 0.3,
-      speed: Math.random() * 0.35 + 0.15,
+      radius: 1.6 + Math.random() * 2.8,
+      speed: Math.random() * 0.3 + 0.12,
       phase: Math.random() * Math.PI * 2,
-      glow: Math.random() < 0.1,
-      brightness: bright + Math.random() * 0.32,
+      glow: Math.random() < glowChance,
+      brightness: bright * (0.78 + Math.random() * 0.22),
     };
   });
 }
@@ -59,46 +69,80 @@ function ovalPoints(
 function buildParticles(): Particle[] {
   const p: Particle[] = [];
 
-  // ── ADAM'S HAND (left side, reaching right) ──
-  // Forearm — thick, angled up toward center
-  p.push(...linePoints(2, 73, 36, 61, 90, 2.8, 0.45));
-  // Palm
-  p.push(...ovalPoints(39, 59, 5.2, 3.8, 55, 0.68));
-  // Index finger — the reaching one
-  p.push(...linePoints(39.5, 56.5, 47.2, 53.2, 38, 1.0, 0.82));
-  // Middle finger
-  p.push(...linePoints(40.5, 58.5, 46.5, 57.0, 30, 0.9, 0.72));
-  // Ring finger
-  p.push(...linePoints(40.5, 61.0, 44.5, 61.5, 24, 0.85, 0.65));
-  // Pinky — curled slightly down
-  p.push(...linePoints(39.5, 63.0, 43.0, 65.5, 20, 0.8, 0.58));
-  // Thumb
-  p.push(...linePoints(36.5, 60.5, 39.5, 64.5, 22, 0.85, 0.62));
+  // ══════════════════════════════════════════════
+  //  ADAM'S HAND  (enters from lower-left, reaching right)
+  // ══════════════════════════════════════════════
 
-  // ── GOD'S HAND (right side, pointing down-left) ──
-  // Forearm — angled down toward center
-  p.push(...linePoints(98, 45, 63, 52, 90, 2.8, 0.45));
+  // Forearm — wide, muscular
+  p.push(...tube(0, 82, 36, 63, 320, 3.8, 0.88, 0.14));
+
+  // Wrist — slightly narrower
+  p.push(...tube(36, 63, 42, 59.5, 100, 2.4, 0.92, 0.2));
+
+  // Palm — dense filled oval
+  p.push(...oval(44.5, 58.5, 7.0, 5.2, 280, 0.93, 0.24));
+
+  // Thumb — curves down-outward from palm base
+  p.push(...tube(41, 61.5, 39, 66.5, 80, 1.4, 0.85, 0.18));
+  p.push(...tube(39, 66.5, 37.5, 69.5, 45, 1.2, 0.80, 0.15));
+
+  // Index finger — EXTENDED, the reaching finger, brightened
+  p.push(...tube(44.5, 55.0, 49.5, 51.5, 130, 1.25, 1.0, 0.32));
+
+  // Middle finger — extended but slightly shorter
+  p.push(...tube(45.5, 57.0, 49.5, 55.0, 105, 1.15, 0.90, 0.24));
+
+  // Ring finger — partly curled back
+  p.push(...tube(45.5, 59.2, 48.5, 59.0, 80, 1.05, 0.83, 0.18));
+
+  // Pinky — shortest, curled
+  p.push(...tube(44.5, 61.5, 47.0, 63.0, 65, 0.95, 0.78, 0.15));
+
+  // Knuckle ridge — bright line across top of fist
+  p.push(...tube(42, 56.0, 47.0, 57.5, 60, 0.7, 0.92, 0.28));
+
+  // ══════════════════════════════════════════════
+  //  GOD'S HAND  (enters from upper-right, pointing down-left)
+  // ══════════════════════════════════════════════
+
+  // Forearm — wide, comes from upper right at a steep angle
+  p.push(...tube(100, 26, 63, 46, 320, 3.8, 0.88, 0.14));
+
+  // Wrist
+  p.push(...tube(63, 46, 57.5, 50, 100, 2.4, 0.92, 0.2));
+
   // Palm
-  p.push(...ovalPoints(60, 53.5, 5.2, 3.8, 55, 0.68));
-  // Index finger — pointing toward Adam
-  p.push(...linePoints(58.5, 51.5, 49.0, 54.5, 38, 1.0, 0.82));
+  p.push(...oval(55.5, 51.5, 7.0, 5.2, 280, 0.93, 0.24));
+
+  // Thumb — raised above the hand
+  p.push(...tube(60.5, 48.0, 57.0, 44.0, 80, 1.4, 0.85, 0.18));
+  p.push(...tube(57.0, 44.0, 55.0, 42.0, 45, 1.2, 0.80, 0.15));
+
+  // Index finger — EXTENDED, pointing toward Adam, brightened
+  p.push(...tube(55.5, 49.5, 49.8, 53.5, 130, 1.25, 1.0, 0.32));
+
   // Middle finger
-  p.push(...linePoints(59.5, 53.5, 51.5, 57.5, 30, 0.9, 0.72));
+  p.push(...tube(55.8, 51.8, 51.0, 56.5, 105, 1.15, 0.90, 0.24));
+
   // Ring finger
-  p.push(...linePoints(60.5, 55.5, 53.5, 59.5, 24, 0.85, 0.65));
+  p.push(...tube(56.2, 53.5, 52.0, 58.5, 80, 1.05, 0.83, 0.18));
+
   // Pinky
-  p.push(...linePoints(61.5, 57.5, 55.5, 62.0, 20, 0.8, 0.58));
-  // Thumb — raised up
-  p.push(...linePoints(62.0, 50.5, 57.5, 47.0, 22, 0.85, 0.62));
+  p.push(...tube(57.0, 55.0, 53.5, 60.5, 65, 0.95, 0.78, 0.15));
 
-  // ── SPARK between fingertips ──
-  // Dense bright cluster in the gap (~48%, 54%)
-  for (let i = 0; i < 18; i++) {
+  // Knuckle ridge
+  p.push(...tube(57.0, 49.5, 52.5, 51.5, 60, 0.7, 0.92, 0.28));
+
+  // ══════════════════════════════════════════════
+  //  DIVINE SPARK — the near-touching gap
+  // ══════════════════════════════════════════════
+  for (let i = 0; i < 45; i++) {
+    const near = Math.random() < 0.5;
     p.push({
-      xPct: 48.0 + (Math.random() - 0.5) * 1.8,
-      yPct: 53.8 + (Math.random() - 0.5) * 1.2,
-      radius: Math.random() * 1.4 + 0.6,
-      speed: Math.random() * 0.6 + 0.45,
+      xPct: 49.6 + (Math.random() - 0.5) * 2.2,
+      yPct: 52.6 + (Math.random() - 0.5) * 1.6,
+      radius: near ? 2.5 + Math.random() * 3.5 : 1.0 + Math.random() * 1.5,
+      speed: Math.random() * 0.9 + 0.55,
       phase: Math.random() * Math.PI * 2,
       glow: true,
       brightness: 1.0,
@@ -108,7 +152,6 @@ function buildParticles(): Particle[] {
   return p;
 }
 
-// Build once — stable reference across re-renders
 const PARTICLES = buildParticles();
 
 export default function CreationCanvas() {
@@ -137,8 +180,8 @@ export default function CreationCanvas() {
       ctx.clearRect(0, 0, w, h);
 
       for (const p of PARTICLES) {
-        const opacity =
-          ((Math.sin(t * p.speed + p.phase) + 1) / 2) * p.brightness;
+        const raw = (Math.sin(t * p.speed + p.phase) + 1) / 2;
+        const opacity = raw * p.brightness;
         const x = (p.xPct / 100) * w;
         const y = (p.yPct / 100) * h;
 
@@ -146,13 +189,13 @@ export default function CreationCanvas() {
         ctx.arc(x, y, p.radius, 0, Math.PI * 2);
 
         if (p.glow) {
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = `rgba(255,255,255,${opacity * 0.65})`;
+          ctx.shadowBlur = 18;
+          ctx.shadowColor = `rgba(255,255,255,${opacity * 0.75})`;
         } else {
           ctx.shadowBlur = 0;
         }
 
-        ctx.fillStyle = `rgba(255,255,255,${opacity * 0.88})`;
+        ctx.fillStyle = `rgba(255,255,255,${Math.min(opacity, 1)})`;
         ctx.fill();
       }
 
@@ -173,7 +216,7 @@ export default function CreationCanvas() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 1, opacity: 0.72 }}
+      style={{ zIndex: 1 }}
       aria-hidden="true"
     />
   );
