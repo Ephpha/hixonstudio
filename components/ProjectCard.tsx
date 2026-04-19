@@ -203,24 +203,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         </p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between">
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs px-2 py-0.5 rounded"
-                style={{
-                  fontFamily: "Courier New, monospace",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  color: "rgba(255,255,255,0.38)",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
+        <div className="flex items-center justify-end">
           <span
             className="visit-label text-xs ml-3 shrink-0"
             style={{
