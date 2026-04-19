@@ -38,16 +38,27 @@ export default function ProjectCard({ project }: { project: Project }) {
       }}
     >
       <div className="flex items-start justify-between mb-3">
-        <h3
-          className="text-lg"
-          style={{
-            fontFamily: "Fraunces, Georgia, serif",
-            fontStyle: "italic",
-            color: "#fff",
-          }}
-        >
-          {project.name}
-        </h3>
+        <div className="flex items-center gap-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`https://www.google.com/s2/favicons?domain=${project.domain}&sz=64`}
+            alt=""
+            width={20}
+            height={20}
+            className="rounded"
+            style={{ opacity: 0.85 }}
+          />
+          <h3
+            className="text-lg"
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              color: "#fff",
+            }}
+          >
+            {project.name}
+          </h3>
+        </div>
         <span
           className="flex items-center gap-1.5 text-xs mt-1 shrink-0"
           style={{
