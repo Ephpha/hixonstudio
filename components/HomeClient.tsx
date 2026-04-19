@@ -5,6 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SparkleSymbol from "@/components/SparkleSymbol";
+import CreationCanvas from "@/components/CreationCanvas";
 import type { PostMeta } from "@/lib/blog";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -71,6 +72,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
 
   return (
     <div className="min-h-screen">
+      <CreationCanvas />
       {/* Hero */}
       <section className="flex flex-col items-center justify-center min-h-[90vh] px-6 text-center">
         <SparkleSymbol size="sm" className="mb-8 opacity-40" />
