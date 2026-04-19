@@ -121,10 +121,11 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
           alt=""
           style={{
             width: "clamp(420px, 55vw, 720px)",
-            opacity: 0.18,
-            filter: "grayscale(100%)",
-            maskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
-            WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+            opacity: 0.12,
+            filter: "grayscale(100%) brightness(1.4)",
+            mixBlendMode: "screen",
+            maskImage: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 85%)",
+            WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 85%)",
             userSelect: "none",
           }}
         />
