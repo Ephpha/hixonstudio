@@ -26,7 +26,7 @@ export default function Nav() {
         href="/"
         className="mr-auto transition-opacity hover:opacity-60"
         style={{
-          fontFamily: "Orbitron, sans-serif",
+          fontFamily: "Syncopate, sans-serif",
           fontStyle: "normal",
           fontSize: "0.85rem",
           color: "#fff",
