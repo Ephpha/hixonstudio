@@ -5,6 +5,7 @@ export type Project = {
   description: string;
   tags: string[];
   status: "live" | "in-progress";
+  logo?: string; // custom logo path in /public, overrides favicon
 };
 
 export const projects: Project[] = [
@@ -30,6 +31,7 @@ export const projects: Project[] = [
     name: "Noxservo",
     domain: "noxservo.com",
     url: "https://noxservo.com",
+    logo: "/logos/noxservo.png",
     description:
       "My personal dev studio and hub — where the projects, experiments, and tools live.",
     tags: ["React", "Vite", "Tailwind"],

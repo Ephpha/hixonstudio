@@ -41,7 +41,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`https://www.google.com/s2/favicons?domain=${project.domain}&sz=64`}
+            src={project.logo ?? `https://www.google.com/s2/favicons?domain=${project.domain}&sz=64`}
             alt=""
             width={20}
             height={20}
