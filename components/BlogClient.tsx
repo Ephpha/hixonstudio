@@ -5,6 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import type { PostMeta } from "@/lib/blog";
 import { estimateReadTime } from "@/lib/readTime";
+import BlogCanvas from "@/components/BlogCanvas";
 
 export default function BlogClient({ posts }: { posts: PostMeta[] }) {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,7 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
 
   return (
     <div className="max-w-2xl mx-auto px-8 py-16">
+      <BlogCanvas />
       <div ref={headerRef} style={{ opacity: 0 }}>
         <h1
           className="mb-2"
@@ -104,31 +106,6 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
         ))}
       </div>
 
-      {/* Creation of Adam — bottom decoration */}
-      <div style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: "flex",
-        justifyContent: "center",
-        pointerEvents: "none",
-        zIndex: 0,
-      }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/creation-of-adam.jpg"
-          alt=""
-          style={{
-            width: "clamp(420px, 55vw, 720px)",
-            opacity: 0.22,
-            filter: "grayscale(100%)",
-            maskImage: "linear-gradient(to top, black 30%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to top, black 30%, transparent 100%)",
-            userSelect: "none",
-          }}
-        />
-      </div>
     </div>
   );
 }
