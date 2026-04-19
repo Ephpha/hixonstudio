@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="#F4C430" name="theme-color"/>
+  <meta content="Diabetes cost &amp; coverage navigation" name="description"/>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="yes" name="apple-mobile-web-app-capable"/>
+  <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="DiaNav" name="apple-mobile-web-app-title"/>
+  <!-- Apple Touch Icons -->
+  <link href="https://media.base44.com/images/public/699952142212605f4188381f/b7e8c2da2_NewDianavapplogo.png" rel="apple-touch-icon"/>
+  <link href="https://media.base44.com/images/public/699952142212605f4188381f/b7e8c2da2_NewDianavapplogo.png" rel="apple-touch-icon" sizes="152x152"/>
+  <link href="https://media.base44.com/images/public/699952142212605f4188381f/b7e8c2da2_NewDianavapplogo.png" rel="apple-touch-icon" sizes="167x167"/>
+  <link href="https://media.base44.com/images/public/699952142212605f4188381f/b7e8c2da2_NewDianavapplogo.png" rel="apple-touch-icon" sizes="180x180"/>
+  <link href="https://media.base44.com/images/public/699952142212605f4188381f/b7e8c2da2_NewDianavapplogo.png" rel="icon" type="image/png"/>
+  <link href="/manifest.json" rel="manifest"/>
+  <title>
+   favicon.png | DiaNav Health
+  </title>
+  <script crossorigin="" src="/assets/index-GELQNjzU.js" type="module">
+  </script>
+  <link crossorigin="" href="/assets/index-BRO4xrbQ.css" rel="stylesheet"/>
+  <meta content="favicon.png | DiaNav Health" property="og:title"/>
+  <meta content="Navigate your diabetes costs with confidence. DiaNav Health helps you understand your expenses, find potential savings on insulin, CGMs, and pumps, and manage your coverage effectively. Take control of your diabetes care costs without the guesswork." property="og:description"/>
+  <meta content="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/render/image/public/base44-prod/public/699952142212605f4188381f/01030d5ee_IMG_3072.JPG?width=1200&amp;height=630&amp;resize=contain" property="og:image"/>
+  <meta content="https://dianavhealth.com/favicon.png" property="og:url"/>
+  <meta content="website" property="og:type"/>
+  <meta content="DiaNav Health" property="og:site_name"/>
+  <meta content="favicon.png | DiaNav Health" name="twitter:title"/>
+  <meta content="Navigate your diabetes costs with confidence. DiaNav Health helps you understand your expenses, find potential savings on insulin, CGMs, and pumps, and manage your coverage effectively. Take control of your diabetes care costs without the guesswork." name="twitter:description"/>
+  <meta content="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/render/image/public/base44-prod/public/699952142212605f4188381f/01030d5ee_IMG_3072.JPG?width=1200&amp;height=630&amp;resize=contain" name="twitter:image"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="https://dianavhealth.com/favicon.png" name="twitter:url"/>
+  <meta content="noindex, nofollow" name="robots"/>
+ </head>
+ <body>
+  <div id="root">
+  </div>
+ </body>
+</html>
