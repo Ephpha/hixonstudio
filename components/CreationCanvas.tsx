@@ -2,157 +2,196 @@
 
 import { useEffect, useRef } from "react";
 
-type Particle = {
-  xPct: number;
-  yPct: number;
-  radius: number;
+// Particle stored in pixel coordinates — built fresh each resize
+type P = {
+  x: number;
+  y: number;
+  r: number;
   speed: number;
   phase: number;
   glow: boolean;
-  brightness: number;
+  bright: number;
 };
 
-// Solid tube — particles distributed in an oval cross-section along a line
+// Tube: fills a cylindrical limb between two points, perpendicular computed in pixel space
 function tube(
   x1: number, y1: number,
   x2: number, y2: number,
   n: number,
-  halfW: number,       // half-width of the limb in pct units
+  hw: number,        // half-width in pixels
   bright: number,
-  glowChance = 0.2
-): Particle[] {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
+  glowChance = 0.18
+): P[] {
+  const dx = x2 - x1, dy = y2 - y1;
   const len = Math.sqrt(dx * dx + dy * dy) || 1;
-  const nx = -dy / len;
-  const ny = dx / len;
+  // Perpendicular unit vector — correct in pixel space
+  const nx = -dy / len, ny = dx / len;
 
   return Array.from({ length: n }, () => {
     const t = Math.random();
-    // fill cross-section with square-root distribution (denser at center)
-    const r = (Math.random() * 2 - 1) * halfW;
+    // Flat cross-section distribution (not gaussian, not edge-heavy)
+    const rr = (Math.random() * 2 - 1) * hw;
     return {
-      xPct: x1 + dx * t + nx * r,
-      yPct: y1 + dy * t + ny * r,
-      radius: 1.4 + Math.random() * 2.2,
-      speed: Math.random() * 0.3 + 0.12,
+      x: x1 + dx * t + nx * rr,
+      y: y1 + dy * t + ny * rr,
+      r: 1.6 + Math.random() * 2.4,
+      speed: 0.1 + Math.random() * 0.28,
       phase: Math.random() * Math.PI * 2,
       glow: Math.random() < glowChance,
-      brightness: bright * (0.72 + Math.random() * 0.28),
+      bright: bright * (0.72 + Math.random() * 0.28),
     };
   });
 }
 
-// Dense filled oval (palm / knuckle areas)
+// Filled oval (palm, knuckle pads)
 function oval(
   cx: number, cy: number,
   rx: number, ry: number,
   n: number,
   bright: number,
-  glowChance = 0.28
-): Particle[] {
+  glowChance = 0.24
+): P[] {
   return Array.from({ length: n }, () => {
-    const angle = Math.random() * Math.PI * 2;
-    const r = Math.sqrt(Math.random());
+    const a = Math.random() * Math.PI * 2;
+    const rr = Math.sqrt(Math.random());
     return {
-      xPct: cx + Math.cos(angle) * rx * r,
-      yPct: cy + Math.sin(angle) * ry * r,
-      radius: 1.6 + Math.random() * 2.8,
-      speed: Math.random() * 0.3 + 0.12,
+      x: cx + Math.cos(a) * rx * rr,
+      y: cy + Math.sin(a) * ry * rr,
+      r: 1.8 + Math.random() * 2.8,
+      speed: 0.1 + Math.random() * 0.28,
       phase: Math.random() * Math.PI * 2,
       glow: Math.random() < glowChance,
-      brightness: bright * (0.78 + Math.random() * 0.22),
+      bright: bright * (0.75 + Math.random() * 0.25),
     };
   });
 }
 
-function buildParticles(): Particle[] {
-  const p: Particle[] = [];
+// ─────────────────────────────────────────────────────────
+//  Design reference: 1440 × 810 px viewport (16:9)
+//  All coordinates defined at this size, then scaled.
+//
+//  COMPOSITION:
+//   • Adam's arm  enters lower-left  (0, 750)  → fingertip ~(692, 452)
+//   • God's arm   enters upper-right (1440,195) → fingertip ~(718, 453)
+//   • 26 px gap between fingertips, centred at (705, 452)
+// ─────────────────────────────────────────────────────────
+function build(w: number, h: number): P[] {
+  const pts: P[] = [];
 
-  // ══════════════════════════════════════════════
-  //  ADAM'S HAND  (enters from lower-left, reaching right)
-  // ══════════════════════════════════════════════
+  // Scale from 1440×810 reference to actual canvas
+  const sx = w / 1440;
+  const sy = h / 810;
+  // Use minimum scale for limb widths so they don't look bloated on wide screens
+  const ss = Math.min(sx, sy);
 
-  // Forearm — wide, muscular
-  p.push(...tube(0, 82, 36, 63, 320, 3.8, 0.88, 0.14));
+  const X = (v: number) => v * sx;
+  const Y = (v: number) => v * sy;
+  const S = (v: number) => v * ss;
 
-  // Wrist — slightly narrower
-  p.push(...tube(36, 63, 42, 59.5, 100, 2.4, 0.92, 0.2));
+  // ╔══════════════════════════════════════════╗
+  // ║  ADAM'S HAND  (bottom-left → centre)    ║
+  // ╚══════════════════════════════════════════╝
+
+  // Forearm — thick, rises ~22° from horizontal
+  pts.push(...tube(X(0), Y(752), X(455), Y(546), 300, S(28), 0.87, 0.12));
+
+  // Wrist — tapers slightly
+  pts.push(...tube(X(455), Y(546), X(506), Y(522), 88, S(20), 0.92, 0.19));
 
   // Palm — dense filled oval
-  p.push(...oval(44.5, 58.5, 7.0, 5.2, 280, 0.93, 0.24));
+  pts.push(...oval(X(541), Y(505), S(64), S(48), 270, 0.93, 0.23));
 
-  // Thumb — curves down-outward from palm base
-  p.push(...tube(41, 61.5, 39, 66.5, 80, 1.4, 0.85, 0.18));
-  p.push(...tube(39, 66.5, 37.5, 69.5, 45, 1.2, 0.80, 0.15));
+  // Thumb — curves downward from the radial side of the palm
+  pts.push(...tube(X(514), Y(523), X(494), Y(551), 72, S(12), 0.83, 0.16));
+  pts.push(...tube(X(494), Y(551), X(480), Y(571), 46, S(10), 0.77, 0.14));
 
-  // Index finger — EXTENDED, the reaching finger, brightened
-  p.push(...tube(44.5, 55.0, 49.5, 51.5, 130, 1.25, 1.0, 0.32));
+  // ── Fingers (two segments each for natural curve) ──
 
-  // Middle finger — extended but slightly shorter
-  p.push(...tube(45.5, 57.0, 49.5, 55.0, 105, 1.15, 0.90, 0.24));
+  // Index — FULLY EXTENDED, the reaching finger, slightly brightest
+  pts.push(...tube(X(536), Y(483), X(614), Y(468), 86, S(10),  0.97, 0.30));
+  pts.push(...tube(X(614), Y(468), X(692), Y(452), 86, S(9.5), 1.00, 0.32));
 
-  // Ring finger — partly curled back
-  p.push(...tube(45.5, 59.2, 48.5, 59.0, 80, 1.05, 0.83, 0.18));
+  // Middle — nearly as long as index
+  pts.push(...tube(X(546), Y(487), X(618), Y(474), 74, S(9.5), 0.90, 0.24));
+  pts.push(...tube(X(618), Y(474), X(687), Y(465), 74, S(9.0), 0.88, 0.22));
 
-  // Pinky — shortest, curled
-  p.push(...tube(44.5, 61.5, 47.0, 63.0, 65, 0.95, 0.78, 0.15));
+  // Ring — shorter, slight downward curve
+  pts.push(...tube(X(554), Y(492), X(619), Y(481), 60, S(9.0), 0.83, 0.18));
+  pts.push(...tube(X(619), Y(481), X(668), Y(477), 60, S(8.5), 0.81, 0.16));
 
-  // Knuckle ridge — bright line across top of fist
-  p.push(...tube(42, 56.0, 47.0, 57.5, 60, 0.7, 0.92, 0.28));
+  // Pinky — shortest, most curled
+  pts.push(...tube(X(559), Y(501), X(613), Y(493), 50, S(8.5), 0.77, 0.15));
+  pts.push(...tube(X(613), Y(493), X(650), Y(493), 50, S(8.0), 0.75, 0.14));
 
-  // ══════════════════════════════════════════════
-  //  GOD'S HAND  (enters from upper-right, pointing down-left)
-  // ══════════════════════════════════════════════
+  // Knuckle pads — small bright ovals at each knuckle
+  pts.push(...oval(X(540), Y(483), S(8), S(5.5), 24, 0.96, 0.36));
+  pts.push(...oval(X(550), Y(487), S(7), S(5.0), 20, 0.92, 0.32));
+  pts.push(...oval(X(557), Y(492), S(6), S(4.5), 17, 0.88, 0.28));
+  pts.push(...oval(X(562), Y(500), S(5.5), S(4), 14, 0.84, 0.24));
 
-  // Forearm — wide, comes from upper right at a steep angle
-  p.push(...tube(100, 26, 63, 46, 320, 3.8, 0.88, 0.14));
+  // ╔══════════════════════════════════════════╗
+  // ║  GOD'S HAND  (upper-right → centre)     ║
+  // ╚══════════════════════════════════════════╝
+
+  // Forearm — thick, descends ~25° below horizontal going right-to-left
+  pts.push(...tube(X(1440), Y(196), X(986), Y(408), 300, S(28), 0.87, 0.12));
 
   // Wrist
-  p.push(...tube(63, 46, 57.5, 50, 100, 2.4, 0.92, 0.2));
+  pts.push(...tube(X(986), Y(408), X(938), Y(428), 88, S(20), 0.92, 0.19));
 
   // Palm
-  p.push(...oval(55.5, 51.5, 7.0, 5.2, 280, 0.93, 0.24));
+  pts.push(...oval(X(902), Y(447), S(64), S(48), 270, 0.93, 0.23));
 
-  // Thumb — raised above the hand
-  p.push(...tube(60.5, 48.0, 57.0, 44.0, 80, 1.4, 0.85, 0.18));
-  p.push(...tube(57.0, 44.0, 55.0, 42.0, 45, 1.2, 0.80, 0.15));
+  // Thumb — extends upward-outward (God's hand is above, thumb raised)
+  pts.push(...tube(X(924), Y(433), X(942), Y(408), 72, S(12), 0.83, 0.16));
+  pts.push(...tube(X(942), Y(408), X(950), Y(390), 46, S(10), 0.77, 0.14));
 
-  // Index finger — EXTENDED, pointing toward Adam, brightened
-  p.push(...tube(55.5, 49.5, 49.8, 53.5, 130, 1.25, 1.0, 0.32));
+  // ── Fingers ──
 
-  // Middle finger
-  p.push(...tube(55.8, 51.8, 51.0, 56.5, 105, 1.15, 0.90, 0.24));
+  // Index — pointing directly at Adam's fingertip
+  pts.push(...tube(X(885), Y(431), X(804), Y(442), 86, S(10),  0.97, 0.30));
+  pts.push(...tube(X(804), Y(442), X(718), Y(453), 86, S(9.5), 1.00, 0.32));
 
-  // Ring finger
-  p.push(...tube(56.2, 53.5, 52.0, 58.5, 80, 1.05, 0.83, 0.18));
+  // Middle
+  pts.push(...tube(X(887), Y(443), X(807), Y(457), 74, S(9.5), 0.90, 0.24));
+  pts.push(...tube(X(807), Y(457), X(727), Y(470), 74, S(9.0), 0.88, 0.22));
+
+  // Ring
+  pts.push(...tube(X(889), Y(455), X(814), Y(471), 60, S(9.0), 0.83, 0.18));
+  pts.push(...tube(X(814), Y(471), X(739), Y(484), 60, S(8.5), 0.81, 0.16));
 
   // Pinky
-  p.push(...tube(57.0, 55.0, 53.5, 60.5, 65, 0.95, 0.78, 0.15));
+  pts.push(...tube(X(891), Y(465), X(819), Y(483), 50, S(8.5), 0.77, 0.15));
+  pts.push(...tube(X(819), Y(483), X(751), Y(498), 50, S(8.0), 0.75, 0.14));
 
-  // Knuckle ridge
-  p.push(...tube(57.0, 49.5, 52.5, 51.5, 60, 0.7, 0.92, 0.28));
+  // Knuckle pads
+  pts.push(...oval(X(882), Y(431), S(8), S(5.5), 24, 0.96, 0.36));
+  pts.push(...oval(X(883), Y(443), S(7), S(5.0), 20, 0.92, 0.32));
+  pts.push(...oval(X(886), Y(455), S(6), S(4.5), 17, 0.88, 0.28));
+  pts.push(...oval(X(889), Y(464), S(5.5), S(4),  14, 0.84, 0.24));
 
-  // ══════════════════════════════════════════════
-  //  DIVINE SPARK — the near-touching gap
-  // ══════════════════════════════════════════════
-  for (let i = 0; i < 45; i++) {
-    const near = Math.random() < 0.5;
-    p.push({
-      xPct: 49.6 + (Math.random() - 0.5) * 2.2,
-      yPct: 52.6 + (Math.random() - 0.5) * 1.6,
-      radius: near ? 2.5 + Math.random() * 3.5 : 1.0 + Math.random() * 1.5,
-      speed: Math.random() * 0.9 + 0.55,
+  // ╔══════════════════════════════════════════╗
+  // ║  DIVINE SPARK  (gap between fingertips) ║
+  // ╚══════════════════════════════════════════╝
+  // Adam tip: X(692), Y(452)   God tip: X(718), Y(453)
+  const spX = (X(692) + X(718)) / 2;   // ≈ X(705)
+  const spY = (Y(452) + Y(453)) / 2;   // ≈ Y(452)
+  for (let i = 0; i < 60; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.sqrt(Math.random()) * S(20);
+    pts.push({
+      x: spX + Math.cos(angle) * dist,
+      y: spY + Math.sin(angle) * dist,
+      r: S(1.6) + Math.random() * S(4.2),
+      speed: 0.5 + Math.random() * 1.1,
       phase: Math.random() * Math.PI * 2,
       glow: true,
-      brightness: 1.0,
+      bright: 1.0,
     });
   }
 
-  return p;
+  return pts;
 }
-
-const PARTICLES = buildParticles();
 
 export default function CreationCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -164,51 +203,57 @@ export default function CreationCanvas() {
     if (!ctx) return;
 
     let animId: number;
-    let w = 0;
-    let h = 0;
+    let pts: P[] = [];
+    let w = 0, h = 0;
 
-    function resize() {
+    function init() {
       if (!canvas) return;
       w = window.innerWidth;
       h = window.innerHeight;
       canvas.width = w;
       canvas.height = h;
+      pts = build(w, h);
     }
 
     function draw(t: number) {
-      if (!canvas || !ctx) return;
+      if (!ctx) return;
       ctx.clearRect(0, 0, w, h);
 
-      for (const p of PARTICLES) {
+      for (const p of pts) {
         const raw = (Math.sin(t * p.speed + p.phase) + 1) / 2;
-        const opacity = raw * p.brightness;
-        const x = (p.xPct / 100) * w;
-        const y = (p.yPct / 100) * h;
+        const opacity = Math.min(raw * p.bright, 1);
 
         ctx.beginPath();
-        ctx.arc(x, y, p.radius, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
 
         if (p.glow) {
-          ctx.shadowBlur = 18;
-          ctx.shadowColor = `rgba(255,255,255,${opacity * 0.75})`;
+          ctx.shadowBlur = 16;
+          ctx.shadowColor = `rgba(255,255,255,${opacity * 0.7})`;
         } else {
           ctx.shadowBlur = 0;
         }
 
-        ctx.fillStyle = `rgba(255,255,255,${Math.min(opacity, 1)})`;
+        ctx.fillStyle = `rgba(255,255,255,${opacity})`;
         ctx.fill();
       }
 
       animId = requestAnimationFrame((ts) => draw(ts / 1000));
     }
 
-    resize();
+    init();
     animId = requestAnimationFrame((ts) => draw(ts / 1000));
-    window.addEventListener("resize", resize);
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    function onResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(init, 250);
+    }
+    window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onResize);
+      clearTimeout(resizeTimer);
     };
   }, []);
 
