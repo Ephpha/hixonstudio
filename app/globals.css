@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "EB Garamond", Georgia, serif;
+  --font-serif: "Fraunces", Georgia, serif;
   --font-mono: "Courier New", monospace;
 }
 
@@ -15,7 +15,7 @@ body {
 
 .prose-hixon {
   max-width: 65ch;
-  font-family: "EB Garamond", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
   font-size: 1.125rem;
   line-height: 1.85;
   color: rgba(255, 255, 255, 0.82);
@@ -24,7 +24,7 @@ body {
 .prose-hixon h1,
 .prose-hixon h2,
 .prose-hixon h3 {
-  font-family: "EB Garamond", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
   font-style: italic;
   color: #fff;
   margin-top: 2em;

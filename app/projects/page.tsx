@@ -50,7 +50,7 @@ export default function ProjectsPage() {
         <h1
           className="mb-2"
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "3rem",
             color: "#fff",

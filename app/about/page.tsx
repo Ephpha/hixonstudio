@@ -59,7 +59,7 @@ export default function AboutPage() {
         <h1
           className="mb-6"
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "3rem",
             color: "#fff",
@@ -70,7 +70,7 @@ export default function AboutPage() {
         </h1>
         <p
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "1.4rem",
             color: "rgba(255,255,255,0.58)",
@@ -158,7 +158,7 @@ export default function AboutPage() {
           </p>
           <p
             style={{
-              fontFamily: "EB Garamond, Georgia, serif",
+              fontFamily: "Fraunces, Georgia, serif",
               fontStyle: "italic",
               fontSize: "1.25rem",
               color: "rgba(255,255,255,0.72)",

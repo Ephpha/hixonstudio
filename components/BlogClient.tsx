@@ -43,7 +43,7 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
         <h1
           className="mb-2"
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "3rem",
             color: "#fff",
@@ -71,7 +71,7 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
               <h2
                 className="text-xl group-hover:opacity-100 transition-opacity"
                 style={{
-                  fontFamily: "EB Garamond, Georgia, serif",
+                  fontFamily: "Fraunces, Georgia, serif",
                   fontStyle: "italic",
                   color: "rgba(255,255,255,0.85)",
                 }}

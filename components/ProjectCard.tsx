@@ -41,7 +41,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <h3
           className="text-lg"
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             color: "#fff",
           }}

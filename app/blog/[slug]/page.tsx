@@ -31,7 +31,7 @@ export default async function BlogPostPage({
         <h1
           className="mb-5"
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "clamp(2rem, 5vw, 3rem)",
             color: "#fff",

@@ -81,7 +81,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           ref={heroRef}
           className="mb-6"
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "clamp(3.5rem, 11vw, 8rem)",
             color: "#fff",
@@ -162,7 +162,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
         />
         <p
           style={{
-            fontFamily: "EB Garamond, Georgia, serif",
+            fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "1.5rem",
             color: "rgba(255,255,255,0.75)",
@@ -201,7 +201,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
               <span
                 className="text-xl group-hover:opacity-100 transition-opacity"
                 style={{
-                  fontFamily: "EB Garamond, Georgia, serif",
+                  fontFamily: "Fraunces, Georgia, serif",
                   fontStyle: "italic",
                   color: "rgba(255,255,255,0.82)",
                 }}

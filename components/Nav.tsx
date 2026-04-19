@@ -26,7 +26,7 @@ export default function Nav() {
         href="/"
         className="mr-auto transition-opacity hover:opacity-60"
         style={{
-          fontFamily: "EB Garamond, Georgia, serif",
+          fontFamily: "Fraunces, Georgia, serif",
           fontStyle: "italic",
           fontSize: "1.2rem",
           color: "#fff",
