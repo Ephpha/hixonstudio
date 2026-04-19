@@ -62,6 +62,7 @@ export const projects: Project[] = [
     name: "JotLabs",
     domain: "jotlabs.vercel.app",
     url: "https://jotlabs.vercel.app",
+    logo: "/logos/jotlabs.png",
     description:
       "A note-taking tool that builds a living concept graph from your writing using [[phrase]] syntax.",
     tags: ["Next.js", "Supabase", "React Flow", "AI"],
