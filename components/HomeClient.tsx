@@ -81,12 +81,12 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           ref={heroRef}
           className="mb-6"
           style={{
-            fontFamily: "Fraunces, Georgia, serif",
-            fontStyle: "italic",
-            fontSize: "clamp(3.5rem, 11vw, 8rem)",
+            fontFamily: "Orbitron, sans-serif",
+            fontStyle: "normal",
+            fontSize: "clamp(2rem, 7vw, 5.5rem)",
             color: "#fff",
-            lineHeight: 1.0,
-            letterSpacing: "-0.01em",
+            lineHeight: 1.1,
+            letterSpacing: "0.12em",
           }}
         >
           {"Hixon.Studio".split("").map((char, i) => (

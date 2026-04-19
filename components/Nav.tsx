@@ -26,11 +26,11 @@ export default function Nav() {
         href="/"
         className="mr-auto transition-opacity hover:opacity-60"
         style={{
-          fontFamily: "Fraunces, Georgia, serif",
-          fontStyle: "italic",
-          fontSize: "1.2rem",
+          fontFamily: "Orbitron, sans-serif",
+          fontStyle: "normal",
+          fontSize: "0.85rem",
           color: "#fff",
-          letterSpacing: "0.03em",
+          letterSpacing: "0.15em",
         }}
       >
         Hixon.Studio

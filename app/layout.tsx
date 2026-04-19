@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import "@fontsource/orbitron/400.css";
+import "@fontsource/orbitron/700.css";
 import "@fontsource/fraunces/300.css";
 import "@fontsource/fraunces/300-italic.css";
 import "@fontsource/fraunces/400.css";
