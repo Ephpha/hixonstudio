@@ -10,6 +10,7 @@ import "@fontsource/fraunces/700-italic.css";
 import "./globals.css";
 import StarCanvas from "@/components/StarCanvas";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Hixon.Studio",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <main className="relative pt-20" style={{ zIndex: 10 }}>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
