@@ -126,7 +126,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           ref={heroRef}
           className="mb-6"
           style={{
-            fontFamily: "Syncopate, sans-serif",
+            fontFamily: "Monowire, sans-serif",
             fontStyle: "normal",
             fontSize: "clamp(1.8rem, 6.5vw, 5rem)",
             color: "#fff",

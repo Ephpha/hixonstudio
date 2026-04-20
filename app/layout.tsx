@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import "@fontsource/syncopate/400.css";
-import "@fontsource/syncopate/700.css";
+// Monowire loaded via @font-face in globals.css
 import "@fontsource/fraunces/300.css";
 import "@fontsource/fraunces/300-italic.css";
 import "@fontsource/fraunces/400.css";

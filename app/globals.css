@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Monowire";
+  src: url("/fonts/MONOWIRE.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "Fraunces", Georgia, serif;
