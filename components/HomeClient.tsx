@@ -98,15 +98,21 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
             <feTurbulence
               id="hero-turbulence"
               type="fractalNoise"
-              baseFrequency="0.72"
+              baseFrequency="0.68"
               numOctaves="4"
               stitchTiles="stitch"
               result="noise"
             />
-            {/* strip colour → pure greyscale static */}
+            {/* strip colour → greyscale */}
             <feColorMatrix type="saturate" values="0" in="noise" result="grey" />
-            {/* mask noise to only where the source text pixels exist */}
-            <feComposite in="grey" in2="SourceGraphic" operator="in" />
+            {/* snap every pixel to pure black or white — real TV static */}
+            <feComponentTransfer in="grey" result="bw">
+              <feFuncR type="discrete" tableValues="0 1" />
+              <feFuncG type="discrete" tableValues="0 1" />
+              <feFuncB type="discrete" tableValues="0 1" />
+            </feComponentTransfer>
+            {/* clip to letter shapes only */}
+            <feComposite in="bw" in2="SourceGraphic" operator="in" />
           </filter>
         </defs>
       </svg>
