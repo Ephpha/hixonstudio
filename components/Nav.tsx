@@ -14,7 +14,7 @@ export default function Nav() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 flex items-center px-8 py-4"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center px-4 sm:px-8 py-4"
       style={{
         background: "rgba(6,6,8,0.8)",
         backdropFilter: "blur(12px)",
@@ -28,15 +28,15 @@ export default function Nav() {
         style={{
           fontFamily: "Monowire, sans-serif",
           fontStyle: "normal",
-          fontSize: "0.85rem",
+          fontSize: "clamp(0.65rem, 2.5vw, 0.85rem)",
           color: "#fff",
-          letterSpacing: "0.15em",
+          letterSpacing: "0.12em",
         }}
       >
         Hixon.Studio
       </Link>
 
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-4 sm:gap-8">
         {links.map(({ href, label }) => {
           const active =
             pathname === href || pathname.startsWith(href + "/");

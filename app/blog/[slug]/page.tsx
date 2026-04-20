@@ -18,7 +18,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <div className="max-w-2xl mx-auto px-8 py-16">
+    <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
       <Link
         href="/blog"
         className="text-xs tracking-widest uppercase mb-12 inline-block transition-colors hover:text-white"

@@ -20,7 +20,7 @@ export default function Footer() {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: "2rem",
+          gap: "clamp(1rem, 4vw, 2rem)",
           marginBottom: "1.75rem",
         }}
       >

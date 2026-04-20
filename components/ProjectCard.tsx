@@ -8,7 +8,11 @@ export default function ProjectCard({ project }: { project: Project }) {
   const glowRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
 
+  // Detect touch device — disable 3D tilt on mobile
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
   function handleMouseMove(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (isTouch) return;
     const card = cardRef.current;
     const glow = glowRef.current;
     if (!card || !glow) return;
@@ -19,18 +23,17 @@ export default function ProjectCard({ project }: { project: Project }) {
     const cx = rect.width / 2;
     const cy = rect.height / 2;
 
-    // 3D tilt — max 10deg
     const rotX = ((y - cy) / cy) * -10;
     const rotY = ((x - cx) / cx) * 10;
 
     card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
 
-    // Spotlight glow follows cursor
     glow.style.opacity = "1";
     glow.style.background = `radial-gradient(180px circle at ${x}px ${y}px, rgba(255,255,255,0.07), transparent 70%)`;
   }
 
   function handleMouseLeave() {
+    if (isTouch) return;
     const card = cardRef.current;
     const glow = glowRef.current;
     if (!card || !glow) return;
@@ -39,17 +42,16 @@ export default function ProjectCard({ project }: { project: Project }) {
     card.style.borderColor = "rgba(255,255,255,0.08)";
     glow.style.opacity = "0";
 
-    // Hide visit label
     const visit = card.querySelector<HTMLSpanElement>(".visit-label");
     if (visit) { visit.style.opacity = "0"; visit.style.transform = "translateY(4px)"; }
   }
 
   function handleMouseEnter() {
+    if (isTouch) return;
     const card = cardRef.current;
     if (!card) return;
     card.style.borderColor = "rgba(255,255,255,0.22)";
 
-    // Show visit label
     const visit = card.querySelector<HTMLSpanElement>(".visit-label");
     if (visit) { visit.style.opacity = "1"; visit.style.transform = "translateY(0px)"; }
   }
@@ -210,8 +212,8 @@ export default function ProjectCard({ project }: { project: Project }) {
               fontFamily: "Fraunces, Georgia, serif",
               fontStyle: "italic",
               color: "rgba(255,255,255,0.7)",
-              opacity: 0,
-              transform: "translateY(4px)",
+              opacity: isTouch ? 1 : 0,
+              transform: isTouch ? "translateY(0px)" : "translateY(4px)",
               transition: "opacity 0.25s ease, transform 0.25s ease",
             }}
           >

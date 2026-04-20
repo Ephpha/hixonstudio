@@ -119,19 +119,19 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
 
       <CreationCanvas />
       {/* Hero */}
-      <section className="flex flex-col items-center justify-center min-h-[90vh] px-6 text-center">
-        <SparkleSymbol size="sm" className="mb-8 opacity-40" />
+      <section className="flex flex-col items-center justify-center min-h-[90vh] px-4 sm:px-6 text-center">
+        <SparkleSymbol size="sm" className="mb-6 sm:mb-8 opacity-40" />
 
         <h1
           ref={heroRef}
-          className="mb-6"
+          className="mb-6 hero-title"
           style={{
             fontFamily: "Monowire, sans-serif",
             fontStyle: "normal",
-            fontSize: "clamp(1.8rem, 6.5vw, 5rem)",
+            fontSize: "clamp(1.5rem, 8vw, 5rem)",
             color: "#fff",
             lineHeight: 1.1,
-            letterSpacing: "0.18em",
+            letterSpacing: "clamp(0.06em, 1.5vw, 0.18em)",
             filter: "url(#tv-static)",
           }}
         >
@@ -193,7 +193,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       {/* What I build */}
       <section
         ref={aboutRef}
-        className="max-w-2xl mx-auto px-8 pb-28"
+        className="max-w-2xl mx-auto px-4 sm:px-8 pb-16 sm:pb-28"
         style={{ opacity: 0 }}
       >
         <p
@@ -210,7 +210,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "1.5rem",
+            fontSize: "clamp(1.15rem, 3.5vw, 1.5rem)",
             color: "rgba(255,255,255,0.75)",
             lineHeight: 1.75,
           }}
@@ -224,7 +224,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       {/* Latest posts */}
       <section
         ref={postsRef}
-        className="max-w-2xl mx-auto px-8 pb-28"
+        className="max-w-2xl mx-auto px-4 sm:px-8 pb-16 sm:pb-28"
         style={{ opacity: 0 }}
       >
         <p

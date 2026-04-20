@@ -46,14 +46,14 @@ export default function ProjectsPage() {
   const wip = projects.filter((p) => p.status === "in-progress");
 
   return (
-    <div className="max-w-4xl mx-auto px-8 py-16">
+    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
       <div ref={headerRef} style={{ opacity: 0 }}>
         <h1
           className="mb-2"
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "3rem",
+            fontSize: "clamp(2rem, 7vw, 3rem)",
             color: "#fff",
             lineHeight: 1.1,
           }}
@@ -69,7 +69,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Live */}
-      <section className="mb-20">
+      <section className="mb-12 sm:mb-20">
         <div className="flex items-center gap-4 mb-8">
           <span
             className="text-xs tracking-widest uppercase shrink-0"

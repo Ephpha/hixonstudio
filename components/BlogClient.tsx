@@ -39,7 +39,7 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
   }, []);
 
   return (
-    <div className="max-w-2xl mx-auto px-8 py-16">
+    <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
       <BlogCanvas />
       <div ref={headerRef} style={{ opacity: 0 }}>
         <h1
@@ -47,21 +47,21 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "3rem",
+            fontSize: "clamp(2rem, 7vw, 3rem)",
             color: "#fff",
           }}
         >
           Writing
         </h1>
         <p
-          className="mb-16 text-sm"
+          className="mb-10 sm:mb-16 text-sm"
           style={{ color: "rgba(255,255,255,0.3)" }}
         >
           Personal thoughts and technical deep dives.
         </p>
       </div>
 
-      <div ref={listRef} className="flex flex-col gap-12" style={{ paddingBottom: "180px" }}>
+      <div ref={listRef} className="flex flex-col gap-8 sm:gap-12" style={{ paddingBottom: "120px" }}>
         {posts.map((post) => (
           <Link
             key={post.slug}

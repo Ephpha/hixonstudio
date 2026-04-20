@@ -52,16 +52,16 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="max-w-2xl mx-auto px-8 py-16">
+    <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
       {/* Hero */}
-      <div ref={heroRef} className="mb-24" style={{ opacity: 0 }}>
+      <div ref={heroRef} className="mb-14 sm:mb-24" style={{ opacity: 0 }}>
         <SparkleSymbol size="sm" className="mb-8 opacity-25" />
         <h1
           className="mb-6"
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "3rem",
+            fontSize: "clamp(2rem, 7vw, 3rem)",
             color: "#fff",
             lineHeight: 1.1,
           }}
@@ -72,7 +72,7 @@ export default function AboutPage() {
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "1.4rem",
+            fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
             color: "rgba(255,255,255,0.58)",
             lineHeight: 1.7,
           }}
@@ -83,7 +83,7 @@ export default function AboutPage() {
       </div>
 
       {/* Story */}
-      <section ref={storyRef} className="mb-20" style={{ opacity: 0 }}>
+      <section ref={storyRef} className="mb-12 sm:mb-20" style={{ opacity: 0 }}>
         <p
           className="text-xs tracking-widest uppercase mb-6"
           style={{ color: "rgba(255,255,255,0.2)" }}
@@ -115,7 +115,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stack */}
-      <section ref={stackRef} className="mb-20" style={{ opacity: 0 }}>
+      <section ref={stackRef} className="mb-12 sm:mb-20" style={{ opacity: 0 }}>
         <p
           className="text-xs tracking-widest uppercase mb-6"
           style={{ color: "rgba(255,255,255,0.2)" }}
