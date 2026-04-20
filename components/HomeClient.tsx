@@ -17,6 +17,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
   const aboutRef = useRef<HTMLElement>(null);
   const postsRef = useRef<HTMLElement>(null);
   const bottomCtaRef = useRef<HTMLDivElement>(null);
+  const glitchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -67,7 +68,35 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       });
     });
 
-    return () => ctx.revert();
+    // Periodic glitch burst — fires every 3–8 seconds randomly
+    const runGlitch = () => {
+      const el = heroRef.current;
+      if (!el) return;
+
+      gsap.timeline()
+        // slam left + red/blue channel split
+        .to(el, { x: -7, textShadow: "7px 0 rgba(255,30,30,0.95), -7px 0 rgba(30,80,255,0.95)", opacity: 0.82, duration: 0.05, ease: "none" })
+        // slam right
+        .to(el, { x: 6, textShadow: "-6px 0 rgba(255,30,30,0.95), 6px 0 rgba(30,80,255,0.95)", opacity: 1, duration: 0.05, ease: "none" })
+        // snap to center, clear shadow
+        .to(el, { x: 0, textShadow: "0px 0 transparent, 0px 0 transparent", duration: 0.04, ease: "none" })
+        // second micro-stutter
+        .to(el, { x: -4, textShadow: "4px 0 rgba(255,30,30,0.75), 0px 0 transparent", opacity: 0.9, duration: 0.04, ease: "none" })
+        .to(el, { x: 0, textShadow: "0px 0 transparent, 0px 0 transparent", opacity: 1, duration: 0.04, ease: "none" })
+        // one last ghost
+        .to(el, { x: 3, textShadow: "0px 0 transparent, -3px 0 rgba(30,80,255,0.6)", duration: 0.05, ease: "none" })
+        .to(el, { x: 0, textShadow: "0px 0 transparent, 0px 0 transparent", duration: 0.15, ease: "power2.out" });
+
+      glitchTimer.current = setTimeout(runGlitch, 3000 + Math.random() * 5000);
+    };
+
+    // Wait for entry animation to finish before first glitch
+    glitchTimer.current = setTimeout(runGlitch, 2800);
+
+    return () => {
+      ctx.revert();
+      if (glitchTimer.current) clearTimeout(glitchTimer.current);
+    };
   }, []);
 
   return (
