@@ -128,10 +128,11 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           style={{
             fontFamily: "Monowire, sans-serif",
             fontStyle: "normal",
-            fontSize: "clamp(1.5rem, 8vw, 5rem)",
+            fontSize: "clamp(1rem, 6.5vw, 5rem)",
             color: "#fff",
             lineHeight: 1.1,
-            letterSpacing: "clamp(0.06em, 1.5vw, 0.18em)",
+            letterSpacing: "clamp(0.04em, 1vw, 0.18em)",
+            whiteSpace: "nowrap",
             filter: "url(#tv-static)",
           }}
         >
