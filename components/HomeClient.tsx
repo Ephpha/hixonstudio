@@ -17,7 +17,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
   const aboutRef = useRef<HTMLElement>(null);
   const postsRef = useRef<HTMLElement>(null);
   const bottomCtaRef = useRef<HTMLDivElement>(null);
-  const glitchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const staticRafRef = useRef<number>(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -68,39 +68,49 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       });
     });
 
-    // Periodic glitch burst — fires every 3–8 seconds randomly
-    const runGlitch = () => {
-      const el = heroRef.current;
-      if (!el) return;
-
-      gsap.timeline()
-        // slam left + red/blue channel split
-        .to(el, { x: -7, textShadow: "7px 0 rgba(255,30,30,0.95), -7px 0 rgba(30,80,255,0.95)", opacity: 0.82, duration: 0.05, ease: "none" })
-        // slam right
-        .to(el, { x: 6, textShadow: "-6px 0 rgba(255,30,30,0.95), 6px 0 rgba(30,80,255,0.95)", opacity: 1, duration: 0.05, ease: "none" })
-        // snap to center, clear shadow
-        .to(el, { x: 0, textShadow: "0px 0 transparent, 0px 0 transparent", duration: 0.04, ease: "none" })
-        // second micro-stutter
-        .to(el, { x: -4, textShadow: "4px 0 rgba(255,30,30,0.75), 0px 0 transparent", opacity: 0.9, duration: 0.04, ease: "none" })
-        .to(el, { x: 0, textShadow: "0px 0 transparent, 0px 0 transparent", opacity: 1, duration: 0.04, ease: "none" })
-        // one last ghost
-        .to(el, { x: 3, textShadow: "0px 0 transparent, -3px 0 rgba(30,80,255,0.6)", duration: 0.05, ease: "none" })
-        .to(el, { x: 0, textShadow: "0px 0 transparent, 0px 0 transparent", duration: 0.15, ease: "power2.out" });
-
-      glitchTimer.current = setTimeout(runGlitch, 3000 + Math.random() * 5000);
+    // TV static: change feTurbulence seed every ~3 frames (~20fps flicker)
+    const turbulence = document.getElementById("hero-turbulence") as SVGFETurbulenceElement | null;
+    let frame = 0;
+    const tick = () => {
+      frame++;
+      if (frame % 3 === 0 && turbulence) {
+        turbulence.setAttribute("seed", String(Math.floor(Math.random() * 9999)));
+      }
+      staticRafRef.current = requestAnimationFrame(tick);
     };
-
-    // Wait for entry animation to finish before first glitch
-    glitchTimer.current = setTimeout(runGlitch, 2800);
+    staticRafRef.current = requestAnimationFrame(tick);
 
     return () => {
       ctx.revert();
-      if (glitchTimer.current) clearTimeout(glitchTimer.current);
+      cancelAnimationFrame(staticRafRef.current);
     };
   }, []);
 
   return (
     <div className="min-h-screen">
+      {/* TV static SVG filter — noise clipped to letter shapes */}
+      <svg
+        aria-hidden
+        style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
+      >
+        <defs>
+          <filter id="tv-static" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
+            <feTurbulence
+              id="hero-turbulence"
+              type="fractalNoise"
+              baseFrequency="0.72"
+              numOctaves="4"
+              stitchTiles="stitch"
+              result="noise"
+            />
+            {/* strip colour → pure greyscale static */}
+            <feColorMatrix type="saturate" values="0" in="noise" result="grey" />
+            {/* mask noise to only where the source text pixels exist */}
+            <feComposite in="grey" in2="SourceGraphic" operator="in" />
+          </filter>
+        </defs>
+      </svg>
+
       <CreationCanvas />
       {/* Hero */}
       <section className="flex flex-col items-center justify-center min-h-[90vh] px-6 text-center">
@@ -116,6 +126,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
             color: "#fff",
             lineHeight: 1.1,
             letterSpacing: "0.18em",
+            filter: "url(#tv-static)",
           }}
         >
           {"Hixon.Studio".split("").map((char, i) => (
