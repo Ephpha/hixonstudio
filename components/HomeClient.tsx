@@ -17,8 +17,6 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
   const aboutRef = useRef<HTMLElement>(null);
   const postsRef = useRef<HTMLElement>(null);
   const bottomCtaRef = useRef<HTMLDivElement>(null);
-  const staticRafRef = useRef<number>(0);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Hero word-by-word reveal
@@ -68,55 +66,28 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       });
     });
 
-    // TV static: change feTurbulence seed every ~3 frames (~20fps flicker)
-    const turbulence = document.getElementById("hero-turbulence") as SVGFETurbulenceElement | null;
-    let frame = 0;
-    const tick = () => {
-      frame++;
-      if (frame % 3 === 0 && turbulence) {
-        turbulence.setAttribute("seed", String(Math.floor(Math.random() * 9999)));
-      }
-      staticRafRef.current = requestAnimationFrame(tick);
+    // Chromatic breathe — slow sine-wave RGB channel separation
+    const breathe = (time: number) => {
+      const el = heroRef.current;
+      if (!el) return;
+      // Period ~12.6 s (2π / 0.5), max offset 5 px, opacity breathes 0.45→0.75
+      const offset = Math.sin(time * 0.5) * 5;
+      const opacity = 0.45 + Math.abs(Math.sin(time * 0.5)) * 0.3;
+      el.style.textShadow = [
+        `${-offset}px 0 rgba(255, 35, 35, ${opacity})`,
+        `${offset}px 0 rgba(35, 75, 255, ${opacity})`,
+      ].join(", ");
     };
-    staticRafRef.current = requestAnimationFrame(tick);
+    gsap.ticker.add(breathe);
 
     return () => {
       ctx.revert();
-      cancelAnimationFrame(staticRafRef.current);
+      gsap.ticker.remove(breathe);
     };
   }, []);
 
   return (
     <div className="min-h-screen">
-      {/* TV static SVG filter — noise clipped to letter shapes */}
-      <svg
-        aria-hidden
-        style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
-      >
-        <defs>
-          <filter id="tv-static" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
-            <feTurbulence
-              id="hero-turbulence"
-              type="fractalNoise"
-              baseFrequency="0.68"
-              numOctaves="4"
-              stitchTiles="stitch"
-              result="noise"
-            />
-            {/* strip colour → greyscale */}
-            <feColorMatrix type="saturate" values="0" in="noise" result="grey" />
-            {/* snap every pixel to pure black or white — real TV static */}
-            <feComponentTransfer in="grey" result="bw">
-              <feFuncR type="discrete" tableValues="0 1" />
-              <feFuncG type="discrete" tableValues="0 1" />
-              <feFuncB type="discrete" tableValues="0 1" />
-            </feComponentTransfer>
-            {/* clip to letter shapes only */}
-            <feComposite in="bw" in2="SourceGraphic" operator="in" />
-          </filter>
-        </defs>
-      </svg>
-
       <CreationCanvas />
       {/* Hero */}
       <section className="flex flex-col items-center justify-center min-h-[90vh] px-4 sm:px-6 text-center">
@@ -133,7 +104,6 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
             lineHeight: 1.1,
             letterSpacing: "clamp(0.04em, 1vw, 0.18em)",
             whiteSpace: "nowrap",
-            filter: "url(#tv-static)",
           }}
         >
           {"Hixon.Studio".split("").map((char, i) => (
