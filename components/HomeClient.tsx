@@ -70,12 +70,12 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
     const breathe = (time: number) => {
       const el = heroRef.current;
       if (!el) return;
-      // Period ~12.6 s (2π / 0.5), max offset 5 px, opacity breathes 0.45→0.75
-      const offset = Math.sin(time * 0.5) * 5;
-      const opacity = 0.45 + Math.abs(Math.sin(time * 0.5)) * 0.3;
+      // 0→1→0 cycle every ~8.4 s
+      const t = (Math.sin(time * 0.75) + 1) / 2;
       el.style.textShadow = [
-        `${-offset}px 0 rgba(255, 35, 35, ${opacity})`,
-        `${offset}px 0 rgba(35, 75, 255, ${opacity})`,
+        `0 0 8px  rgba(0, 220, 255, ${t * 0.65})`,
+        `0 0 28px rgba(0, 200, 255, ${t * 0.30})`,
+        `0 0 60px rgba(0, 175, 255, ${t * 0.14})`,
       ].join(", ");
     };
     gsap.ticker.add(breathe);
