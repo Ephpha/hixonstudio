@@ -73,9 +73,9 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       // 0→1→0 cycle every ~8.4 s
       const t = (Math.sin(time * 0.75) + 1) / 2;
       el.style.textShadow = [
-        `0 0 8px  rgba(0, 220, 255, ${t * 0.65})`,
-        `0 0 28px rgba(0, 200, 255, ${t * 0.30})`,
-        `0 0 60px rgba(0, 175, 255, ${t * 0.14})`,
+        `0 0 8px  rgba(255, 255, 255, ${t * 0.55})`,
+        `0 0 28px rgba(255, 255, 255, ${t * 0.25})`,
+        `0 0 60px rgba(255, 255, 255, ${t * 0.10})`,
       ].join(", ");
     };
     gsap.ticker.add(breathe);
