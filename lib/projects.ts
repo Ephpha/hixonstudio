@@ -43,6 +43,7 @@ export const projects: Project[] = [
     name: "WhatColor",
     domain: "what-color.com",
     url: "https://what-color.com",
+    logo: "/logos/whatcolor.png",
     description:
       "A color identification tool built for the colorblind — point your camera at anything and instantly know what color it is.",
     tags: ["React", "Vite", "AI"],
