@@ -15,7 +15,7 @@ export const projects: Project[] = [
     url: "https://ephpha.ai",
     logo: "/logos/ephpha.png",
     description:
-      "AI-powered tools and experiments — a living lab for ideas at the edge of the intelligence space.",
+      "An AI email assistant that helps you write better emails, craft subject lines that get opened, and know exactly when to hit send.",
     tags: ["AI", "Next.js", "TypeScript"],
     status: "live",
   },
