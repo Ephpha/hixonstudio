@@ -10,16 +10,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "DiaNavHealth",
-    domain: "dianavhealth.com",
-    url: "https://dianavhealth.com",
-    logo: "/logos/dianavhealth.png",
-    description:
-      "A health-focused platform built to make wellness information accessible and actionable.",
-    tags: ["Web", "Health", "React"],
-    status: "live",
-  },
-  {
     name: "Ephpha",
     domain: "ephpha.ai",
     url: "https://ephpha.ai",
@@ -47,6 +37,25 @@ export const projects: Project[] = [
     description:
       "Cloud storage with a clean, opinionated interface I actually want to use every day.",
     tags: ["Next.js", "Supabase", "Storage"],
+    status: "live",
+  },
+  {
+    name: "WhatColor",
+    domain: "what-color.com",
+    url: "https://what-color.com",
+    description:
+      "A color identification tool built for the colorblind — point your camera at anything and instantly know what color it is.",
+    tags: ["React", "Vite", "AI"],
+    status: "live",
+  },
+  {
+    name: "DiaNavHealth",
+    domain: "dianavhealth.com",
+    url: "https://dianavhealth.com",
+    logo: "/logos/dianavhealth.png",
+    description:
+      "A health-focused platform built to make wellness information accessible and actionable.",
+    tags: ["Web", "Health", "React"],
     status: "in-progress",
   },
   {

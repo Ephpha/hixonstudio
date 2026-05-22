@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import gsap from "gsap";
-import type { PostMeta } from "@/lib/blog";
-import { estimateReadTime } from "@/lib/readTime";
 import BlogCanvas from "@/components/BlogCanvas";
 
-export default function BlogClient({ posts }: { posts: PostMeta[] }) {
+export default function BlogClient() {
   const headerRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const comingSoonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -18,22 +15,11 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 0.1 }
       );
-
-      const entries = listRef.current?.querySelectorAll(".blog-entry");
-      if (entries?.length) {
-        gsap.fromTo(
-          entries,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.08,
-            duration: 0.5,
-            ease: "power2.out",
-            delay: 0.3,
-          }
-        );
-      }
+      gsap.fromTo(
+        comingSoonRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 0.35 }
+      );
     });
     return () => ctx.revert();
   }, []);
@@ -61,51 +47,29 @@ export default function BlogClient({ posts }: { posts: PostMeta[] }) {
         </p>
       </div>
 
-      <div ref={listRef} className="flex flex-col gap-8 sm:gap-12" style={{ paddingBottom: "120px" }}>
-        {posts.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="blog-entry group flex flex-col gap-2"
-            style={{ opacity: 0 }}
-          >
-            <div className="flex items-start justify-between gap-4">
-              <h2
-                className="text-xl group-hover:opacity-100 transition-opacity"
-                style={{
-                  fontFamily: "Fraunces, Georgia, serif",
-                  fontStyle: "italic",
-                  color: "rgba(255,255,255,0.85)",
-                }}
-              >
-                {post.title}
-              </h2>
-              <span
-                className="shrink-0 text-xs px-2 py-0.5 rounded-full mt-1 capitalize"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.09)",
-                  color: "rgba(255,255,255,0.38)",
-                }}
-              >
-                {post.tag}
-              </span>
-            </div>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
-              {post.excerpt}
-            </p>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-              {new Date(post.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}{" "}
-              · {estimateReadTime(post.excerpt)}
-            </p>
-          </Link>
-        ))}
+      <div ref={comingSoonRef} style={{ opacity: 0 }}>
+        <div
+          className="w-8 h-px mb-10"
+          style={{ background: "rgba(255,255,255,0.15)" }}
+        />
+        <p
+          style={{
+            fontFamily: "Fraunces, Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(1.1rem, 3vw, 1.35rem)",
+            color: "rgba(255,255,255,0.55)",
+            lineHeight: 1.75,
+          }}
+        >
+          Something worth reading is on its way.
+        </p>
+        <p
+          className="mt-3 text-xs tracking-widest uppercase"
+          style={{ color: "rgba(255,255,255,0.2)" }}
+        >
+          Coming soon
+        </p>
       </div>
-
     </div>
   );
 }

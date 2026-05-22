@@ -192,59 +192,61 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
         </p>
       </section>
 
-      {/* Latest posts */}
-      <section
-        ref={postsRef}
-        className="max-w-2xl mx-auto px-4 sm:px-8 pb-16 sm:pb-28"
-        style={{ opacity: 0 }}
-      >
-        <p
-          className="text-xs tracking-widest uppercase mb-4"
-          style={{ color: "rgba(255,255,255,0.22)" }}
+      {/* Latest posts — hidden when no posts exist */}
+      {recentPosts.length > 0 && (
+        <section
+          ref={postsRef}
+          className="max-w-2xl mx-auto px-4 sm:px-8 pb-16 sm:pb-28"
+          style={{ opacity: 0 }}
         >
-          Latest writing
-        </p>
-        <div
-          className="w-8 h-px mb-8"
-          style={{ background: "rgba(255,255,255,0.18)" }}
-        />
-        <div className="flex flex-col gap-8">
-          {recentPosts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group flex flex-col gap-1.5"
-            >
-              <span
-                className="text-xl group-hover:opacity-100 transition-opacity"
-                style={{
-                  fontFamily: "Fraunces, Georgia, serif",
-                  fontStyle: "italic",
-                  color: "rgba(255,255,255,0.82)",
-                }}
+          <p
+            className="text-xs tracking-widest uppercase mb-4"
+            style={{ color: "rgba(255,255,255,0.22)" }}
+          >
+            Latest writing
+          </p>
+          <div
+            className="w-8 h-px mb-8"
+            style={{ background: "rgba(255,255,255,0.18)" }}
+          />
+          <div className="flex flex-col gap-8">
+            {recentPosts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group flex flex-col gap-1.5"
               >
-                {post.title}
-              </span>
-              <span
-                className="text-sm"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-              >
-                {post.excerpt}
-              </span>
-              <span
-                className="text-xs"
-                style={{ color: "rgba(255,255,255,0.2)" }}
-              >
-                {new Date(post.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+                <span
+                  className="text-xl group-hover:opacity-100 transition-opacity"
+                  style={{
+                    fontFamily: "Fraunces, Georgia, serif",
+                    fontStyle: "italic",
+                    color: "rgba(255,255,255,0.82)",
+                  }}
+                >
+                  {post.title}
+                </span>
+                <span
+                  className="text-sm"
+                  style={{ color: "rgba(255,255,255,0.35)" }}
+                >
+                  {post.excerpt}
+                </span>
+                <span
+                  className="text-xs"
+                  style={{ color: "rgba(255,255,255,0.2)" }}
+                >
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Bottom CTA */}
       <div
