@@ -37,12 +37,17 @@ const alts = [
   },
 ];
 
+type Status = "idle" | "sending" | "sent" | "error";
+
 export default function ContactPage() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [company, setCompany] = useState(""); // honeypot
   const [typed, setTyped] = useState("");
-  const [opened, setOpened] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const heroRef = useRef<HTMLDivElement>(null);
   const formCardRef = useRef<HTMLDivElement>(null);
@@ -123,14 +128,29 @@ export default function ContactPage() {
     return () => ctx.revert();
   }, []);
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    const body = `From: ${name}\n\n${message}`;
-    const mailto = `mailto:matthix96@gmail.com?subject=${encodeURIComponent(
-      subject || `Hello from hixon.studio${name ? ` — ${name}` : ""}`
-    )}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setOpened(true);
+    if (status === "sending") return;
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message, company }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMsg(data?.error ?? "Something went wrong. Try again.");
+        return;
+      }
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+      setErrorMsg("Network error. Try again.");
+    }
   };
 
   const inputBase: React.CSSProperties = {
@@ -201,6 +221,87 @@ export default function ContactPage() {
         </p>
       </div>
 
+      {/* Success state — replaces form when sent */}
+      {status === "sent" && (
+        <div
+          className="mb-16 sm:mb-24 p-8 sm:p-12 rounded-2xl text-center relative overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(120,255,160,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+            border: "1px solid rgba(120,255,160,0.18)",
+            animation: "hixonSentFade 0.7s ease-out",
+          }}
+        >
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: "50%",
+              background: "rgba(120,255,160,0.1)",
+              border: "1px solid rgba(120,255,160,0.4)",
+              margin: "0 auto 1.75rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 0 32px rgba(120,255,160,0.15)",
+            }}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="rgba(180,255,200,0.95)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h2
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              fontSize: "clamp(1.6rem, 5vw, 2.25rem)",
+              color: "#fff",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            Message sent.
+          </h2>
+          <p
+            style={{
+              color: "rgba(255,255,255,0.6)",
+              fontSize: "0.95rem",
+              lineHeight: 1.7,
+              maxWidth: "26rem",
+              margin: "0 auto",
+            }}
+          >
+            Thanks {name || "for reaching out"}. I&apos;ll get back to you at{" "}
+            <span style={{ color: "rgba(255,255,255,0.85)" }}>{email}</span> as
+            soon as I can.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setName("");
+              setEmail("");
+              setSubject("");
+              setMessage("");
+              setStatus("idle");
+            }}
+            className="text-xs tracking-widest uppercase mt-8 transition-colors hover:text-white"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+          >
+            Send another →
+          </button>
+        </div>
+      )}
+
       {/* Form Card */}
       <div
         ref={formCardRef}
@@ -210,6 +311,7 @@ export default function ContactPage() {
             "linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%)",
           border: "1px solid rgba(255,255,255,0.08)",
           opacity: 0,
+          display: status === "sent" ? "none" : undefined,
         }}
       >
         {/* Faint corner glow */}
@@ -251,6 +353,28 @@ export default function ContactPage() {
 
           <div className="field mb-6" style={{ opacity: 0 }}>
             <label
+              htmlFor="email"
+              className="block text-xs tracking-widest uppercase mb-3"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Where should I reply?"
+              className="w-full px-4 py-3 rounded-lg outline-none text-base"
+              style={inputBase}
+              onFocus={(e) => onFocusStyle(e.currentTarget)}
+              onBlur={(e) => onBlurStyle(e.currentTarget)}
+            />
+          </div>
+
+          <div className="field mb-6" style={{ opacity: 0 }}>
+            <label
               htmlFor="subject"
               className="block text-xs tracking-widest uppercase mb-3"
               style={{ color: "rgba(255,255,255,0.4)" }}
@@ -267,6 +391,28 @@ export default function ContactPage() {
               style={inputBase}
               onFocus={(e) => onFocusStyle(e.currentTarget)}
               onBlur={(e) => onBlurStyle(e.currentTarget)}
+            />
+          </div>
+
+          {/* Honeypot — hidden from humans, irresistible to bots */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: "-9999px",
+              top: "-9999px",
+              opacity: 0,
+              pointerEvents: "none",
+            }}
+          >
+            <label htmlFor="company">Company</label>
+            <input
+              id="company"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
             />
           </div>
 
@@ -298,14 +444,18 @@ export default function ContactPage() {
           >
             <button
               type="submit"
+              disabled={status === "sending"}
               className="group inline-flex items-center gap-3 text-sm px-6 py-3 rounded-full transition-all"
               style={{
                 background: "rgba(255,255,255,0.08)",
                 border: "1px solid rgba(255,255,255,0.22)",
                 color: "#fff",
                 letterSpacing: "0.06em",
+                cursor: status === "sending" ? "wait" : "pointer",
+                opacity: status === "sending" ? 0.6 : 1,
               }}
               onMouseEnter={(e) => {
+                if (status === "sending") return;
                 e.currentTarget.style.background = "rgba(255,255,255,0.12)";
                 e.currentTarget.style.boxShadow =
                   "0 0 24px rgba(255,255,255,0.08)";
@@ -315,17 +465,19 @@ export default function ContactPage() {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <span>Send message</span>
+              <span>
+                {status === "sending" ? "Sending..." : "Send message"}
+              </span>
               <span className="transition-transform group-hover:translate-x-1">
                 →
               </span>
             </button>
-            {opened && (
+            {status === "error" && (
               <span
                 className="text-xs tracking-widest uppercase"
-                style={{ color: "rgba(120,255,160,0.85)" }}
+                style={{ color: "rgba(255,140,140,0.9)" }}
               >
-                ● Opening your mail app
+                ● {errorMsg}
               </span>
             )}
           </div>
