@@ -15,6 +15,7 @@ export default function AboutPage() {
   const shiftRef = useRef<HTMLElement>(null);
   const distributionRef = useRef<HTMLElement>(null);
   const stackRef = useRef<HTMLElement>(null);
+  const elsewhereRef = useRef<HTMLElement>(null);
   const closingRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function AboutPage() {
         { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.1 }
       );
 
-      [storyRef, shiftRef, distributionRef, stackRef, closingRef].forEach((ref) => {
+      [storyRef, shiftRef, distributionRef, stackRef, elsewhereRef, closingRef].forEach((ref) => {
         gsap.fromTo(
           ref.current,
           { opacity: 0, y: 30 },
@@ -248,6 +249,68 @@ export default function AboutPage() {
           projects. GPT-5.5 for visual direction, layouts, color, and helping
           shape how things feel.
         </p>
+      </section>
+
+      {/* Elsewhere */}
+      <section
+        ref={elsewhereRef}
+        className="mb-14 sm:mb-24"
+        style={{ opacity: 0 }}
+      >
+        <p
+          className="text-xs tracking-widest uppercase mb-5"
+          style={{ color: "rgba(255,255,255,0.22)" }}
+        >
+          Elsewhere
+        </p>
+        <div
+          className="w-8 h-px mb-8"
+          style={{ background: "rgba(255,255,255,0.18)" }}
+        />
+        <div className="flex flex-col">
+          {[
+            { label: "X", handle: "@HixonStudio", href: "https://x.com/HixonStudio" },
+            { label: "Substack", handle: "@hunchohix", href: "https://substack.com/@hunchohix" },
+            { label: "GitHub", handle: "@Hixly", href: "https://github.com/Hixly" },
+          ].map((link, i, arr) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between py-4 transition-colors"
+              style={{
+                borderTop: i === 0 ? "1px solid rgba(255,255,255,0.06)" : undefined,
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <div className="flex items-baseline gap-4">
+                <span
+                  className="text-xs tracking-widest uppercase"
+                  style={{ color: "rgba(255,255,255,0.32)", width: "5rem" }}
+                >
+                  {link.label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "Fraunces, Georgia, serif",
+                    fontStyle: "italic",
+                    fontSize: "1.15rem",
+                    color: "rgba(255,255,255,0.82)",
+                  }}
+                >
+                  {link.handle}
+                </span>
+              </div>
+              <span
+                className="transition-transform group-hover:translate-x-1"
+                style={{ color: "rgba(255,255,255,0.45)" }}
+              >
+                →
+              </span>
+            </a>
+          ))}
+        </div>
       </section>
 
       {/* Closing */}

@@ -7,19 +7,27 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SparkleSymbol from "@/components/SparkleSymbol";
 import CreationCanvas from "@/components/CreationCanvas";
 import type { PostMeta } from "@/lib/blog";
+import { timeAgo, type GithubData } from "@/lib/github";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const BUILD_COPY =
   "Anyone can generate code. Not everyone can decide what should exist, why it should exist, or what it should feel like.\n\nThe distance between imagination and execution has collapsed. AI didn't remove the need for taste, patience, or direction — it made those things matter more.\n\nHixon.Studio is where I build, test, learn, and share the process publicly.";
 
-export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] }) {
+export default function HomeClient({
+  recentPosts,
+  github,
+}: {
+  recentPosts: PostMeta[];
+  github: GithubData | null;
+}) {
   const [typed, setTyped] = useState("");
   const [typingDone, setTypingDone] = useState(false);
   const heroRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
+  const githubRef = useRef<HTMLElement>(null);
   const postsRef = useRef<HTMLElement>(null);
   const bottomCtaRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -56,7 +64,7 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
       );
 
       // Scroll sections (skip aboutRef — typewriter handles its own reveal)
-      [postsRef, bottomCtaRef].forEach((ref) => {
+      [githubRef, postsRef, bottomCtaRef].forEach((ref) => {
         gsap.fromTo(
           ref.current,
           { opacity: 0, y: 30 },
@@ -239,6 +247,201 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           </span>
         </div>
       </section>
+
+      {/* Building in Public — live GitHub data */}
+      {github && github.repos.length > 0 && (
+        <section
+          ref={githubRef}
+          className="max-w-2xl mx-auto px-4 sm:px-8 pb-16 sm:pb-28"
+          style={{ opacity: 0 }}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <p
+              className="text-xs tracking-widest uppercase"
+              style={{ color: "rgba(255,255,255,0.22)" }}
+            >
+              Building in public
+            </p>
+            <span
+              className="text-xs tracking-widest uppercase flex items-center gap-2"
+              style={{ color: "rgba(255,255,255,0.32)" }}
+            >
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "rgba(120,255,160,0.85)",
+                  boxShadow: "0 0 8px rgba(120,255,160,0.6)",
+                  display: "inline-block",
+                  animation: "hixonPulse 2.4s ease-in-out infinite",
+                }}
+              />
+              Live
+            </span>
+          </div>
+          <div
+            className="w-8 h-px mb-8"
+            style={{ background: "rgba(255,255,255,0.18)" }}
+          />
+
+          {/* Stats row */}
+          <div
+            className="grid grid-cols-3 gap-4 mb-10"
+            style={{
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              paddingTop: "1.5rem",
+              paddingBottom: "1.5rem",
+            }}
+          >
+            <div>
+              <p
+                style={{
+                  fontFamily: "Monowire, sans-serif",
+                  fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
+                  color: "#fff",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1,
+                  marginBottom: "0.4rem",
+                }}
+              >
+                {github.publicRepos}
+              </p>
+              <p
+                className="text-xs tracking-widest uppercase"
+                style={{ color: "rgba(255,255,255,0.32)" }}
+              >
+                Public repos
+              </p>
+            </div>
+            <div>
+              <p
+                style={{
+                  fontFamily: "Monowire, sans-serif",
+                  fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
+                  color: "#fff",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1,
+                  marginBottom: "0.4rem",
+                }}
+              >
+                {github.lastPushedAt ? timeAgo(github.lastPushedAt) : "—"}
+              </p>
+              <p
+                className="text-xs tracking-widest uppercase"
+                style={{ color: "rgba(255,255,255,0.32)" }}
+              >
+                Last commit
+              </p>
+            </div>
+            <div>
+              <p
+                style={{
+                  fontFamily: "Monowire, sans-serif",
+                  fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
+                  color: "#fff",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1,
+                  marginBottom: "0.4rem",
+                }}
+              >
+                {github.totalStars}
+              </p>
+              <p
+                className="text-xs tracking-widest uppercase"
+                style={{ color: "rgba(255,255,255,0.32)" }}
+              >
+                Stars
+              </p>
+            </div>
+          </div>
+
+          {/* Recent repos */}
+          <div className="flex flex-col gap-4 mb-8">
+            {github.repos.map((repo) => (
+              <a
+                key={repo.url}
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block p-5 sm:p-6 rounded-lg transition-all"
+                style={{
+                  background: "rgba(255,255,255,0.025)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                }}
+              >
+                <div className="flex items-start justify-between gap-4 mb-2">
+                  <span
+                    style={{
+                      fontFamily: "Monowire, sans-serif",
+                      fontSize: "1.05rem",
+                      color: "rgba(255,255,255,0.95)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {repo.name}
+                  </span>
+                  <span
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    style={{
+                      color: "rgba(255,255,255,0.4)",
+                      fontSize: "0.85rem",
+                      marginTop: "0.2rem",
+                    }}
+                  >
+                    ↗
+                  </span>
+                </div>
+                {repo.description && (
+                  <p
+                    className="mb-3 text-sm"
+                    style={{
+                      color: "rgba(255,255,255,0.52)",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {repo.description}
+                  </p>
+                )}
+                <div
+                  className="flex items-center gap-4 text-xs"
+                  style={{ color: "rgba(255,255,255,0.32)" }}
+                >
+                  {repo.language && (
+                    <span className="flex items-center gap-1.5">
+                      <span
+                        style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          background: "rgba(255,255,255,0.45)",
+                          display: "inline-block",
+                        }}
+                      />
+                      {repo.language}
+                    </span>
+                  )}
+                  <span>· pushed {timeAgo(repo.pushedAt)}</span>
+                  {repo.stars > 0 && <span>· ★ {repo.stars}</span>}
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="text-right">
+            <a
+              href={github.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs tracking-widest uppercase transition-colors hover:text-white"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              View profile on GitHub →
+            </a>
+          </div>
+        </section>
+      )}
 
       {/* Latest posts — hidden when no posts exist */}
       {recentPosts.length > 0 && (
