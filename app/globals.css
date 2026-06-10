@@ -98,3 +98,8 @@ body {
   color: rgba(255, 255, 255, 0.5);
   font-style: italic;
 }
+
+@keyframes hixonCursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}

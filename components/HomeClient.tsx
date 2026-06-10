@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,7 +10,12 @@ import type { PostMeta } from "@/lib/blog";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const BUILD_COPY =
+  "Anyone can generate code. Not everyone can decide what should exist, why it should exist, or what it should feel like.\n\nThe distance between imagination and execution has collapsed. AI didn't remove the need for taste, patience, or direction — it made those things matter more.\n\nHixon.Studio is where I build, test, learn, and share the process publicly.";
+
 export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] }) {
+  const [typed, setTyped] = useState("");
+  const [typingDone, setTypingDone] = useState(false);
   const heroRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -50,8 +55,8 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
         "-=0.2"
       );
 
-      // Scroll sections
-      [aboutRef, postsRef, bottomCtaRef].forEach((ref) => {
+      // Scroll sections (skip aboutRef — typewriter handles its own reveal)
+      [postsRef, bottomCtaRef].forEach((ref) => {
         gsap.fromTo(
           ref.current,
           { opacity: 0, y: 30 },
@@ -64,6 +69,35 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           }
         );
       });
+
+      // About section: header fades in, then text types out
+      if (aboutRef.current) {
+        gsap.fromTo(
+          aboutRef.current,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: { trigger: aboutRef.current, start: "top 80%" },
+          }
+        );
+
+        const counter = { i: 0 };
+        gsap.to(counter, {
+          i: BUILD_COPY.length,
+          duration: BUILD_COPY.length * 0.022,
+          ease: "none",
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: "top 70%",
+            toggleActions: "play none none none",
+          },
+          onUpdate: () => setTyped(BUILD_COPY.slice(0, Math.floor(counter.i))),
+          onComplete: () => setTypingDone(true),
+        });
+      }
     });
 
     // Chromatic breathe — slow sine-wave RGB channel separation
@@ -177,19 +211,33 @@ export default function HomeClient({ recentPosts }: { recentPosts: PostMeta[] })
           className="w-8 h-px mb-8"
           style={{ background: "rgba(255,255,255,0.18)" }}
         />
-        <p
+        <div
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
             fontSize: "clamp(1.15rem, 3.5vw, 1.5rem)",
             color: "rgba(255,255,255,0.75)",
             lineHeight: 1.75,
+            whiteSpace: "pre-line",
+            minHeight: "12em",
           }}
         >
-          I build AI tools, web apps, and products that feel alive. Everything
-          here was made from scratch — no templates, no shortcuts. Just ideas
-          turned into real software.
-        </p>
+          {typed}
+          <span
+            aria-hidden="true"
+            style={{
+              display: "inline-block",
+              width: "0.55em",
+              marginLeft: "0.06em",
+              transform: "translateY(0.1em)",
+              color: "rgba(255,255,255,0.85)",
+              animation: "hixonCursor 1s steps(1) infinite",
+              opacity: typingDone ? 0.6 : 1,
+            }}
+          >
+            ▌
+          </span>
+        </div>
       </section>
 
       {/* Latest posts — hidden when no posts exist */}

@@ -7,24 +7,15 @@ import SparkleSymbol from "@/components/SparkleSymbol";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stack = [
-  "Next.js",
-  "TypeScript",
-  "React",
-  "Tailwind CSS",
-  "Supabase",
-  "GSAP",
-  "Electron",
-  "Node.js",
-  "Python",
-  "AI APIs",
-];
+const buildingTools = ["Claude Code", "GPT-5.5", "Next.js", "React", "TypeScript", "Tailwind", "Supabase", "GSAP", "Electron", "Python"];
 
 export default function AboutPage() {
   const heroRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLElement>(null);
+  const shiftRef = useRef<HTMLElement>(null);
+  const distributionRef = useRef<HTMLElement>(null);
   const stackRef = useRef<HTMLElement>(null);
-  const dreamRef = useRef<HTMLElement>(null);
+  const closingRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,7 +25,7 @@ export default function AboutPage() {
         { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.1 }
       );
 
-      [storyRef, stackRef, dreamRef].forEach((ref) => {
+      [storyRef, shiftRef, distributionRef, stackRef, closingRef].forEach((ref) => {
         gsap.fromTo(
           ref.current,
           { opacity: 0, y: 30 },
@@ -54,19 +45,19 @@ export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
       {/* Hero */}
-      <div ref={heroRef} className="mb-14 sm:mb-24" style={{ opacity: 0 }}>
+      <div ref={heroRef} className="mb-16 sm:mb-28" style={{ opacity: 0 }}>
         <SparkleSymbol size="sm" className="mb-8 opacity-25" />
         <h1
           className="mb-6"
           style={{
             fontFamily: "Fraunces, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "clamp(2rem, 7vw, 3rem)",
+            fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
             color: "#fff",
-            lineHeight: 1.1,
+            lineHeight: 1.05,
           }}
         >
-          About
+          I&apos;m Hix.
         </h1>
         <p
           style={{
@@ -77,53 +68,164 @@ export default function AboutPage() {
             lineHeight: 1.7,
           }}
         >
-          I&apos;m a self-taught developer obsessed with building things at the
-          intersection of AI and human experience.
+          I build under Hixon.Studio — a place to test ideas, ship them
+          publicly, and figure things out in the open.
         </p>
       </div>
 
-      {/* Story */}
-      <section ref={storyRef} className="mb-12 sm:mb-20" style={{ opacity: 0 }}>
+      {/* The story */}
+      <section ref={storyRef} className="mb-14 sm:mb-24" style={{ opacity: 0 }}>
         <p
-          className="text-xs tracking-widest uppercase mb-6"
-          style={{ color: "rgba(255,255,255,0.2)" }}
+          className="text-xs tracking-widest uppercase mb-5"
+          style={{ color: "rgba(255,255,255,0.22)" }}
         >
-          The story
+          How I got here
         </p>
         <div
+          className="w-8 h-px mb-8"
+          style={{ background: "rgba(255,255,255,0.18)" }}
+        />
+        <div
           className="flex flex-col gap-5 text-base"
-          style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.85 }}
+          style={{ color: "rgba(255,255,255,0.62)", lineHeight: 1.85 }}
         >
           <p>
-            I didn&apos;t go to school for this. I learned by building —
-            shipping things, breaking them, rebuilding them better. That cycle
-            is the most honest education I&apos;ve ever had.
+            Back in February 2026, I started getting pulled deeper into AI and
+            the tech world in general. It started with curiosity. I was trying
+            to understand what OpenClaw was. That led me to API keys. Then
+            tokenization. Then agents. Then MiniMax. Then Claude. Then Claude
+            Code.
           </p>
           <p>
-            The projects on this site aren&apos;t side projects in the &ldquo;I
-            made a todo app&rdquo; sense. They&apos;re real software I use,
-            software other people use, and software I&apos;m building because
-            the problem is genuinely unsolved and I want the solution to exist.
+            Somewhere in that rabbit hole, my entire perception of what is
+            possible changed.
           </p>
           <p>
-            I care most about the feeling of software. How it responds. Whether
-            it feels like it understands you. That&apos;s where AI gets
-            interesting to me — not as a feature to bolt on, but as
-            infrastructure for products that feel alive.
+            I don&apos;t come from a traditional software background. I work a
+            software production job in the medical field. I had little real
+            experience with Python, full coding environments, or building
+            software from the ground up. So when I first started seeing what
+            these tools could do, it felt almost unrealistic.
+          </p>
+          <p
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              color: "rgba(255,255,255,0.85)",
+              fontSize: "1.15em",
+            }}
+          >
+            But Claude Code changed everything for me. It made the technical
+            side of building feel less like a locked door and more like a
+            language I could slowly learn how to speak.
+          </p>
+        </div>
+      </section>
+
+      {/* The shift */}
+      <section ref={shiftRef} className="mb-14 sm:mb-24" style={{ opacity: 0 }}>
+        <p
+          className="text-xs tracking-widest uppercase mb-5"
+          style={{ color: "rgba(255,255,255,0.22)" }}
+        >
+          What I&apos;ve learned
+        </p>
+        <div
+          className="w-8 h-px mb-8"
+          style={{ background: "rgba(255,255,255,0.18)" }}
+        />
+        <div
+          className="flex flex-col gap-5 text-base"
+          style={{ color: "rgba(255,255,255,0.62)", lineHeight: 1.85 }}
+        >
+          <p>
+            A lot of people call this &ldquo;vibe coding.&rdquo; I understand
+            why. But after months doing it every day, I don&apos;t think it&apos;s
+            simply easy or hard. It rewards patience. Clear thinking. Having an
+            actual vision for what you want to build, how you want it to work,
+            and how you want the end user to feel when they use it.
+          </p>
+          <p>
+            Prompting is communication. You have to understand how these models
+            interpret what you&apos;re asking, how they structure their output,
+            and how specific you need to be to get the result you actually
+            imagined.
+          </p>
+          <p
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              color: "rgba(255,255,255,0.85)",
+              fontSize: "1.15em",
+            }}
+          >
+            Anyone can generate code. Not everyone can decide what should exist,
+            why it should exist, who it&apos;s for, and what it should feel like.
+          </p>
+        </div>
+      </section>
+
+      {/* The other side */}
+      <section
+        ref={distributionRef}
+        className="mb-14 sm:mb-24"
+        style={{ opacity: 0 }}
+      >
+        <p
+          className="text-xs tracking-widest uppercase mb-5"
+          style={{ color: "rgba(255,255,255,0.22)" }}
+        >
+          The other side
+        </p>
+        <div
+          className="w-8 h-px mb-8"
+          style={{ background: "rgba(255,255,255,0.18)" }}
+        />
+        <div
+          className="flex flex-col gap-5 text-base"
+          style={{ color: "rgba(255,255,255,0.62)", lineHeight: 1.85 }}
+        >
+          <p>
+            It&apos;s a lot harder to get rich off a vibe-coded project than
+            people make it sound. Coding isn&apos;t always the hardest part
+            anymore.
+          </p>
+          <p>
+            The harder part is what comes after — getting people to notice it,
+            understand it, trust it, use it, and care enough to come back.
+          </p>
+          <p>
+            We could have millions of builders making useful, life-changing
+            products. But if they can&apos;t get them in front of people, a lot
+            of great ideas will still disappear.
+          </p>
+          <p
+            style={{
+              color: "rgba(255,255,255,0.85)",
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              fontSize: "1.15em",
+            }}
+          >
+            Building is one side. Distribution is the other.
           </p>
         </div>
       </section>
 
       {/* Stack */}
-      <section ref={stackRef} className="mb-12 sm:mb-20" style={{ opacity: 0 }}>
+      <section ref={stackRef} className="mb-14 sm:mb-24" style={{ opacity: 0 }}>
         <p
-          className="text-xs tracking-widest uppercase mb-6"
-          style={{ color: "rgba(255,255,255,0.2)" }}
+          className="text-xs tracking-widest uppercase mb-5"
+          style={{ color: "rgba(255,255,255,0.22)" }}
         >
-          Tools I work with
+          What I build with
         </p>
+        <div
+          className="w-8 h-px mb-8"
+          style={{ background: "rgba(255,255,255,0.18)" }}
+        />
         <div className="flex flex-wrap gap-2">
-          {stack.map((item) => (
+          {buildingTools.map((item) => (
             <span
               key={item}
               className="text-xs px-3 py-1 rounded-full"
@@ -131,44 +233,72 @@ export default function AboutPage() {
                 fontFamily: "Courier New, monospace",
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.09)",
-                color: "rgba(255,255,255,0.48)",
+                color: "rgba(255,255,255,0.5)",
               }}
             >
               {item}
             </span>
           ))}
         </div>
+        <p
+          className="text-sm mt-6"
+          style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.75 }}
+        >
+          Claude Code daily for building, navigating codebases, and mapping out
+          projects. GPT-5.5 for visual direction, layouts, color, and helping
+          shape how things feel.
+        </p>
       </section>
 
-      {/* Dream */}
-      <section ref={dreamRef} className="pb-16" style={{ opacity: 0 }}>
+      {/* Closing */}
+      <section ref={closingRef} className="pb-16" style={{ opacity: 0 }}>
         <div
-          className="p-8 rounded-xl"
+          className="p-8 sm:p-10 rounded-xl"
           style={{
             background: "rgba(255,255,255,0.02)",
             border: "1px solid rgba(255,255,255,0.07)",
           }}
         >
-          <SparkleSymbol size="sm" className="mb-5 opacity-20" />
+          <SparkleSymbol size="sm" className="mb-5 opacity-25" />
           <p
             className="text-xs tracking-widest uppercase mb-5"
-            style={{ color: "rgba(255,255,255,0.2)" }}
+            style={{ color: "rgba(255,255,255,0.22)" }}
           >
             Where I&apos;m headed
           </p>
-          <p
+          <div
+            className="flex flex-col gap-5"
             style={{
               fontFamily: "Fraunces, Georgia, serif",
               fontStyle: "italic",
-              fontSize: "1.25rem",
-              color: "rgba(255,255,255,0.72)",
+              fontSize: "1.2rem",
+              color: "rgba(255,255,255,0.78)",
               lineHeight: 1.75,
             }}
           >
-            I want to work at the frontier — the teams building the models and
-            the products that will define how humans relate to intelligence. If
-            you&apos;re building that and you think I can help, I&apos;d love
-            to talk.
+            <p>
+              AI lowered the cost of trying. It didn&apos;t remove the need for
+              taste, patience, direction, or persistence — it made those things
+              matter more.
+            </p>
+            <p>
+              The question is no longer &ldquo;Can I build this?&rdquo; The
+              better question is: &ldquo;Am I willing to spend the time, tokens,
+              patience, and energy to figure it out?&rdquo;
+            </p>
+            <p>
+              That&apos;s what Hixon.Studio has become for me. A place to build,
+              test, learn, fail, improve, and share the process publicly.
+            </p>
+          </div>
+          <p
+            className="mt-8 text-sm"
+            style={{
+              color: "rgba(255,255,255,0.35)",
+              letterSpacing: "0.04em",
+            }}
+          >
+            — Hix
           </p>
         </div>
       </section>
