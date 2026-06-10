@@ -7,8 +7,51 @@ import BlogCanvas from "@/components/BlogCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type PlatformId = "x" | "substack" | "hackernoon";
+
+function PlatformLogo({
+  platform,
+  size = 20,
+}: {
+  platform: PlatformId;
+  size?: number;
+}) {
+  const common = {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "currentColor",
+    xmlns: "http://www.w3.org/2000/svg",
+    "aria-hidden": true,
+    style: { display: "block" },
+  } as const;
+
+  if (platform === "x") {
+    return (
+      <svg {...common} role="img" aria-label="X">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    );
+  }
+
+  if (platform === "substack") {
+    return (
+      <svg {...common} role="img" aria-label="Substack">
+        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+      </svg>
+    );
+  }
+
+  // hackernoon — stylized lowercase "h"
+  return (
+    <svg {...common} role="img" aria-label="HackerNoon">
+      <path d="M4.5 3.2h2.7v7.5c.7-1.2 2-1.9 3.6-1.9 2.7 0 4.5 1.7 4.5 4.4V20.8h-2.7v-6.4c0-1.6-.9-2.6-2.4-2.6-1.6 0-3 1.1-3 3v6h-2.7V3.2z" />
+    </svg>
+  );
+}
+
 type WritingLink = {
-  source: string;
+  platform: PlatformId;
   date?: string;
   title: string;
   excerpt: string;
@@ -18,7 +61,7 @@ type WritingLink = {
 
 const recent: WritingLink[] = [
   {
-    source: "Essay · X",
+    platform: "x",
     date: "June 9, 2026",
     title: "The Last Four Months Changed How I See AI",
     excerpt:
@@ -29,7 +72,7 @@ const recent: WritingLink[] = [
 ];
 
 type Platform = {
-  tag: string;
+  id: PlatformId;
   title: string;
   description: string;
   href: string;
@@ -38,7 +81,7 @@ type Platform = {
 
 const platforms: Platform[] = [
   {
-    tag: "Hixon Studio · Substack",
+    id: "substack",
     title: "Longer pieces. Process notes. The building, in writing.",
     description:
       "Deeper writing on what I'm building, what I'm learning, and the rabbit holes I keep falling into. Free. Whenever I have something worth saying.",
@@ -46,7 +89,7 @@ const platforms: Platform[] = [
     cta: "Subscribe on Substack",
   },
   {
-    tag: "Hixon Studio · HackerNoon",
+    id: "hackernoon",
     title: "Technical essays and build write-ups.",
     description:
       "Deep dives on how I built each project — stacks, decisions, mistakes, and the parts of the process other write-ups skip.",
@@ -157,10 +200,9 @@ export default function BlogClient() {
             >
               <div className="flex items-center justify-between mb-5">
                 <span
-                  className="text-xs tracking-widest uppercase"
-                  style={{ color: "rgba(255,255,255,0.4)" }}
+                  style={{ color: "rgba(255,255,255,0.78)", display: "block" }}
                 >
-                  {post.source}
+                  <PlatformLogo platform={post.platform} size={22} />
                 </span>
                 {post.date && (
                   <span
@@ -256,10 +298,10 @@ export default function BlogClient() {
               }}
             >
               <span
-                className="text-xs tracking-widest uppercase block mb-4"
-                style={{ color: "rgba(255,255,255,0.42)" }}
+                className="block mb-4"
+                style={{ color: "rgba(255,255,255,0.78)" }}
               >
-                {p.tag}
+                <PlatformLogo platform={p.id} size={22} />
               </span>
 
               <h2
