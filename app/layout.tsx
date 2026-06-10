@@ -12,13 +12,13 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hixon.studio"),
+  metadataBase: new URL("https://www.hixon.studio"),
   title: "Hixon.Studio",
   description: "AI developer. Builder. Making things worth using.",
   openGraph: {
     title: "Hixon.Studio",
     description: "AI developer. Builder. Making things worth using.",
-    url: "https://hixon.studio",
+    url: "https://www.hixon.studio",
     siteName: "Hixon.Studio",
     type: "website",
   },
