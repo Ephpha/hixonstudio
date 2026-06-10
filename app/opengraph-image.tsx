@@ -69,19 +69,6 @@ export default async function Image() {
           }}
         />
 
-        {/* sparkle */}
-        <div
-          style={{
-            fontSize: 36,
-            color: "rgba(255,255,255,0.4)",
-            marginBottom: 28,
-            fontFamily: "serif",
-            display: "flex",
-          }}
-        >
-          ✦
-        </div>
-
         {/* the mark */}
         <div
           style={{
