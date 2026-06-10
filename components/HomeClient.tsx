@@ -285,161 +285,68 @@ export default function HomeClient({
             style={{ background: "rgba(255,255,255,0.18)" }}
           />
 
-          {/* Stats row */}
-          <div
-            className="grid grid-cols-3 gap-4 mb-10"
-            style={{
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-              borderBottom: "1px solid rgba(255,255,255,0.06)",
-              paddingTop: "1.5rem",
-              paddingBottom: "1.5rem",
-            }}
+          {/* Inline stat strip */}
+          <p
+            className="mb-6 text-xs tracking-widest uppercase"
+            style={{ color: "rgba(255,255,255,0.5)" }}
           >
-            <div>
-              <p
-                style={{
-                  fontFamily: "Monowire, sans-serif",
-                  fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
-                  color: "#fff",
-                  letterSpacing: "0.04em",
-                  lineHeight: 1,
-                  marginBottom: "0.4rem",
-                }}
-              >
-                {github.publicRepos}
-              </p>
-              <p
-                className="text-xs tracking-widest uppercase"
-                style={{ color: "rgba(255,255,255,0.32)" }}
-              >
-                Public repos
-              </p>
-            </div>
-            <div>
-              <p
-                style={{
-                  fontFamily: "Monowire, sans-serif",
-                  fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
-                  color: "#fff",
-                  letterSpacing: "0.04em",
-                  lineHeight: 1,
-                  marginBottom: "0.4rem",
-                }}
-              >
-                {github.lastPushedAt ? timeAgo(github.lastPushedAt) : "—"}
-              </p>
-              <p
-                className="text-xs tracking-widest uppercase"
-                style={{ color: "rgba(255,255,255,0.32)" }}
-              >
-                Last commit
-              </p>
-            </div>
-            <div>
-              <p
-                style={{
-                  fontFamily: "Monowire, sans-serif",
-                  fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
-                  color: "#fff",
-                  letterSpacing: "0.04em",
-                  lineHeight: 1,
-                  marginBottom: "0.4rem",
-                }}
-              >
-                {github.totalStars}
-              </p>
-              <p
-                className="text-xs tracking-widest uppercase"
-                style={{ color: "rgba(255,255,255,0.32)" }}
-              >
-                Stars
-              </p>
-            </div>
-          </div>
+            <span>{github.publicRepos} repos</span>
+            <span style={{ color: "rgba(255,255,255,0.2)", padding: "0 0.75em" }}>
+              ·
+            </span>
+            <span>
+              last commit {github.lastPushedAt ? timeAgo(github.lastPushedAt) : "—"}
+            </span>
+            <span style={{ color: "rgba(255,255,255,0.2)", padding: "0 0.75em" }}>
+              ·
+            </span>
+            <span>{github.totalStars} stars</span>
+          </p>
 
-          {/* Recent repos */}
-          <div className="flex flex-col gap-4 mb-8">
-            {github.repos.map((repo) => (
+          {/* Currently in */}
+          {github.repos[0] && (
+            <div className="flex items-baseline justify-between gap-4 flex-wrap">
               <a
-                key={repo.url}
-                href={repo.url}
+                href={github.repos[0].url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block p-5 sm:p-6 rounded-lg transition-all"
-                style={{
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                }}
+                className="group inline-flex items-baseline gap-3 transition-opacity hover:opacity-100"
+                style={{ opacity: 0.92 }}
               >
-                <div className="flex items-start justify-between gap-4 mb-2">
-                  <span
-                    style={{
-                      fontFamily: "Monowire, sans-serif",
-                      fontSize: "1.05rem",
-                      color: "rgba(255,255,255,0.95)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {repo.name}
-                  </span>
-                  <span
-                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    style={{
-                      color: "rgba(255,255,255,0.4)",
-                      fontSize: "0.85rem",
-                      marginTop: "0.2rem",
-                    }}
-                  >
-                    ↗
-                  </span>
-                </div>
-                {repo.description && (
-                  <p
-                    className="mb-3 text-sm"
-                    style={{
-                      color: "rgba(255,255,255,0.52)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {repo.description}
-                  </p>
-                )}
-                <div
-                  className="flex items-center gap-4 text-xs"
-                  style={{ color: "rgba(255,255,255,0.32)" }}
+                <span
+                  className="text-xs tracking-widest uppercase"
+                  style={{ color: "rgba(255,255,255,0.35)" }}
                 >
-                  {repo.language && (
-                    <span className="flex items-center gap-1.5">
-                      <span
-                        style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: "50%",
-                          background: "rgba(255,255,255,0.45)",
-                          display: "inline-block",
-                        }}
-                      />
-                      {repo.language}
-                    </span>
-                  )}
-                  <span>· pushed {timeAgo(repo.pushedAt)}</span>
-                  {repo.stars > 0 && <span>· ★ {repo.stars}</span>}
-                </div>
+                  Currently in
+                </span>
+                <span
+                  style={{
+                    fontFamily: "Fraunces, Georgia, serif",
+                    fontStyle: "italic",
+                    fontSize: "clamp(1.1rem, 3vw, 1.35rem)",
+                    color: "rgba(255,255,255,0.92)",
+                  }}
+                >
+                  {github.repos[0].name}
+                </span>
+                <span
+                  className="transition-transform group-hover:translate-x-1"
+                  style={{ color: "rgba(255,255,255,0.5)" }}
+                >
+                  →
+                </span>
               </a>
-            ))}
-          </div>
-
-          <div className="text-right">
-            <a
-              href={github.profileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs tracking-widest uppercase transition-colors hover:text-white"
-              style={{ color: "rgba(255,255,255,0.4)" }}
-            >
-              View profile on GitHub →
-            </a>
-          </div>
+              <a
+                href={github.profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs tracking-widest uppercase transition-colors hover:text-white"
+                style={{ color: "rgba(255,255,255,0.35)" }}
+              >
+                View on GitHub ↗
+              </a>
+            </div>
+          )}
         </section>
       )}
 
