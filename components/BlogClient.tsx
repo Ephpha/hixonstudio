@@ -28,6 +28,33 @@ const recent: WritingLink[] = [
   },
 ];
 
+type Platform = {
+  tag: string;
+  title: string;
+  description: string;
+  href: string;
+  cta: string;
+};
+
+const platforms: Platform[] = [
+  {
+    tag: "Hixon Studio · Substack",
+    title: "Longer pieces. Process notes. The building, in writing.",
+    description:
+      "Deeper writing on what I'm building, what I'm learning, and the rabbit holes I keep falling into. Free. Whenever I have something worth saying.",
+    href: "https://substack.com/@hunchohix",
+    cta: "Subscribe on Substack",
+  },
+  {
+    tag: "Hixon Studio · HackerNoon",
+    title: "Technical essays and build write-ups.",
+    description:
+      "Deep dives on how I built each project — stacks, decisions, mistakes, and the parts of the process other write-ups skip.",
+    href: "https://hackernoon.com/u/hixon",
+    cta: "Read on HackerNoon",
+  },
+];
+
 export default function BlogClient() {
   const headerRef = useRef<HTMLDivElement>(null);
   const recentRef = useRef<HTMLElement>(null);
@@ -190,104 +217,97 @@ export default function BlogClient() {
         </div>
       </section>
 
-      {/* Substack */}
+      {/* Subscribe / Follow */}
       <section
         ref={substackRef}
         className="mb-14 sm:mb-20"
         style={{ opacity: 0 }}
       >
-        <p
-          className="text-xs tracking-widest uppercase mb-5"
-          style={{ color: "rgba(255,255,255,0.25)" }}
-        >
-          Subscribe
-        </p>
+        <div className="flex items-center justify-between mb-5">
+          <p
+            className="text-xs tracking-widest uppercase"
+            style={{ color: "rgba(255,255,255,0.25)" }}
+          >
+            Follow along
+          </p>
+          <p
+            className="text-xs tracking-widest uppercase"
+            style={{ color: "rgba(255,255,255,0.18)" }}
+          >
+            02 / 02
+          </p>
+        </div>
         <div
           className="w-full h-px mb-8"
           style={{ background: "rgba(255,255,255,0.08)" }}
         />
 
-        <a
-          href="https://substack.com/@hunchohix"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group block p-8 sm:p-10 rounded-xl transition-all relative overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%)",
-            border: "1px solid rgba(255,255,255,0.09)",
-          }}
-        >
-          {/* faint corner glow */}
-          <div
-            style={{
-              position: "absolute",
-              top: "-40%",
-              right: "-20%",
-              width: "60%",
-              height: "120%",
-              background:
-                "radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, transparent 60%)",
-              pointerEvents: "none",
-            }}
-          />
-
-          <div className="relative">
-            <span
-              className="text-xs tracking-widest uppercase block mb-5"
-              style={{ color: "rgba(255,255,255,0.42)" }}
-            >
-              Hixon Studio · Substack
-            </span>
-
-            <h2
-              className="mb-5"
+        <div className="flex flex-col gap-5">
+          {platforms.map((p) => (
+            <a
+              key={p.href}
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block p-6 sm:p-8 rounded-xl transition-all"
               style={{
-                fontFamily: "Fraunces, Georgia, serif",
-                fontStyle: "italic",
-                fontSize: "clamp(1.3rem, 4vw, 1.8rem)",
-                color: "rgba(255,255,255,0.95)",
-                lineHeight: 1.2,
-                maxWidth: "26rem",
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
-              Longer pieces. Process notes. The building, in writing.
-            </h2>
-
-            <p
-              className="mb-7 text-sm sm:text-base"
-              style={{
-                color: "rgba(255,255,255,0.55)",
-                lineHeight: 1.7,
-                maxWidth: "32rem",
-              }}
-            >
-              Deeper writing on what I&apos;m building, what I&apos;m learning,
-              and the rabbit holes I keep falling into. Free. Whenever I have
-              something worth saying.
-            </p>
-
-            <div className="flex items-center gap-3">
               <span
-                className="text-sm px-5 py-2.5 rounded-full transition-opacity group-hover:opacity-80"
+                className="text-xs tracking-widest uppercase block mb-4"
+                style={{ color: "rgba(255,255,255,0.42)" }}
+              >
+                {p.tag}
+              </span>
+
+              <h2
+                className="mb-4"
                 style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  color: "#fff",
-                  letterSpacing: "0.05em",
+                  fontFamily: "Fraunces, Georgia, serif",
+                  fontStyle: "italic",
+                  fontSize: "clamp(1.2rem, 3.6vw, 1.5rem)",
+                  color: "rgba(255,255,255,0.93)",
+                  lineHeight: 1.25,
+                  maxWidth: "28rem",
                 }}
               >
-                Subscribe on Substack
-              </span>
-              <span
-                className="transition-transform group-hover:translate-x-1"
-                style={{ color: "rgba(255,255,255,0.5)", fontSize: "1rem" }}
+                {p.title}
+              </h2>
+
+              <p
+                className="mb-6 text-sm"
+                style={{
+                  color: "rgba(255,255,255,0.52)",
+                  lineHeight: 1.7,
+                  maxWidth: "34rem",
+                }}
               >
-                →
-              </span>
-            </div>
-          </div>
-        </a>
+                {p.description}
+              </p>
+
+              <div className="flex items-center gap-3">
+                <span
+                  className="text-xs tracking-widest uppercase px-4 py-2 rounded-full transition-opacity group-hover:opacity-80"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.14)",
+                    color: "rgba(255,255,255,0.95)",
+                  }}
+                >
+                  {p.cta}
+                </span>
+                <span
+                  className="transition-transform group-hover:translate-x-1"
+                  style={{ color: "rgba(255,255,255,0.45)" }}
+                >
+                  →
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
       </section>
 
       {/* Footer note */}
