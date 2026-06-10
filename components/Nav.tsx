@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SocialIcons from "@/components/SocialIcons";
 
 const links = [
   { href: "/projects", label: "Projects" },
@@ -35,6 +36,10 @@ export default function Nav() {
       >
         Hixon.Studio
       </Link>
+
+      <div className="hidden sm:block mr-6">
+        <SocialIcons size={15} />
+      </div>
 
       <div className="flex items-center gap-4 sm:gap-8">
         {links.map(({ href, label }) => {
