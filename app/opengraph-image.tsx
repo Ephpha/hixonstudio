@@ -22,44 +22,110 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          padding: "120px",
           position: "relative",
         }}
       >
+        {/* soft center glow */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0) 70%)",
+              "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%)",
             display: "flex",
           }}
         />
+
+        {/* tiny corner mark */}
+        <div
+          style={{
+            position: "absolute",
+            top: 56,
+            left: 64,
+            fontFamily: "Monowire",
+            fontSize: 22,
+            color: "rgba(255,255,255,0.35)",
+            letterSpacing: "0.04em",
+            display: "flex",
+          }}
+        >
+          H<span style={{ color: "rgba(255,255,255,0.18)" }}>.</span>S
+        </div>
+
+        {/* tiny corner status */}
+        <div
+          style={{
+            position: "absolute",
+            top: 62,
+            right: 64,
+            fontSize: 13,
+            color: "rgba(255,255,255,0.3)",
+            letterSpacing: "0.35em",
+            textTransform: "uppercase",
+            display: "flex",
+          }}
+        >
+          Est. 2026
+        </div>
+
+        {/* wordmark */}
         <div
           style={{
             fontFamily: "Monowire",
-            fontSize: 140,
+            fontSize: 96,
             color: "#fff",
-            letterSpacing: "0.12em",
+            letterSpacing: "0.04em",
             textShadow:
-              "0 0 24px rgba(255,255,255,0.35), 0 0 64px rgba(255,255,255,0.15)",
+              "0 0 18px rgba(255,255,255,0.30), 0 0 56px rgba(255,255,255,0.10)",
             display: "flex",
+            lineHeight: 1,
           }}
         >
-          HIXON
-          <span style={{ color: "rgba(255,255,255,0.35)" }}>.</span>
-          STUDIO
+          Hixon<span style={{ color: "rgba(255,255,255,0.35)" }}>.</span>Studio
         </div>
+
+        {/* divider */}
         <div
           style={{
-            marginTop: 36,
-            fontSize: 22,
-            letterSpacing: "0.32em",
+            width: 48,
+            height: 1,
+            background: "rgba(255,255,255,0.25)",
+            marginTop: 40,
+            marginBottom: 32,
+            display: "flex",
+          }}
+        />
+
+        {/* tagline */}
+        <div
+          style={{
+            fontSize: 18,
+            color: "rgba(255,255,255,0.55)",
+            letterSpacing: "0.4em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.45)",
             display: "flex",
           }}
         >
-          AI developer · Builder · Making things worth using
+          AI Developer · Builder · Designer
+        </div>
+
+        {/* bottom domain */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 60,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "center",
+            fontSize: 14,
+            color: "rgba(255,255,255,0.32)",
+            letterSpacing: "0.5em",
+            textTransform: "uppercase",
+          }}
+        >
+          hixon.studio
         </div>
       </div>
     ),
