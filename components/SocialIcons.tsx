@@ -13,7 +13,7 @@ const links: SocialLink[] = [
   { key: "x", label: "X", href: "https://x.com/HixonStudio" },
   { key: "substack", label: "Substack", href: "https://substack.com/@hunchohix" },
   { key: "hackernoon", label: "HackerNoon", href: "https://hackernoon.com/u/hixon" },
-  { key: "email", label: "Email", href: "mailto:matthix96@gmail.com" },
+  { key: "email", label: "Contact", href: "/contact" },
 ];
 
 function Icon({ k, size = 16 }: { k: IconKey; size?: number }) {
@@ -78,8 +78,8 @@ export default function SocialIcons({ size = 16 }: { size?: number }) {
         <a
           key={link.key}
           href={link.href}
-          target={link.key === "email" ? undefined : "_blank"}
-          rel={link.key === "email" ? undefined : "noopener noreferrer"}
+          target={link.key === "email" || link.href.startsWith("/") ? undefined : "_blank"}
+          rel={link.key === "email" || link.href.startsWith("/") ? undefined : "noopener noreferrer"}
           aria-label={link.label}
           title={link.label}
           className="transition-colors"
