@@ -12,6 +12,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hixon.studio"),
   title: "Hixon.Studio",
   description: "AI developer. Builder. Making things worth using.",
   openGraph: {
@@ -19,6 +20,12 @@ export const metadata: Metadata = {
     description: "AI developer. Builder. Making things worth using.",
     url: "https://hixon.studio",
     siteName: "Hixon.Studio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hixon.Studio",
+    description: "AI developer. Builder. Making things worth using.",
   },
 };
 
