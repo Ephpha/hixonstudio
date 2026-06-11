@@ -17,11 +17,8 @@ export default function AboutPage() {
   const stackRef = useRef<HTMLElement>(null);
   const elsewhereRef = useRef<HTMLElement>(null);
   const closingRef = useRef<HTMLElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let breatheTimer: ReturnType<typeof setTimeout>;
-
     const ctx = gsap.context(() => {
       gsap.fromTo(
         heroRef.current,
@@ -43,97 +40,38 @@ export default function AboutPage() {
         );
       });
     });
-
-    if (portraitRef.current) {
-      const el = portraitRef.current;
-      el.style.transition = "opacity 1.8s ease-out, filter 1.8s ease-out, transform 1.8s ease-out";
-      requestAnimationFrame(() => {
-        el.style.opacity = "0.6";
-        el.style.filter = "blur(0px)";
-        el.style.transform = "scale(1)";
-      });
-      breatheTimer = setTimeout(() => {
-        el.style.transition = "none";
-        el.style.animation = "portraitBreathe 6s ease-in-out infinite";
-      }, 2000);
-    }
-
-    return () => {
-      ctx.revert();
-      clearTimeout(breatheTimer);
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
-      {/* Hero with portrait background */}
-      <div className="relative mb-16 sm:mb-28">
-        {/* Portrait — behind the text, masked into the page */}
-        <div
-          ref={portraitRef}
-          aria-hidden="true"
-          className="pointer-events-none select-none"
+      {/* Hero */}
+      <div ref={heroRef} className="mb-16 sm:mb-28" style={{ opacity: 0 }}>
+        <SparkleSymbol size="sm" className="mb-8 opacity-25" />
+        <h1
+          className="mb-6"
           style={{
-            position: "absolute",
-            top: "-1rem",
-            right: "-2rem",
-            width: "clamp(180px, 40vw, 360px)",
-            opacity: 0,
-            filter: "blur(8px)",
-            transform: "scale(1.08)",
-            zIndex: 0,
-            mixBlendMode: "screen",
+            fontFamily: "Fraunces, Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
+            color: "#fff",
+            lineHeight: 1.05,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/hix-portrait.png"
-            alt=""
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-              maskImage:
-                "radial-gradient(ellipse 70% 75% at 55% 38%, black 20%, transparent 75%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 70% 75% at 55% 38%, black 20%, transparent 75%)",
-              filter: "grayscale(100%) invert(1) brightness(0.7) blur(2.5px)",
-            }}
-          />
-        </div>
-
-        <div
-          ref={heroRef}
-          className="relative"
-          style={{ opacity: 0, zIndex: 1 }}
+          I&apos;m Hix.
+        </h1>
+        <p
+          style={{
+            fontFamily: "Fraunces, Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
+            color: "rgba(255,255,255,0.58)",
+            lineHeight: 1.7,
+          }}
         >
-          <SparkleSymbol size="sm" className="mb-8 opacity-25" />
-          <h1
-            className="mb-6"
-            style={{
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
-              color: "#fff",
-              lineHeight: 1.05,
-            }}
-          >
-            I&apos;m Hix.
-          </h1>
-          <p
-            style={{
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
-              color: "rgba(255,255,255,0.58)",
-              lineHeight: 1.7,
-              maxWidth: "26rem",
-            }}
-          >
-            I build under Hixon.Studio — a place to test ideas, ship them
-            publicly, and figure things out in the open.
-          </p>
-        </div>
+          I build under Hixon.Studio — a place to test ideas, ship them
+          publicly, and figure things out in the open.
+        </p>
       </div>
 
       {/* The story */}
