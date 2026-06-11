@@ -81,8 +81,8 @@ export default function AboutPage() {
           style={{
             position: "absolute",
             top: "-1rem",
-            right: "0",
-            width: "clamp(180px, 42vw, 380px)",
+            right: "-3rem",
+            width: "clamp(200px, 45vw, 420px)",
             opacity: 0,
             zIndex: 0,
           }}
@@ -96,9 +96,9 @@ export default function AboutPage() {
               height: "auto",
               display: "block",
               maskImage:
-                "radial-gradient(ellipse 70% 60% at 55% 40%, black 15%, transparent 75%)",
+                "radial-gradient(ellipse 60% 65% at 65% 40%, black 10%, transparent 70%)",
               WebkitMaskImage:
-                "radial-gradient(ellipse 70% 60% at 55% 40%, black 15%, transparent 75%)",
+                "radial-gradient(ellipse 60% 65% at 65% 40%, black 10%, transparent 70%)",
               filter: "grayscale(100%) contrast(1.15)",
             }}
           />
