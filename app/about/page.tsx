@@ -20,37 +20,14 @@ export default function AboutPage() {
   const portraitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let breatheTimer: ReturnType<typeof setTimeout>;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         heroRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.1 }
       );
-
-      // Portrait: fade in with subtle scale settle, then gentle continuous breathe
-      if (portraitRef.current) {
-        gsap.fromTo(
-          portraitRef.current,
-          { opacity: 0, scale: 1.08, filter: "blur(6px)" },
-          {
-            opacity: 0.75,
-            scale: 1,
-            filter: "blur(0px)",
-            duration: 1.6,
-            ease: "power2.out",
-            delay: 0.3,
-            onComplete: () => {
-              gsap.to(portraitRef.current, {
-                opacity: 0.6,
-                duration: 4,
-                ease: "sine.inOut",
-                repeat: -1,
-                yoyo: true,
-              });
-            },
-          }
-        );
-      }
 
       [storyRef, shiftRef, distributionRef, stackRef, elsewhereRef, closingRef].forEach((ref) => {
         gsap.fromTo(
@@ -66,7 +43,25 @@ export default function AboutPage() {
         );
       });
     });
-    return () => ctx.revert();
+
+    if (portraitRef.current) {
+      const el = portraitRef.current;
+      el.style.transition = "opacity 1.8s ease-out, filter 1.8s ease-out, transform 1.8s ease-out";
+      requestAnimationFrame(() => {
+        el.style.opacity = "0.6";
+        el.style.filter = "blur(0px)";
+        el.style.transform = "scale(1)";
+      });
+      breatheTimer = setTimeout(() => {
+        el.style.transition = "none";
+        el.style.animation = "portraitBreathe 6s ease-in-out infinite";
+      }, 2000);
+    }
+
+    return () => {
+      ctx.revert();
+      clearTimeout(breatheTimer);
+    };
   }, []);
 
   return (
@@ -84,7 +79,10 @@ export default function AboutPage() {
             right: "-2rem",
             width: "clamp(180px, 40vw, 360px)",
             opacity: 0,
+            filter: "blur(8px)",
+            transform: "scale(1.08)",
             zIndex: 0,
+            mixBlendMode: "screen",
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -96,11 +94,10 @@ export default function AboutPage() {
               height: "auto",
               display: "block",
               maskImage:
-                "radial-gradient(ellipse 60% 65% at 65% 40%, black 10%, transparent 70%)",
+                "radial-gradient(ellipse 70% 75% at 55% 38%, black 20%, transparent 75%)",
               WebkitMaskImage:
-                "radial-gradient(ellipse 60% 65% at 65% 40%, black 10%, transparent 70%)",
-              filter: "grayscale(100%) invert(1) contrast(1.2) brightness(0.9)",
-              mixBlendMode: "screen",
+                "radial-gradient(ellipse 70% 75% at 55% 38%, black 20%, transparent 75%)",
+              filter: "grayscale(100%) invert(1) brightness(0.7) blur(2.5px)",
             }}
           />
         </div>
