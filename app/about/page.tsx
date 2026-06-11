@@ -33,7 +33,7 @@ export default function AboutPage() {
           portraitRef.current,
           { opacity: 0, scale: 1.08, filter: "blur(6px)" },
           {
-            opacity: 0.4,
+            opacity: 0.75,
             scale: 1,
             filter: "blur(0px)",
             duration: 1.6,
@@ -41,7 +41,7 @@ export default function AboutPage() {
             delay: 0.3,
             onComplete: () => {
               gsap.to(portraitRef.current, {
-                opacity: 0.3,
+                opacity: 0.6,
                 duration: 4,
                 ease: "sine.inOut",
                 repeat: -1,
@@ -81,8 +81,8 @@ export default function AboutPage() {
           style={{
             position: "absolute",
             top: "-1rem",
-            right: "-3rem",
-            width: "clamp(200px, 45vw, 420px)",
+            right: "-2rem",
+            width: "clamp(180px, 40vw, 360px)",
             opacity: 0,
             zIndex: 0,
           }}
@@ -99,7 +99,8 @@ export default function AboutPage() {
                 "radial-gradient(ellipse 60% 65% at 65% 40%, black 10%, transparent 70%)",
               WebkitMaskImage:
                 "radial-gradient(ellipse 60% 65% at 65% 40%, black 10%, transparent 70%)",
-              filter: "grayscale(100%) contrast(1.15)",
+              filter: "grayscale(100%) invert(1) contrast(1.2) brightness(0.9)",
+              mixBlendMode: "screen",
             }}
           />
         </div>
