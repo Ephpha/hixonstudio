@@ -17,6 +17,7 @@ export default function AboutPage() {
   const stackRef = useRef<HTMLElement>(null);
   const elsewhereRef = useRef<HTMLElement>(null);
   const closingRef = useRef<HTMLElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -25,6 +26,31 @@ export default function AboutPage() {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.1 }
       );
+
+      // Portrait: fade in with subtle scale settle, then gentle continuous breathe
+      if (portraitRef.current) {
+        gsap.fromTo(
+          portraitRef.current,
+          { opacity: 0, scale: 1.08, filter: "blur(6px)" },
+          {
+            opacity: 0.42,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 1.6,
+            ease: "power2.out",
+            delay: 0.3,
+            onComplete: () => {
+              gsap.to(portraitRef.current, {
+                opacity: 0.36,
+                duration: 4,
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true,
+              });
+            },
+          }
+        );
+      }
 
       [storyRef, shiftRef, distributionRef, stackRef, elsewhereRef, closingRef].forEach((ref) => {
         gsap.fromTo(
@@ -45,33 +71,72 @@ export default function AboutPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
-      {/* Hero */}
-      <div ref={heroRef} className="mb-16 sm:mb-28" style={{ opacity: 0 }}>
-        <SparkleSymbol size="sm" className="mb-8 opacity-25" />
-        <h1
-          className="mb-6"
+      {/* Hero with portrait background */}
+      <div className="relative mb-16 sm:mb-28">
+        {/* Portrait — behind the text, masked into the page */}
+        <div
+          ref={portraitRef}
+          aria-hidden="true"
+          className="pointer-events-none select-none"
           style={{
-            fontFamily: "Fraunces, Georgia, serif",
-            fontStyle: "italic",
-            fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
-            color: "#fff",
-            lineHeight: 1.05,
+            position: "absolute",
+            top: "-2rem",
+            right: "-2rem",
+            width: "clamp(180px, 42vw, 380px)",
+            opacity: 0,
+            zIndex: 0,
           }}
         >
-          I&apos;m Hix.
-        </h1>
-        <p
-          style={{
-            fontFamily: "Fraunces, Georgia, serif",
-            fontStyle: "italic",
-            fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
-            color: "rgba(255,255,255,0.58)",
-            lineHeight: 1.7,
-          }}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hix-portrait.png"
+            alt=""
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              maskImage:
+                "radial-gradient(ellipse 85% 70% at 70% 45%, black 25%, transparent 88%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 85% 70% at 70% 45%, black 25%, transparent 88%)",
+              filter: "grayscale(100%) contrast(1.08) brightness(0.95) invert(1)",
+              mixBlendMode: "screen",
+            }}
+          />
+        </div>
+
+        <div
+          ref={heroRef}
+          className="relative"
+          style={{ opacity: 0, zIndex: 1 }}
         >
-          I build under Hixon.Studio — a place to test ideas, ship them
-          publicly, and figure things out in the open.
-        </p>
+          <SparkleSymbol size="sm" className="mb-8 opacity-25" />
+          <h1
+            className="mb-6"
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
+              color: "#fff",
+              lineHeight: 1.05,
+            }}
+          >
+            I&apos;m Hix.
+          </h1>
+          <p
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
+              color: "rgba(255,255,255,0.58)",
+              lineHeight: 1.7,
+              maxWidth: "26rem",
+            }}
+          >
+            I build under Hixon.Studio — a place to test ideas, ship them
+            publicly, and figure things out in the open.
+          </p>
+        </div>
       </div>
 
       {/* The story */}
