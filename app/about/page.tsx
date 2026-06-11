@@ -33,7 +33,7 @@ export default function AboutPage() {
           portraitRef.current,
           { opacity: 0, scale: 1.08, filter: "blur(6px)" },
           {
-            opacity: 0.18,
+            opacity: 0.4,
             scale: 1,
             filter: "blur(0px)",
             duration: 1.6,
@@ -41,7 +41,7 @@ export default function AboutPage() {
             delay: 0.3,
             onComplete: () => {
               gsap.to(portraitRef.current, {
-                opacity: 0.12,
+                opacity: 0.3,
                 duration: 4,
                 ease: "sine.inOut",
                 repeat: -1,
