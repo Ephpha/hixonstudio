@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const buildingTools = ["Claude Code", "GPT-5.5", "Next.js", "React", "TypeScript", "Tailwind", "Supabase", "GSAP", "Electron", "Python"];
 
 export default function AboutPage() {
+  const heroRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLElement>(null);
   const shiftRef = useRef<HTMLElement>(null);
   const distributionRef = useRef<HTMLElement>(null);
@@ -19,6 +20,12 @@ export default function AboutPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      gsap.fromTo(
+        heroRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.1 }
+      );
+
       [storyRef, shiftRef, distributionRef, stackRef, elsewhereRef, closingRef].forEach((ref) => {
         gsap.fromTo(
           ref.current,
@@ -39,56 +46,32 @@ export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
       {/* Hero */}
-      <div className="mb-16 sm:mb-28 flex flex-col-reverse md:flex-row md:items-center gap-8 sm:gap-10">
-        <div className="md:flex-1">
-          <SparkleSymbol size="sm" className="mb-8 opacity-25" />
-          <h1
-            className="mb-6"
-            style={{
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
-              color: "#fff",
-              lineHeight: 1.05,
-            }}
-          >
-            I&apos;m Hix.
-          </h1>
-          <p
-            style={{
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
-              color: "rgba(255,255,255,0.58)",
-              lineHeight: 1.7,
-            }}
-          >
-            I build under Hixon.Studio — a place to test ideas, ship them
-            publicly, and figure things out in the open.
-          </p>
-        </div>
-
-        {/* Portrait — beside the text, edges faded into the starfield */}
-        <div
-          className="shrink-0 self-center"
-          style={{ width: "clamp(220px, 36vw, 340px)" }}
+      <div ref={heroRef} className="mb-16 sm:mb-28" style={{ opacity: 0 }}>
+        <SparkleSymbol size="sm" className="mb-8 opacity-25" />
+        <h1
+          className="mb-6"
+          style={{
+            fontFamily: "Fraunces, Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(2.25rem, 8vw, 3.5rem)",
+            color: "#fff",
+            lineHeight: 1.05,
+          }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/hix-portrait.png"
-            alt="Pencil-sketch portrait of Hix"
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-              filter: "grayscale(100%) contrast(1.05) brightness(0.9)",
-              maskImage:
-                "radial-gradient(ellipse 74% 80% at 50% 42%, #000 42%, transparent 78%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 74% 80% at 50% 42%, #000 42%, transparent 78%)",
-            }}
-          />
-        </div>
+          I&apos;m Hix.
+        </h1>
+        <p
+          style={{
+            fontFamily: "Fraunces, Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(1.1rem, 3.5vw, 1.4rem)",
+            color: "rgba(255,255,255,0.58)",
+            lineHeight: 1.7,
+          }}
+        >
+          I build under Hixon.Studio — a place to test ideas, ship them
+          publicly, and figure things out in the open.
+        </p>
       </div>
 
       {/* The story */}
