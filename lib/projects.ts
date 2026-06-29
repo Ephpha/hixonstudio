@@ -27,7 +27,7 @@ export const projects: Project[] = [
     description:
       "A simple search engine built around saving energy — dark by design, like the nostalgic Blackle, but made for today.",
     tags: ["React", "Vite", "Tailwind"],
-    status: "live",
+    status: "in-progress",
   },
   {
     name: "Pluit",
