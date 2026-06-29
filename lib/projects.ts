@@ -10,6 +10,16 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: "WhatColor",
+    domain: "what-color.com",
+    url: "https://what-color.com",
+    logo: "/logos/whatcolor.png",
+    description:
+      "A color identification tool built for the colorblind — point your camera at anything and instantly know what color it is.",
+    tags: ["React", "Vite", "AI"],
+    status: "live",
+  },
+  {
     name: "Ephpha",
     domain: "ephpha.ai",
     url: "https://ephpha.ai",
@@ -18,16 +28,6 @@ export const projects: Project[] = [
       "An AI email assistant that helps you write better emails, craft subject lines that get opened, and know exactly when to hit send.",
     tags: ["AI", "Next.js", "TypeScript"],
     status: "live",
-  },
-  {
-    name: "Noxservo",
-    domain: "noxservo.com",
-    url: "https://noxservo.com",
-    logo: "/logos/noxservo.png",
-    description:
-      "A simple search engine built around saving energy — dark by design, like the nostalgic Blackle, but made for today.",
-    tags: ["React", "Vite", "Tailwind"],
-    status: "in-progress",
   },
   {
     name: "Pluit",
@@ -40,14 +40,14 @@ export const projects: Project[] = [
     status: "live",
   },
   {
-    name: "WhatColor",
-    domain: "what-color.com",
-    url: "https://what-color.com",
-    logo: "/logos/whatcolor.png",
+    name: "Noxservo",
+    domain: "noxservo.com",
+    url: "https://noxservo.com",
+    logo: "/logos/noxservo.png",
     description:
-      "A color identification tool built for the colorblind — point your camera at anything and instantly know what color it is.",
-    tags: ["React", "Vite", "AI"],
-    status: "live",
+      "A simple search engine built around saving energy — dark by design, like the nostalgic Blackle, but made for today.",
+    tags: ["React", "Vite", "Tailwind"],
+    status: "in-progress",
   },
   {
     name: "Duxy",
