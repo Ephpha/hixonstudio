@@ -39,9 +39,10 @@ That's it. Read them, copy the good ones, post.
 1. `/x-posts` reads your **voice profile** and **topic sources**.
 2. It searches the web for what's trending **today** in your lanes (AI, indie
    building, dev tools, design/taste, your projects). Exa MCP is used if available.
-3. It drafts 6 posts across formats (build log, opinion, lesson, reaction,
-   question), obeying your hard rules (no emojis, no hashtags, ≤ 280 chars, never
-   invents facts about your projects).
+3. It drafts 6 posts across your real formats (audience question, X/growth take,
+   AI tool reaction, build-in-public/promo, motivational, curiosity) in your
+   actual voice — casual, warm, short, emoji-light — and never invents facts about
+   your projects or states model rumors as confirmed.
 4. It outputs them mobile-friendly — each post in a copy-ready code block, with a
    char count and the sources it used so you can fact-check before posting.
 5. It logs the batch to `x-content/posts/YYYY-MM-DD.md` so the next run won't repeat.

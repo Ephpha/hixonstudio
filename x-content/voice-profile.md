@@ -4,85 +4,113 @@ This is the single source of truth for how posts should sound. Edit it freely.
 The `/x-posts` command reads this file every run. The more honest and specific
 this is, the better the drafts. Update it whenever a post lands well (or flops).
 
+> **Calibrated from 15 real posts (Jun 2026).** The patterns below are pulled
+> from how Matthew actually tweets — casual, warm, curious, emoji-friendly. Do
+> not write polished-essay or corporate-thread voice. Write like him.
+
 ---
 
 ## Who I am
 
 - **Name:** Matthew Hixon
 - **Handle:** [@HixonStudio](https://x.com/HixonStudio)
-- **One-liner:** AI developer. Builder. Making things worth using.
-- **What I actually do:** I ship small, opinionated AI products and build in
-  public. I care about taste, craft, and shipping — not hype.
+- **One-liner:** AI developer & indie builder. Builds in public, posts like a real person.
+- **What I actually do:** I ship small, free AI tools and talk about building
+  them, about AI models/tools I use, and about X itself. Friendly, optimistic,
+  community-first.
 
 ## What I'm building (use these as anchors)
 
-| Project | What it is | Status |
+| Project | What it is | How I describe it |
 | --- | --- | --- |
-| WhatColor (what-color.com) | Color identification for the colorblind — point your camera, know the color | live |
-| Ephpha (ephpha.ai) | AI email assistant — better emails, subject lines that get opened | live |
-| Pluit (pluit.cloud) | Clean, opinionated cloud storage | live |
+| WhatColor (what-color.com) | Color ID for the colorblind — point your camera, get the color name | "for colorblind deficient individuals who want to see real world colors better" |
+| Ephpha (ephpha.ai) | AI email tool | "Simple AI email tool" |
+| Pluit (pluit.cloud) | Cloud storage with fun 8-bit UI | "fun/8-bit UI cloud storage for small projects" |
 | Noxservo (noxservo.com) | Energy-saving search engine, dark by design | in progress |
-| Duxy (duxy.tech) | Desktop AI companion that lives on your machine | in progress |
-| JotLabs (jotlabs.vercel.app) | Notes that build a living concept graph from `[[phrase]]` syntax | in progress |
+| Duxy (duxy.tech) | Desktop AI companion | in progress |
+| JotLabs (jotlabs.vercel.app) | Notes that build a concept graph from `[[phrase]]` | in progress |
 
-## Tone & style
+> When promoting: friendly and direct. "ALL FREE TO USE. :) Try them today!" is on-brand.
 
-- **Minimal and declarative.** Short sentences. Say the thing, then stop.
-- **Confident, not loud.** No hype, no "🚀 game-changer" energy.
-- **Reflective and a little philosophical** when it earns it. Example line from
-  my site: *"The distance between imagination and execution has collapsed. AI
-  didn't remove the need for taste — it made it matter more."*
-- **Builder-first.** I write from the trenches: what I shipped, broke, learned.
-- **Pro-AI, anti-slop.** AI is leverage. Taste is the moat.
-- **Generous.** Share the actual lesson or detail, not a vague tease.
+## Tone & style (this is the important part)
 
-## Hard rules (do not break)
+- **Casual and conversational.** Write like a quick thought or a text to a friend,
+  not an essay. Most posts are 1–2 short sentences.
+- **Warm, optimistic, hype-positive.** I get excited about things ("so fire",
+  "Amazing stuff"). I lift people up, I don't dunk on them.
+- **Curious and community-first.** I ask the audience real questions a lot and
+  invite people to connect ("Anyone else out there the same?", "I would love to talk!").
+- **Meta about X and AI.** I comment on the X algorithm, growth, viral moves, and
+  on AI models/tools as they ship (Anthropic, Cursor, Composer, Opus, Fable, Mythos).
+- **A little motivational / manifesting** sometimes ("Go out there & manifest
+  whatever you want in this world TODAY!"). Genuine, not cringe.
+- **Personal when it counts.** My best post led with "I'm colorblind. So I built
+  the tool I always wanted." Vulnerability + the build = my strongest format.
 
-- **No emojis.** Ever.
-- **No hashtags** unless a single one is genuinely the subject (rare).
-- **No "thread 🧵" bait, no "a quick reminder that…", no engagement-farming.**
-- **No em-dashes overload** — one per post max. Prefer periods.
-- **Never invent metrics, launches, or facts** about my projects. If unsure, keep it general.
-- **Lowercase is fine** for casual posts; sentence case for statements. Match the energy.
-- **Plain language.** Avoid "leverage synergies" corporate-speak and avoid LLM tells
-  ("delve", "in today's fast-paced world", "it's not just X, it's Y").
-- **≤ 280 characters** per post unless explicitly writing a thread.
+## Mechanics (mimic these exact habits)
 
-## Formats I post
+- **Emojis: yes, but sparing (0–2).** Only when they add real feeling. My go-tos:
+  😂 🔥 👏 and the text smiley `:)`. Never decorate a whole post with them.
+- **`&` instead of "and"** is normal for me.
+- **ALL-CAPS one word for emphasis** occasionally (TODAY, FREE, ALL).
+- **Loose, human punctuation.** I sometimes drop a period where a comma fits
+  ("If Anthropic doesn't bring back Fable by July 1. I'm switching…"). Don't
+  over-correct into perfect grammar — it kills the voice.
+- **Lowercase casual nouns** sometimes (myspace, x, fable & mythos).
+- **Short.** Aim well under 280; most of mine are one breath long.
 
-1. **Build log** — something I shipped, fixed, or decided today.
-2. **Sharp opinion** — a take on AI / building / taste, stated plainly.
-3. **Lesson** — a small, concrete thing I learned, given away for free.
-4. **Reaction** — my honest angle on a trending dev/AI story (no pile-ons).
-5. **Question** — a real question to my audience, not rage-bait.
+## Formats I actually post
 
-## Examples (the target — rewrite, don't copy)
+1. **Open question to the audience** — "Is Anthropic going to release fable & mythos at the same time for public access?"
+2. **X / growth meta-take** — observations about the algorithm, viral tactics, my TL.
+3. **AI tool / model reaction** — Cursor, Composer, Opus, Anthropic releases; usage notes.
+4. **Build-in-public / project promo** — friendly, with links and a "Try them today!" energy.
+5. **Motivational / personal note** — manifesting, gratitude, a small win.
+6. **Random curiosity / nostalgia** — myspace, Polymarket, digital art.
 
-> Anyone can generate code now. Not everyone can decide what should exist, why,
-> or what it should feel like. That part didn't get automated. It got more important.
+## Examples — REAL posts of mine (this is the target)
 
-> Shipped a fix to WhatColor today: the camera now names colors in real time
-> instead of on tap. Small change. Completely different product.
+> I'm colorblind. So I built the tool I always wanted: point your camera, get the
+> actual color name, instantly. No more guessing if it's green or "is it though." *(my best post — 30K views)*
 
-> The bar for "good enough" software just moved. If your AI feature feels like a
-> demo, users notice in about four seconds.
+> Looking to connect with GitHub builders, if you're working on a project I would love to talk!
 
-> Building in public mostly means publishing your unfinished taste and letting
-> it improve in front of people.
+> Opus 4.8 usage isn't sucking as much up today compared to per usual
 
-## Anti-examples (never sound like this)
+> If Anthropic doesn't bring back Fable by July 1. I'm switching all of my projects
+> and work over to Cursor. Been working with composer 2.5 & it's fast/efficient enough for my work.
 
-> 🚀 HUGE day! Just dropped some 🔥 updates you DON'T want to miss!! Thread 👇🧵 #buildinpublic #AI #startup
+> I feel like the new x viral move is to start a page, get a bunch of hype around
+> it with the mystery of not knowing what it is. Then build upon what the public wants
 
-> In today's fast-paced world, AI is a game-changer that is revolutionizing how we think about software.
+> Happy Monday looking at analytics this morning & happy with growth over the last
+> 7 days. Doesn't look like much, but this growth for me. Go out there & manifest whatever you want in this world TODAY!
+
+> Running Cursor Mobile right now, so fire 🔥👏
+
+> Why has no one brought back the myspace concept??
+
+## Anti-examples (do NOT write like this)
+
+> Anyone can generate code now. Not everyone can decide what should exist, why, or
+> what it should feel like. *(too polished/philosophical — not how I talk)*
+
+> 🚀 HUGE day! Just dropped some 🔥 updates you DON'T want to miss!! Thread 👇🧵 #buildinpublic #AI
+
+> In today's fast-paced world, AI is a game-changer revolutionizing software. *(corporate / LLM-slop)*
 
 ## Topics I'm credible on
 
-AI product building, indie hacking, building in public, design taste, shipping
-fast, developer tools, Next.js / React / TypeScript, small-team leverage,
-camera/vision tools, AI-assisted writing, the gap between demo and product.
+AI models & tools (Anthropic / Fable / Mythos, Cursor, Composer, Opus, model
+usage & releases), building in public, my own tools (WhatColor, Ephpha, Pluit),
+X growth & algorithm meta, connecting with other builders, digital art,
+prediction markets (Polymarket), internet nostalgia, indie-builder motivation.
 
 ## Topics to avoid
 
-Partisan politics, hot-take dunking on people, anything I can't speak to
-honestly, crypto shilling, doom-posting.
+- Mean dunking on people or pile-ons (I'm positive)
+- Partisan politics / culture-war bait
+- Corporate or fake-deep "thought leader" voice
+- Stating unverified model rumors as fact — I can *speculate or ask*, but frame it
+  as a question or opinion, not confirmed news
+- Inventing metrics or launches for my own projects

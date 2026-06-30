@@ -12,9 +12,11 @@ Hixon's (@HixonStudio) voice about what's trending each day.
 
 1. Prefer running the **`/x-posts`** command (`.cursor/commands/x-posts.md`) — it
    has the full workflow.
-2. Always ground tone in **`x-content/voice-profile.md`** (the hard rules there
-   are non-negotiable: no emojis, no hashtags, no engagement bait, ≤ 280 chars,
-   never invent facts about the projects).
+2. Always ground tone in **`x-content/voice-profile.md`** — his voice is casual,
+   warm, optimistic, short, and emoji-light (0–2, only when they add feeling).
+   Non-negotiables: ≤ 280 chars, never invent project metrics/launches, don't
+   state unverified model rumors as fact, no mean dunking. Do NOT write
+   polished-essay or corporate voice.
 3. Use **`x-content/topic-sources.md`** for lanes, sources, and trend→angle mapping.
 4. Check **`x-content/posts/`** for recent batches and avoid repeating angles.
 

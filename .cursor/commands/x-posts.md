@@ -30,16 +30,22 @@ given, cover a healthy mix across my lanes.
 ## Step 2 — Draft the posts
 
 Produce **6 posts total**, mixing these formats (see voice profile for each):
-build log, sharp opinion, lesson, reaction-to-trend, question.
+open question to the audience, X/growth meta-take, AI tool/model reaction,
+build-in-public / project promo, motivational/personal note, random curiosity.
 
 For each post:
 
-- Stay in my voice. Obey every hard rule (no emojis, no hashtags, no engagement
-  bait, ≤ 280 characters, no invented facts about my projects).
+- Stay in my voice — casual, warm, optimistic, short. Match the mechanics in the
+  voice profile: 0–2 emojis only when they add feeling (😂 🔥 👏 `:)`), `&` for
+  "and", occasional ALL-CAPS emphasis, loose human punctuation, usually well
+  under 280 chars. Do NOT write polished-essay or corporate voice.
+- Don't invent metrics or launches for my projects, and don't state unverified
+  model rumors as fact — speculate or ask instead.
 - Make it self-contained and copy-paste ready — no placeholders like `[link]`
   unless I clearly need to drop one in, and if so make it obvious.
-- Tie at least 2 of the 6 to a current trend; the rest can be evergreen/build-log.
-- Vary sentence shape and opening words across posts. No two should start the same.
+- Tie at least 2 of the 6 to something current (a model release, X chatter, etc.);
+  the rest can be evergreen build-in-public / question / motivational posts.
+- Vary the format and opening words across posts. No two should start the same.
 
 ## Step 3 — Output format (built for mobile copy/paste)
 
@@ -53,7 +59,7 @@ it's a clean one-tap copy on mobile:
 > ```
 > the exact post text here
 > ```
-> `247/280` · why this works: one short clause.
+> `132/280` · why this works: one short clause.
 
 Repeat for all 6. Keep the commentary to a single clause — the code block is the
 product.
