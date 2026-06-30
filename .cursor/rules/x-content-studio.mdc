@@ -1,0 +1,30 @@
+---
+description: X (Twitter) content creator for @HixonStudio. How to generate on-brand, copy-paste-ready posts about daily trends. Reference when asked to write tweets/X posts, draft social content, or run the content agent.
+alwaysApply: false
+---
+
+# X Content Studio
+
+This repo includes a lightweight system for generating X posts in Matthew
+Hixon's (@HixonStudio) voice about what's trending each day.
+
+## When asked to write X posts / tweets / social content
+
+1. Prefer running the **`/x-posts`** command (`.cursor/commands/x-posts.md`) — it
+   has the full workflow.
+2. Always ground tone in **`x-content/voice-profile.md`** (the hard rules there
+   are non-negotiable: no emojis, no hashtags, no engagement bait, ≤ 280 chars,
+   never invent facts about the projects).
+3. Use **`x-content/topic-sources.md`** for lanes, sources, and trend→angle mapping.
+4. Check **`x-content/posts/`** for recent batches and avoid repeating angles.
+
+## Related commands
+
+- `/x-posts [focus]` — generate today's batch of copy-paste-ready posts.
+- `/x-voice [feedback or sample tweets]` — refine the voice profile.
+
+## Scheduling
+
+For automatic runs multiple times per day, set up a Cursor Automation (scheduled
+trigger) pointed at this repo whose prompt is "Run /x-posts". See
+`x-content/README.md` for exact steps.
