@@ -32,7 +32,8 @@ That's it. Read them, copy the good ones, post.
 | `.cursor/rules/x-content-studio.mdc` | Makes any agent aware of the system. |
 | `x-content/voice-profile.md` | **Your tone & rules.** The most important file — edit it. |
 | `x-content/topic-sources.md` | Where to find trends and how to find your angle. |
-| `x-content/posts/` | Archive of past batches, so it never repeats itself. |
+| `x-content/automation-prompt.md` | Copy-paste prompt + settings for the scheduled Automation. |
+| `x-content/posts/` | Archive of past batches (used in interactive runs). |
 
 ## How it works
 
@@ -49,44 +50,37 @@ That's it. Read them, copy the good ones, post.
 
 ## Run it automatically — multiple times per day
 
-Cursor **Automations** can run an agent on a schedule (this is a cloud agent, so
-it runs even when your phone is closed). Set up one automation per posting slot,
-or one with a cron that fires several times a day.
+Cursor **Automations** run an agent on a schedule as a cloud agent, so it works
+even when your phone is closed. This is the one part you set up on the web (once);
+after that everything happens on mobile.
 
 1. Go to **[cursor.com/automations](https://cursor.com/automations)** → **New**
    (or use the `/automate` skill from an agent session).
-2. Trigger: **Scheduled**. Pick preset times or a custom cron. For three slots a
-   day, e.g. `0 9,13,18 * * *` (9am, 1pm, 6pm) — set your timezone.
-3. Repository: attach **this repo** so it can read your voice profile, commands,
-   and post archive.
-4. Prompt: paste this —
+2. Trigger: **Scheduled**. Pick a cron that fires a few times a day, e.g.
+   `0 9,13,18 * * *` (9am / 1pm / 6pm). Set your timezone.
+3. Repository: attach **this repo** (required — it reads your voice profile + command).
+4. Prompt: copy the ready-made block from **[`automation-prompt.md`](./automation-prompt.md)**.
+5. Tools (optional): add **Memories** (keeps the no-repeat memory across runs) and
+   **Send to Slack** if you want the batch pushed to Slack too.
+6. Save and activate. Repeat for more slots if you prefer separate automations.
 
-   ```
-   Run /x-posts. Deliver today's batch of copy-paste-ready X posts for
-   @HixonStudio following the command's workflow exactly. Then commit the
-   archive file you create under x-content/posts/.
-   ```
-
-5. (Optional) Add the **Send to Slack** tool, or have it open a tiny PR, so the
-   drafts land somewhere you'll see them.
-6. Save and activate.
+**You read the posts right in the agent run on mobile** — the 6 drafts print in
+the chat, each in its own copy-friendly code block. You get a push notification
+when the run finishes. No PRs, no repo noise.
 
 > Notes
 > - Automations run as cloud agents in Max Mode and use cloud-agent usage.
-> - Automation config (and rules/skills/secrets) is managed on the web, not in the
->   mobile app — but once set up, runs and results show up on mobile.
+> - Automation/secrets/Slack config is managed on the web, not in the mobile app —
+>   but once set up, runs and results show up on mobile.
 > - A scheduled run "may run with a delay but will not start before the indicated
 >   time," so treat slots as "around 9am," not to-the-second.
 
-### Want the drafts pushed to you?
+### Two ways to receive each batch
 
-Two easy patterns:
-
-- **Slack/notification:** add the Slack tool to the automation; you get the batch
-  as a message and copy from there.
-- **Commit to the repo:** have the automation save each batch to
-  `x-content/posts/` (the prompt above does this). Open the repo on mobile, read
-  the latest file, copy what you like. This also feeds the no-repeat memory.
+- **Read in the run (default, cleanest):** open the finished automation run on
+  mobile and copy posts straight from the chat. Nothing to clean up.
+- **Slack:** add the Slack tool to the automation and the batch arrives as a
+  message you can copy from anywhere.
 
 ## Make it sound more like you (do this once, early)
 

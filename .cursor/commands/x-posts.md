@@ -70,18 +70,20 @@ After the 6 posts, add:
 - **Sources:** the links/headlines you used for the trending posts, so I can
   fact-check before posting.
 
-## Step 4 — Archive this batch
+## Step 4 — Remember this batch (so future runs don't repeat)
 
-Append today's batch to the archive so future runs don't repeat:
+Pick the path that matches how you're running:
 
-- File: `x-content/posts/YYYY-MM-DD.md` (use today's date; if it exists, append a
-  new timestamped section for this run).
-- Use the format in `x-content/posts/TEMPLATE.md`.
-- Save the final post text, the format tag, and the source links.
-
-> Note: when this runs as a scheduled cloud agent, committing the archive file in
-> a small PR/commit keeps the no-repeat memory durable across runs. When run
-> interactively on mobile, writing the file is enough.
+- **Scheduled / cloud automation (headless):** the response in Step 3 *is* the
+  deliverable — do not open a pull request or touch app code. To avoid repeating
+  yourself across runs, **save a short Memory** of today's date, topics, and
+  angles, and **read recent Memories first** at the start of Step 1. If a
+  `x-content/posts/` archive is reachable, you may append to today's file, but
+  never spam `main` with PRs — Memories are the no-repeat mechanism here.
+- **Interactive (you're chatting with the agent):** append the batch to
+  `x-content/posts/YYYY-MM-DD.md` using the format in `x-content/posts/TEMPLATE.md`
+  (post text, format tag, source links). If the file exists, add a new
+  `## Run @ HH:MM` section.
 
 ## Reminders
 
