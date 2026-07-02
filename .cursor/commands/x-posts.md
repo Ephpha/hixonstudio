@@ -19,9 +19,11 @@ given, cover a healthy mix across my lanes.
 ## Step 1 — Find what's trending today
 
 - Determine today's date first.
-- Use web search (and `web_search_exa` via Exa MCP if available) to find what's
-  trending **in my lanes in the last ~24–48 hours**. Prioritize AI, indie
-  building, dev tools, design/taste, and my project-adjacent topics.
+- **If X API MCP (`xapi`) is available:** use it first — fetch trends/news, search
+  recent posts in my lanes (AI tools, Cursor, Anthropic, build-in-public), and
+  optionally read my recent `@HixonStudio` posts so you don't repeat myself.
+- **If X MCP is not available:** fall back to web search (and Exa MCP if available)
+  for what's trending in my lanes in the last ~24–48 hours.
 - Verify recency. If you can't confirm something is recent, treat it as evergreen
   and use a fallback angle from `topic-sources.md` instead of faking a trend.
 - Pick the **3–4 strongest topics**. Quality over quantity. Skip anything on my
@@ -67,7 +69,7 @@ product.
 After the 6 posts, add:
 
 - **Best bet:** which number you'd post first and why (one line).
-- **Sources:** the links/headlines you used for the trending posts, so I can
+- **Sources:** cite X MCP queries/results when used, plus any web links. So I can
   fact-check before posting.
 
 ## Step 4 — Remember this batch (so future runs don't repeat)

@@ -24,6 +24,13 @@ Hixon's (@HixonStudio) voice about what's trending each day.
 
 - `/x-posts [focus]` — generate today's batch of copy-paste-ready posts.
 - `/x-voice [feedback or sample tweets]` — refine the voice profile.
+- `/x-learn` — refresh voice profile from your real recent X posts (requires X MCP).
+
+## X MCP
+
+When **xapi** MCP is connected, prefer it for trends/search/recent posts. Setup:
+`x-content/x-mcp-setup.md`. Fall back to web search if unavailable. Do not use
+X MCP posting tools unless explicitly asked — copy-paste workflow only.
 
 ## Scheduling
 

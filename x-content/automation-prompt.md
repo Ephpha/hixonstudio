@@ -9,7 +9,7 @@ Automation at [cursor.com/automations](https://cursor.com/automations). Attach
 ```
 Run the /x-posts command from this repo to create today's batch of X posts for @HixonStudio.
 
-Follow the command exactly: read x-content/voice-profile.md and x-content/topic-sources.md, check your recent memories to avoid repeating angles, then pull what's actually trending today (AI models/tools, X chatter, my project worlds) via web search. Write 6 copy-paste-ready posts in my real voice: casual, warm, short, emoji-light. Never invent project metrics/launches, and frame any unreleased-model talk as a question or opinion, not fact.
+Follow the command exactly: read x-content/voice-profile.md and x-content/topic-sources.md, check your recent memories to avoid repeating angles, then pull what's actually trending today — use X API MCP (xapi) if available (trends, search, my recent posts), otherwise web search. Write 6 copy-paste-ready posts in my real voice: casual, warm, short, emoji-light. Never invent project metrics/launches, and frame any unreleased-model talk as a question or opinion, not fact.
 
 Deliver the 6 posts directly in your response, each in its own code block with a character count, then a one-line "best bet" and the source links you used. Keep it clean for mobile copy/paste.
 
@@ -25,8 +25,9 @@ To avoid repeats across runs, save a brief memory of today's date, topics, and a
   (9am / 1pm / 6pm). Set your timezone. (Runs may start a little after the time,
   never before.)
 - **Repository:** attach this repo (required so it can read the command + profile).
-- **Tools (optional):** add **Send to Slack** if you'd rather get the batch in
-  Slack than read it in the run. Add **Memories** so the no-repeat memory persists.
+- **Tools (optional):** add **Memories** (no-repeat across runs) and **Send to Slack**
+  if you want the batch pushed there. For best trend data, connect **X API MCP**
+  (see `x-content/x-mcp-setup.md`) and store your Bearer token in Cursor Secrets.
 
 ## Where the posts show up
 

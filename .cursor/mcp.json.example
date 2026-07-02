@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "xapi": {
+      "url": "https://api.x.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_APP_ONLY_BEARER_TOKEN"
+      }
+    }
+  }
+}

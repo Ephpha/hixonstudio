@@ -11,14 +11,21 @@ interests shift.
 The agent should pull *fresh* signals at run time (not from memory). In order of
 preference:
 
-1. **Web search** for the current date — e.g. "AI news today", "Hacker News top
-   today", "trending in tech <today's date>", "<my niche> news".
-2. **Exa MCP** (`web_search_exa`) if available, for recency-ranked results.
-3. **Context7** for library/framework release notes when a post is about a tool.
+1. **X API MCP (`xapi`)** — if connected, use it first:
+   - Fetch **trends** (and news if available) for a relevant location
+   - **Search recent posts** in my lanes: AI models/tools, Cursor, Anthropic,
+     build-in-public, indie hacking (last ~24–48h, recency sort)
+   - Optionally read **my recent `@HixonStudio` posts** to avoid repeating angles
+2. **Web search** — fallback when X MCP isn't available: "AI news today", "Hacker
+   News top today", trending in tech + today's date, etc.
+3. **Exa MCP** (`web_search_exa`) if available, for recency-ranked web results.
+4. **Context7** for library/framework release notes when a post is about a tool.
 
 Always confirm a topic is *actually from the last ~24–48h* before treating it as
 trending. If you can't verify recency, label it as "evergreen" instead of
 "trending" and pick from the evergreen angles below.
+
+> Setup: see `x-content/x-mcp-setup.md`. Without MCP, web search still works.
 
 ## My lanes (only post in these)
 

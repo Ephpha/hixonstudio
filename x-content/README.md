@@ -29,24 +29,36 @@ That's it. Read them, copy the good ones, post.
 | --- | --- |
 | `.cursor/commands/x-posts.md` | The `/x-posts` command — the main generator. |
 | `.cursor/commands/x-voice.md` | The `/x-voice` command — teach/refine your tone. |
+| `.cursor/commands/x-learn.md` | The `/x-learn` command — refresh voice from your real X posts (needs X MCP). |
 | `.cursor/rules/x-content-studio.mdc` | Makes any agent aware of the system. |
+| `.cursor/mcp.json.example` | Template for connecting X API MCP (copy → `.cursor/mcp.json`, don't commit). |
 | `x-content/voice-profile.md` | **Your tone & rules.** The most important file — edit it. |
 | `x-content/topic-sources.md` | Where to find trends and how to find your angle. |
+| `x-content/x-mcp-setup.md` | How to connect X API MCP (recommended). |
 | `x-content/automation-prompt.md` | Copy-paste prompt + settings for the scheduled Automation. |
 | `x-content/posts/` | Archive of past batches (used in interactive runs). |
 
 ## How it works
 
 1. `/x-posts` reads your **voice profile** and **topic sources**.
-2. It searches the web for what's trending **today** in your lanes (AI, indie
-   building, dev tools, design/taste, your projects). Exa MCP is used if available.
-3. It drafts 6 posts across your real formats (audience question, X/growth take,
-   AI tool reaction, build-in-public/promo, motivational, curiosity) in your
-   actual voice — casual, warm, short, emoji-light — and never invents facts about
-   your projects or states model rumors as confirmed.
+2. It pulls trends via **X API MCP first** (if connected), otherwise web search
+   (+ Exa if available) for what's trending today in your lanes.
+3. It drafts 6 posts across your real formats in your actual voice — casual, warm,
+   short, emoji-light — and never invents facts about your projects or states model
+   rumors as confirmed.
 4. It outputs them mobile-friendly — each post in a copy-ready code block, with a
-   char count and the sources it used so you can fact-check before posting.
-5. It logs the batch to `x-content/posts/YYYY-MM-DD.md` so the next run won't repeat.
+   char count and sources so you can fact-check before posting.
+5. It logs the batch (interactive runs) or saves a Memory (scheduled runs) so the
+   next run won't repeat.
+
+## Optional: X API MCP (recommended)
+
+Connect the official X MCP for real trends, X search in your lanes, and
+auto-learning your voice from recent posts. See **[`x-mcp-setup.md`](./x-mcp-setup.md)**.
+
+- **Add it:** yes — big upgrade for trend quality
+- **Skip Docs MCP:** it only searches API docs, not live X
+- **Keep posting manual:** read-only Bearer token is enough; no auto-posting unless you ask later
 
 ## Run it automatically — multiple times per day
 
