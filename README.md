@@ -4,6 +4,8 @@
 
 **Live:** [hixon.studio](https://hixon.studio)
 
+![hixon.studio landing](.github/screenshot.png)
+
 The home for everything I build. Portfolio, project log, blog, and the place I send people when they ask "what are you working on?"
 
 ## Pages
