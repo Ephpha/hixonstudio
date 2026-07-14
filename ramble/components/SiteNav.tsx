@@ -9,19 +9,25 @@ const navLinks = [
 
 export default function SiteNav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-transparent bg-white/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-black/[0.04] bg-white/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-[4.25rem] sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Image
-            src="/logo.png"
-            alt="Ramble"
-            width={34}
-            height={34}
-            className="h-[34px] w-[34px] object-contain"
-            priority
-            unoptimized
-          />
-          <span className="text-[15px] font-semibold tracking-tight text-foreground">
+        <Link
+          href="/"
+          className="group flex items-center gap-2.5 sm:gap-3"
+          aria-label="Ramble home"
+        >
+          <span className="relative inline-flex h-9 w-9 shrink-0 sm:h-[38px] sm:w-[38px]">
+            <Image
+              src="/app-icon.png"
+              alt=""
+              width={76}
+              height={76}
+              className="h-full w-full object-contain drop-shadow-[0_1px_1px_rgba(11,61,145,0.12),0_6px_16px_rgba(26,108,255,0.28)] transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+              priority
+              unoptimized
+            />
+          </span>
+          <span className="text-[15px] font-semibold tracking-[-0.02em] text-foreground sm:text-[16px]">
             Ramble
           </span>
         </Link>
@@ -45,7 +51,10 @@ export default function SiteNav() {
           >
             GitHub
           </a>
-          <a href="#waitlist" className="cta-pill !px-4 !py-2 text-[13px] sm:!px-5">
+          <a
+            href="#waitlist"
+            className="cta-pill !px-4 !py-2 text-[13px] sm:!px-5"
+          >
             Start free
           </a>
         </div>
