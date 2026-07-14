@@ -260,7 +260,8 @@ export default function Home() {
                   alt="Ramble"
                   width={180}
                   height={180}
-                  className="h-40 w-40 drop-shadow-2xl sm:h-44 sm:w-44"
+                  className="h-40 w-40 object-contain drop-shadow-[0_24px_50px_rgba(0,0,0,0.35)] sm:h-44 sm:w-44"
+                  unoptimized
                 />
               </div>
             </div>
@@ -315,7 +316,8 @@ export default function Home() {
               alt=""
               width={28}
               height={28}
-              className="rounded-lg"
+              className="h-7 w-7 object-contain"
+              unoptimized
             />
             <span className="text-sm font-semibold">Ramble</span>
           </div>

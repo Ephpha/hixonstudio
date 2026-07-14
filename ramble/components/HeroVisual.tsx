@@ -17,14 +17,15 @@ export default function HeroVisual() {
         <div className="relative">
           <span className="listen-pulse" aria-hidden />
           <span className="listen-pulse" aria-hidden />
-          <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.28)] backdrop-blur-md ring-1 ring-white/40 sm:h-28 sm:w-28">
+          <div className="relative flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28">
             <Image
               src="/logo.png"
               alt="Ramble logo"
-              width={78}
-              height={78}
-              className="h-[72px] w-[72px] drop-shadow-lg sm:h-[78px] sm:w-[78px]"
+              width={96}
+              height={96}
+              className="h-[84px] w-[84px] object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)] sm:h-[96px] sm:w-[96px]"
               priority
+              unoptimized
             />
           </div>
         </div>

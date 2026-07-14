@@ -17,8 +17,9 @@ export default function SiteNav() {
             alt="Ramble"
             width={34}
             height={34}
-            className="h-[34px] w-[34px] rounded-[10px] shadow-sm"
+            className="h-[34px] w-[34px] object-contain"
             priority
+            unoptimized
           />
           <span className="text-[15px] font-semibold tracking-tight text-foreground">
             Ramble
