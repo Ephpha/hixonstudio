@@ -17,13 +17,13 @@ export default function HeroVisual() {
         <div className="relative">
           <span className="listen-pulse" aria-hidden />
           <span className="listen-pulse" aria-hidden />
-          <div className="relative flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28">
+          <div className="relative flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
             <Image
               src="/logo.png"
               alt="Ramble logo"
-              width={96}
-              height={96}
-              className="h-[84px] w-[84px] object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.35)] sm:h-[96px] sm:w-[96px]"
+              width={128}
+              height={128}
+              className="h-[112px] w-[112px] object-contain drop-shadow-[0_2px_6px_rgba(4,18,51,0.45)] [filter:drop-shadow(0_22px_44px_rgba(4,18,51,0.5))] sm:h-[128px] sm:w-[128px]"
               priority
               unoptimized
             />
