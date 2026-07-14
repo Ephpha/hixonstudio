@@ -18,12 +18,12 @@ const instrument = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Ramble — Speak freely. Publish clean.",
   description:
-    "Open-source voice writing for people who hate typing. Ramble into your phone, get a clean X post or Substack article.",
+    "Open-source voice writing. Ramble into your phone, pick a format — article, X post, text, email, or free ramble — and get a clean draft back.",
   metadataBase: new URL("https://ramble.app"),
   openGraph: {
     title: "Ramble — Speak freely. Publish clean.",
     description:
-      "Open-source voice writing for people who hate typing. Ramble into your phone, get a clean X post or Substack article.",
+      "Open-source voice writing. Ramble into your phone, pick a format — article, X post, text, email, or free ramble — and get a clean draft back.",
     images: ["/logo.png"],
   },
   icons: {

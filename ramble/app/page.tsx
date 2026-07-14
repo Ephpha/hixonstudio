@@ -2,6 +2,15 @@ import Image from "next/image";
 import SiteNav from "@/components/SiteNav";
 import HeroVisual from "@/components/HeroVisual";
 
+const formats = [
+  "Article",
+  "X post",
+  "Text message",
+  "Email",
+  "Free ramble",
+  "Notes",
+];
+
 const features = [
   {
     eyebrow: "Listen",
@@ -14,6 +23,17 @@ const features = [
     ],
   },
   {
+    eyebrow: "Formats",
+    title: "Pick how the ramble should land.",
+    body: "Filter the output before you speak — article, X post, text, email, free ramble, or notes. Same Listen button. Different clean cuts.",
+    points: [
+      "Article & long-form",
+      "X / short social posts",
+      "Text messages & emails",
+      "Free ramble when you just need it shaped",
+    ],
+  },
+  {
     eyebrow: "Folders",
     title: "Every subject gets its own room.",
     body: "Create folders for the things you keep returning to. Rename them. Keep rambles organized instead of dumped.",
@@ -23,33 +43,23 @@ const features = [
       "Drafts stay with the ramble that made them",
     ],
   },
-  {
-    eyebrow: "Publish-ready",
-    title: "X posts and Substack articles, cleaned up.",
-    body: "Ramble turns loose speech into a clean cut draft for the channel you want — short for X, long-form for Substack.",
-    points: [
-      "Platform-aware structure",
-      "Your ideas, tighter prose",
-      "Copy, edit, ship",
-    ],
-  },
 ];
 
 const steps = [
   {
     n: "01",
-    title: "Ramble",
-    body: "Hit Listen and talk the idea out loud — messy is fine.",
+    title: "Pick a format",
+    body: "Article, X post, text, email, free ramble — choose the filter that fits.",
   },
   {
     n: "02",
-    title: "Shape",
-    body: "Choose X or Substack. Ramble forms a clean article from the recording.",
+    title: "Ramble",
+    body: "Hit Listen and talk it out. Messy is fine. That’s the point.",
   },
   {
     n: "03",
-    title: "File it",
-    body: "Park it in a folder. Rename, revisit, publish when it feels right.",
+    title: "Get the clean cut",
+    body: "Ramble shapes your speech into that format. File it. Copy it. Ship it.",
   },
 ];
 
@@ -78,9 +88,23 @@ export default function Home() {
             <span className="brand-text italic">Just ramble.</span>
           </h1>
           <p className="fade-up fade-up-delay-2 mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            For people who want to write articles but hate writing and typing.
-            Speak freely. Get a clean X post or Substack article back.
+            Speak freely. Filter the output — article, X post, text, email, or a
+            free ramble — and get a clean cut draft back.
           </p>
+          <div className="fade-up fade-up-delay-3 mt-7 flex flex-wrap items-center justify-center gap-2">
+            {formats.map((format, i) => (
+              <span
+                key={format}
+                className={`rounded-full px-3.5 py-1.5 text-[12px] font-semibold tracking-tight ${
+                  i === 0
+                    ? "bg-foreground text-white"
+                    : "border border-border bg-white text-muted"
+                }`}
+              >
+                {format}
+              </span>
+            ))}
+          </div>
           <div className="fade-up fade-up-delay-3 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a href="#waitlist" className="cta-pill min-w-[168px]">
               <MicIcon />
@@ -98,7 +122,7 @@ export default function Home() {
               <Dot /> Built for phones
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Dot /> Folder-organized
+              <Dot /> Format filters
             </span>
             <span className="inline-flex items-center gap-1.5">
               <Dot /> MIT open source
@@ -132,7 +156,7 @@ export default function Home() {
               className="mt-3 text-[clamp(2rem,4.5vw,3rem)] leading-[1.1] tracking-[-0.02em]"
               style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}
             >
-              The design you speak is the draft you get
+              The draft you speak is the draft you get
             </h2>
           </div>
 
@@ -189,7 +213,7 @@ export default function Home() {
                 className="mt-3 text-[clamp(2rem,4.5vw,3rem)] leading-[1.1] tracking-[-0.02em]"
                 style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}
               >
-                Three steps. No blank page.
+                Three steps. Any format.
               </h2>
             </div>
             <div className="mt-12 grid gap-4 sm:grid-cols-3 sm:gap-5">
@@ -343,7 +367,13 @@ function FeaturePanel({ index }: { index: number }) {
       key="listen"
       className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-[2rem] bg-[linear-gradient(145deg,#071536,#0b3d91_45%,#2ec5ff)] p-8 shadow-[var(--shadow-soft)]"
     >
-      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "url(/hero-texture.jpg)", backgroundSize: "cover" }} />
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: "url(/hero-texture.jpg)",
+          backgroundSize: "cover",
+        }}
+      />
       <button
         type="button"
         className="relative flex h-28 w-28 flex-col items-center justify-center rounded-full bg-white text-[#0b3d91] shadow-2xl transition hover:scale-[1.03]"
@@ -356,11 +386,51 @@ function FeaturePanel({ index }: { index: number }) {
       </button>
     </div>,
     <div
+      key="formats"
+      className="min-h-[280px] rounded-[2rem] border border-border bg-white p-6 shadow-[var(--shadow-soft)]"
+    >
+      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-2">
+        Output filter
+      </p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {[
+          { label: "Article", on: true },
+          { label: "X post", on: false },
+          { label: "Text", on: false },
+          { label: "Email", on: false },
+          { label: "Free ramble", on: false },
+          { label: "Notes", on: false },
+        ].map((item) => (
+          <span
+            key={item.label}
+            className={`rounded-full px-3.5 py-2 text-xs font-semibold ${
+              item.on
+                ? "bg-foreground text-white"
+                : "border border-border bg-surface text-muted"
+            }`}
+          >
+            {item.label}
+          </span>
+        ))}
+      </div>
+      <div className="mt-6 rounded-2xl border border-border bg-surface p-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-2">
+          Shaping as
+        </p>
+        <p
+          className="mt-2 text-xl leading-snug text-foreground"
+          style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}
+        >
+          Article — clean long-form from your ramble.
+        </p>
+      </div>
+    </div>,
+    <div
       key="folders"
       className="min-h-[280px] rounded-[2rem] border border-border bg-white p-6 shadow-[var(--shadow-soft)]"
     >
       <div className="space-y-3">
-        {["Product ideas", "Substack drafts", "Shift notes"].map((name, i) => (
+        {["Product ideas", "Client emails", "Shift notes"].map((name, i) => (
           <div
             key={name}
             className="flex items-center justify-between rounded-2xl border border-border bg-surface px-4 py-3"
@@ -378,36 +448,6 @@ function FeaturePanel({ index }: { index: number }) {
             <span className="text-xs font-medium text-muted-2">Rename</span>
           </div>
         ))}
-      </div>
-    </div>,
-    <div
-      key="publish"
-      className="min-h-[280px] rounded-[2rem] border border-border bg-white p-6 shadow-[var(--shadow-soft)]"
-    >
-      <div className="flex gap-2">
-        <span className="rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-white">
-          X post
-        </span>
-        <span className="rounded-full border border-border px-3 py-1 text-xs font-semibold text-muted">
-          Substack
-        </span>
-      </div>
-      <div className="mt-5 space-y-3">
-        <div className="h-3 w-[80%] rounded-full bg-foreground/90" />
-        <div className="h-3 w-full rounded-full bg-border" />
-        <div className="h-3 w-[92%] rounded-full bg-border" />
-        <div className="h-3 w-[70%] rounded-full bg-border" />
-        <div className="mt-6 rounded-2xl border border-border bg-surface p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-2">
-            From your ramble
-          </p>
-          <p
-            className="mt-2 text-lg leading-snug text-foreground"
-            style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}
-          >
-            Anyone can generate words. Not everyone can decide what should exist.
-          </p>
-        </div>
       </div>
     </div>,
   ];

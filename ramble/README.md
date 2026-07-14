@@ -2,13 +2,22 @@
 
 **Speak freely. Publish clean.**
 
-Open-source voice writing for people who want to write articles but hate writing and typing. Ramble into your phone, get a clean **X post** or **Substack article**.
+Open-source voice writing for people who hate typing. Ramble into your phone, pick a **format filter**, and get a clean draft back.
+
+## Formats
+
+- Article / long-form
+- X post / short social
+- Text message
+- Email
+- Free ramble
+- Notes
 
 ## Product
 
 - Big **Listen** button
+- **Format filters** before you speak
 - **Folders** to organize rambles (create + rename)
-- Drafts shaped for **X** or **Substack**
 - Premium, restrained UI — not vibe-coded chrome
 
 ## Stack
@@ -33,14 +42,14 @@ npm run build
 
 ## Brand
 
-Drop your real logo files here (from laptop):
+Official source files live in `brand/Ramble.ai/`.
+
+Drop your real **`MAIN LOGO`** there (PNG preferred). Until then, `public/logo.png` and `public/app-icon.png` are working stand-ins.
 
 | File | Use |
 |---|---|
-| `public/logo.png` | Transparent mark (hero, open-source, footer) |
-| `public/app-icon.png` | Optional: squircle app icon for the top-left nav (if omitted, nav can use `logo.png`) |
-
-Preferred: PNG with transparent background. After replacing files, restart `npm run dev`.
+| `public/logo.png` | Transparent mark (hero, sections, footer) |
+| `public/app-icon.png` | Squircle app icon for the top-left nav |
 
 ## License
 
