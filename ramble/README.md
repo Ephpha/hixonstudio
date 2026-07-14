@@ -33,7 +33,14 @@ npm run build
 
 ## Brand
 
-Use the logo at `public/logo.png` exactly — white microphone on the blue speech-bubble mark. Do not substitute another render.
+Drop your real logo files here (from laptop):
+
+| File | Use |
+|---|---|
+| `public/logo.png` | Transparent mark (hero, open-source, footer) |
+| `public/app-icon.png` | Optional: squircle app icon for the top-left nav (if omitted, nav can use `logo.png`) |
+
+Preferred: PNG with transparent background. After replacing files, restart `npm run dev`.
 
 ## License
 
