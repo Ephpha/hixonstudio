@@ -370,7 +370,7 @@ function FeaturePanel({ index }: { index: number }) {
       <div
         className="absolute inset-0 opacity-30"
         style={{
-          backgroundImage: "url(/hero-texture.jpg)",
+          backgroundImage: "url(/hero-bg.jpg)",
           backgroundSize: "cover",
         }}
       />

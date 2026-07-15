@@ -2,37 +2,34 @@ import Image from "next/image";
 
 export default function HeroVisual() {
   return (
-    <div className="hero-shell fade-up aspect-[16/9] sm:aspect-[2.05/1]">
+    <div className="hero-shell fade-up aspect-[5/4] sm:aspect-[2.05/1]">
       <Image
-        src="/hero-texture.jpg"
+        src="/hero-bg.jpg"
         alt=""
         fill
         priority
         className="object-cover"
         sizes="(max-width: 1200px) 100vw, 1120px"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#061433]/55 via-transparent to-[#0b3d91]/15" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#04102b]/60 via-transparent to-[#0b3d91]/20" />
 
-      <div className="absolute inset-0 flex items-center justify-center pb-10 sm:pb-14">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 pb-16 sm:gap-7 sm:pb-24">
         <div className="relative">
           <span className="listen-pulse" aria-hidden />
           <span className="listen-pulse" aria-hidden />
-          <div className="relative flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
+          <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-[0_30px_80px_rgba(2,10,30,0.5)] sm:h-36 sm:w-36">
             <Image
               src="/logo.png"
               alt="Ramble logo"
               width={128}
               height={128}
-              className="h-[112px] w-[112px] object-contain drop-shadow-[0_2px_6px_rgba(4,18,51,0.45)] [filter:drop-shadow(0_22px_44px_rgba(4,18,51,0.5))] sm:h-[128px] sm:w-[128px]"
+              className="h-[76px] w-[76px] object-contain sm:h-[116px] sm:w-[116px]"
               priority
               unoptimized
             />
           </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-[4.25rem] left-1/2 z-10 w-full -translate-x-1/2 px-4 text-center sm:bottom-[5.25rem]">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/75">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/80">
           Hold to listen
         </p>
       </div>
