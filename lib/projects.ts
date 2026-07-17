@@ -30,13 +30,12 @@ export const projects: Project[] = [
     status: "live",
   },
   {
-    name: "Pluit",
-    domain: "pluit.cloud",
-    url: "https://pluit.cloud",
-    logo: "/logos/pluit.png",
+    name: "Hackyard",
+    domain: "hackyard.tech",
+    url: "https://hackyard.tech",
     description:
-      "Cloud storage with a clean, opinionated interface I actually want to use every day.",
-    tags: ["Next.js", "Supabase", "Storage"],
+      "A hackathon platform for hosting, joining, and judging events — teams, submissions, and live judging all in one place.",
+    tags: ["Next.js", "Supabase", "Vercel"],
     status: "live",
   },
   {
@@ -50,12 +49,22 @@ export const projects: Project[] = [
     status: "in-progress",
   },
   {
-    name: "Duxy",
-    domain: "duxy.tech",
-    url: "https://duxy.tech",
+    name: "Pluit",
+    domain: "pluit.cloud",
+    url: "https://pluit.cloud",
+    logo: "/logos/pluit.png",
     description:
-      "A desktop AI companion that follows your cursor, points out things on your screen, and talks to you — less like a chatbot, more like a co-pilot that actually lives on your machine.",
-    tags: ["Electron", "TypeScript", "AI", "React"],
+      "Cloud storage with a clean, opinionated interface I actually want to use every day.",
+    tags: ["Next.js", "Supabase", "Storage"],
+    status: "in-progress",
+  },
+  {
+    name: "So&So",
+    domain: "coming soon",
+    url: "#",
+    description:
+      "A personal AI chatbot you tune with sliders instead of prompts — dial in its personality, tone, and depth to make it yours.",
+    tags: ["Next.js", "Supabase", "Gemini"],
     status: "in-progress",
   },
   {
