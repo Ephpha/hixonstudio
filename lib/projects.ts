@@ -10,13 +10,13 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "WhatColor",
-    domain: "what-color.com",
-    url: "https://what-color.com",
-    logo: "/logos/whatcolor.png",
+    name: "Hackyard",
+    domain: "hackyard.tech",
+    url: "https://hackyard.tech",
+    logo: "/logos/hackyard.png",
     description:
-      "A color identification tool built for the colorblind — point your camera at anything and instantly know what color it is.",
-    tags: ["React", "Vite", "AI"],
+      "A hackathon platform for hosting, joining, and judging events — teams, submissions, and live judging all in one place.",
+    tags: ["Next.js", "Supabase", "Vercel"],
     status: "live",
   },
   {
@@ -30,13 +30,13 @@ export const projects: Project[] = [
     status: "live",
   },
   {
-    name: "Hackyard",
-    domain: "hackyard.tech",
-    url: "https://hackyard.tech",
-    logo: "/logos/hackyard.png",
+    name: "WhatColor",
+    domain: "what-color.com",
+    url: "https://what-color.com",
+    logo: "/logos/whatcolor.png",
     description:
-      "A hackathon platform for hosting, joining, and judging events — teams, submissions, and live judging all in one place.",
-    tags: ["Next.js", "Supabase", "Vercel"],
+      "A color identification tool built for the colorblind — point your camera at anything and instantly know what color it is.",
+    tags: ["React", "Vite", "AI"],
     status: "live",
   },
   {
