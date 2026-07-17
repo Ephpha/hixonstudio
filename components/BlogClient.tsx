@@ -61,6 +61,16 @@ type WritingLink = {
 
 const recent: WritingLink[] = [
   {
+    platform: "substack",
+    date: "July 17, 2026",
+    title:
+      "I'm Building Hackyard — Small AI Hackathons Where Every Project Actually Gets Seen",
+    excerpt:
+      "I've watched too many hackathons turn into lottery tickets. So I'm building the opposite. It's called Hackyard, and the whole idea fits in one sentence: small, community-driven AI hackathons where every single project gets eyes on it.",
+    href: "https://hixly.substack.com/p/im-building-hackyard-small-ai-hackathons",
+    cta: "Read on Substack",
+  },
+  {
     platform: "x",
     date: "June 9, 2026",
     title: "The Last Four Months Changed How I See AI",
