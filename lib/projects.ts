@@ -33,6 +33,7 @@ export const projects: Project[] = [
     name: "Hackyard",
     domain: "hackyard.tech",
     url: "https://hackyard.tech",
+    logo: "/logos/hackyard.png",
     description:
       "A hackathon platform for hosting, joining, and judging events — teams, submissions, and live judging all in one place.",
     tags: ["Next.js", "Supabase", "Vercel"],
@@ -62,6 +63,7 @@ export const projects: Project[] = [
     name: "So&So",
     domain: "coming soon",
     url: "#",
+    logo: "/logos/soandso.png",
     description:
       "A personal AI chatbot you tune with sliders instead of prompts — dial in its personality, tone, and depth to make it yours.",
     tags: ["Next.js", "Supabase", "Gemini"],
