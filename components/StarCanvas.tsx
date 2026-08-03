@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/useReducedMotion";
 
 type Star = {
   x: number;
@@ -11,6 +12,8 @@ type Star = {
   glow: boolean;
 };
 
+const STAR_COUNT = 200;
+
 export default function StarCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -20,19 +23,27 @@ export default function StarCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animId: number;
+    let animId: number | null = null;
     let stars: Star[] = [];
+    const reduced = prefersReducedMotion();
 
-    function resize() {
-      if (!canvas) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    function sizeCanvas() {
+      if (!canvas || !ctx) return;
+      const { innerWidth: w, innerHeight: h } = window;
+      // Cap DPR at 2 — beyond that the extra pixels cost more than they show.
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     function initStars() {
-      stars = Array.from({ length: 200 }, () => ({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
+      const { innerWidth: w, innerHeight: h } = window;
+      stars = Array.from({ length: STAR_COUNT }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
         radius:
           Math.random() < 0.15
             ? Math.random() * 1.5 + 1
@@ -43,12 +54,15 @@ export default function StarCanvas() {
       }));
     }
 
-    function draw(t: number) {
+    function paint(t: number) {
       if (!canvas || !ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
       for (const star of stars) {
-        const opacity = (Math.sin(t * star.speed + star.phase) + 1) / 2;
+        // Reduced motion: hold every star at its midpoint brightness.
+        const opacity = reduced
+          ? 0.6
+          : (Math.sin(t * star.speed + star.phase) + 1) / 2;
 
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
@@ -63,18 +77,52 @@ export default function StarCanvas() {
         ctx.fillStyle = `rgba(255,255,255,${opacity * 0.75})`;
         ctx.fill();
       }
-
-      animId = requestAnimationFrame((ts) => draw(ts / 1000));
     }
 
-    resize();
+    function frame(ts: number) {
+      paint(ts / 1000);
+      animId = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (animId !== null || reduced) return;
+      animId = requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      if (animId === null) return;
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+
+    // Don't burn CPU/battery animating a canvas nobody is looking at.
+    function onVisibility() {
+      if (document.hidden) stop();
+      else start();
+    }
+
+    function onResize() {
+      sizeCanvas();
+      initStars(); // reposition, otherwise stars strand outside the new viewport
+      if (reduced) paint(0);
+    }
+
+    sizeCanvas();
     initStars();
-    animId = requestAnimationFrame((ts) => draw(ts / 1000));
-    window.addEventListener("resize", resize);
+
+    if (reduced) {
+      paint(0); // one static frame, no loop
+    } else {
+      start();
+    }
+
+    window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
+      stop();
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 

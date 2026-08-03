@@ -13,8 +13,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.hixon.studio"),
-  title: "Hixon.Studio",
+  title: {
+    default: "Hixon.Studio",
+    // Pages set a bare title ("About"); this renders it as "About — Hixon.Studio".
+    template: "%s — Hixon.Studio",
+  },
   description: "AI developer. Builder. Making things worth using.",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Hixon.Studio",
     description: "AI developer. Builder. Making things worth using.",

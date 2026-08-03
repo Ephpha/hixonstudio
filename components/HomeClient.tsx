@@ -8,6 +8,7 @@ import SparkleSymbol from "@/components/SparkleSymbol";
 import CreationCanvas from "@/components/CreationCanvas";
 import type { PostMeta } from "@/lib/blog";
 import { timeAgo, type GithubData } from "@/lib/github";
+import { prefersReducedMotion, useReducedMotion } from "@/lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +24,10 @@ export default function HomeClient({
 }) {
   const [typed, setTyped] = useState("");
   const [typingDone, setTypingDone] = useState(false);
+  const reducedMotion = useReducedMotion();
+  // Under reduced motion the typewriter never runs, so show the finished copy.
+  const buildCopy = reducedMotion ? BUILD_COPY : typed;
+  const buildCopyDone = reducedMotion || typingDone;
   const heroRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -31,6 +36,37 @@ export default function HomeClient({
   const postsRef = useRef<HTMLElement>(null);
   const bottomCtaRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      // Skip the word reveal, the typewriter, and the breathing glow — land
+      // directly on the finished state. The copy itself comes from `buildCopy`,
+      // which already resolves to the full text under reduced motion.
+      const words = Array.from(
+        heroRef.current?.querySelectorAll(".hero-word") ?? []
+      );
+      gsap.set([...words], { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0 });
+      gsap.set(
+        [
+          taglineRef.current,
+          ctaRef.current,
+          aboutRef.current,
+          githubRef.current,
+          postsRef.current,
+          bottomCtaRef.current,
+        ],
+        { opacity: 1, y: 0 }
+      );
+
+      if (heroRef.current) {
+        // Fixed glow at the midpoint of what the breathe cycle would produce.
+        heroRef.current.style.textShadow = [
+          "0 0 8px  rgba(255, 255, 255, 0.28)",
+          "0 0 28px rgba(255, 255, 255, 0.12)",
+          "0 0 60px rgba(255, 255, 255, 0.05)",
+        ].join(", ");
+      }
+      return;
+    }
+
     const ctx = gsap.context(() => {
       // Hero word-by-word reveal
       const words = heroRef.current?.querySelectorAll(".hero-word");
@@ -230,7 +266,7 @@ export default function HomeClient({
             minHeight: "12em",
           }}
         >
-          {typed}
+          {buildCopy}
           <span
             aria-hidden="true"
             style={{
@@ -240,7 +276,7 @@ export default function HomeClient({
               transform: "translateY(0.1em)",
               color: "rgba(255,255,255,0.85)",
               animation: "hixonCursor 1s steps(1) infinite",
-              opacity: typingDone ? 0.6 : 1,
+              opacity: buildCopyDone ? 0.6 : 1,
             }}
           >
             ▌

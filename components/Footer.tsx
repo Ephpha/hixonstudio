@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { projects } from "@/lib/projects";
 
 export default function Footer() {

@@ -1,6 +1,8 @@
 "use client";
 
-type IconKey = "github" | "x" | "substack" | "hackernoon" | "email";
+import Link from "next/link";
+
+type IconKey ="github" | "x" | "substack" | "hackernoon" | "email";
 
 type SocialLink = {
   key: IconKey;
@@ -74,24 +76,37 @@ export default function SocialIcons({ size = 16 }: { size?: number }) {
         WebkitBackdropFilter: "blur(8px)",
       }}
     >
-      {links.map((link) => (
-        <a
-          key={link.key}
-          href={link.href}
-          target={link.key === "email" || link.href.startsWith("/") ? undefined : "_blank"}
-          rel={link.key === "email" || link.href.startsWith("/") ? undefined : "noopener noreferrer"}
-          aria-label={link.label}
-          title={link.label}
-          className="transition-colors"
-          style={{ color: "rgba(255,255,255,0.55)" }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "rgba(255,255,255,0.55)")
-          }
-        >
-          <Icon k={link.key} size={size} />
-        </a>
-      ))}
+      {links.map((link) => {
+        const internal = link.href.startsWith("/");
+        const shared = {
+          "aria-label": link.label,
+          title: link.label,
+          className: "transition-colors",
+          style: { color: "rgba(255,255,255,0.55)" },
+          onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) =>
+            (e.currentTarget.style.color = "#fff"),
+          onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) =>
+            (e.currentTarget.style.color = "rgba(255,255,255,0.55)"),
+        };
+
+        // Internal routes go through next/link so they navigate client-side
+        // instead of triggering a full page reload.
+        return internal ? (
+          <Link key={link.key} href={link.href} {...shared}>
+            <Icon k={link.key} size={size} />
+          </Link>
+        ) : (
+          <a
+            key={link.key}
+            href={link.href}
+            target={link.key === "email" ? undefined : "_blank"}
+            rel={link.key === "email" ? undefined : "noopener noreferrer"}
+            {...shared}
+          >
+            <Icon k={link.key} size={size} />
+          </a>
+        );
+      })}
     </div>
   );
 }

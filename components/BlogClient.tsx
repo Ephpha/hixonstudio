@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import BlogCanvas from "@/components/BlogCanvas";
+import { prefersReducedMotion } from "@/lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -115,6 +116,14 @@ export default function BlogClient() {
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      gsap.set(
+        [headerRef.current, recentRef.current, substackRef.current, footerRef.current],
+        { opacity: 1, y: 0 }
+      );
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         headerRef.current,
@@ -187,7 +196,8 @@ export default function BlogClient() {
             className="text-xs tracking-widest uppercase"
             style={{ color: "rgba(255,255,255,0.18)" }}
           >
-            01 / 01
+            {String(recent.length).padStart(2, "0")} /{" "}
+            {String(recent.length).padStart(2, "0")}
           </p>
         </div>
         <div

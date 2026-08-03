@@ -17,6 +17,11 @@ export type Post = PostMeta & {
 };
 
 export function getAllPosts(): PostMeta[] {
+  // The posts directory may not exist at all — git cannot track an empty
+  // directory, so a fresh clone has no content/blog. Treat that as "no posts"
+  // rather than letting readdirSync throw and fail the whole build.
+  if (!fs.existsSync(BLOG_DIR)) return [];
+
   const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".mdx"));
 
   const posts = files.map((filename) => {

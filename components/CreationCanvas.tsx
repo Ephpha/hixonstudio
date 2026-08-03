@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/useReducedMotion";
 
 type Star = {
   x: number;  // -1..1 normalized screen offset from center
@@ -30,8 +31,9 @@ export default function CreationCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animId: number;
+    let animId: number | null = null;
     let w = 0, h = 0, cx = 0, cy = 0;
+    const reduced = prefersReducedMotion();
     const stars: Star[] = Array.from({ length: STAR_COUNT }, () => {
       const s: Star = { x: 0, y: 0, z: 1, pz: 1 };
       spawn(s, true);
@@ -103,19 +105,59 @@ export default function CreationCanvas() {
       animId = requestAnimationFrame(draw);
     }
 
+    /**
+     * Reduced motion: the warp effect is motion by definition, so swap it for a
+     * still starfield — same visual texture behind the text, no travel.
+     */
+    function drawStatic() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, w, h);
+      for (const s of stars) {
+        const { sx, sy } = project(s, s.z);
+        if (sx < 0 || sx > w || sy < 0 || sy > h) continue;
+        const closeness = 1 - s.z;
+        ctx.fillStyle = `rgba(255,255,255,${Math.min(closeness * MAX_OPACITY, MAX_OPACITY)})`;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 0.4 + closeness * 0.9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function start() {
+      if (animId !== null || reduced) return;
+      animId = requestAnimationFrame(draw);
+    }
+
+    function stop() {
+      if (animId === null) return;
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+
+    function onVisibility() {
+      if (document.hidden) stop();
+      else start();
+    }
+
     resize();
-    animId = requestAnimationFrame(draw);
+    if (reduced) drawStatic();
+    else start();
 
     let resizeTimer: ReturnType<typeof setTimeout>;
     function onResize() {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(resize, 150);
+      resizeTimer = setTimeout(() => {
+        resize();
+        if (reduced) drawStatic();
+      }, 150);
     }
     window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      cancelAnimationFrame(animId);
+      stop();
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
       clearTimeout(resizeTimer);
     };
   }, []);

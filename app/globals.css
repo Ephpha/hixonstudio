@@ -113,3 +113,22 @@ body {
   0% { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/*
+ * Respect the OS "reduce motion" setting.
+ *
+ * Animations are collapsed to a single instant step rather than removed, so
+ * anything that animates *into* its visible state still ends up visible.
+ * Canvas backgrounds and GSAP are JS-driven and opt out separately via
+ * lib/useReducedMotion.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
