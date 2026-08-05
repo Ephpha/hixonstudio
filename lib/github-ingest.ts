@@ -136,12 +136,14 @@ function excerptReadme(markdown: string): string {
     .replace(/<[^>]+>/g, " ")
     .replace(/!\[[^\]]*]\([^)]+\)/g, "")
     .replace(/\[([^\]]+)]\([^)]+\)/g, "$1")
+    .replace(/&[a-z]+;/gi, " ")
     .replace(/[#>*_`|-]+/g, " ");
   const lines = cleaned
     .split("\n")
     .map((l) => l.replace(/\s+/g, " ").trim())
-    .filter((l) => l.length > 24)
-    .filter((l) => !/^https?:\/\//i.test(l));
+    .filter((l) => l.length > 40)
+    .filter((l) => !/^https?:\/\//i.test(l))
+    .filter((l) => !/license|npmjs|actions\/workflows/i.test(l));
   const prose = lines[0] ?? "";
   return prose.slice(0, 220);
 }

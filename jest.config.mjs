@@ -6,6 +6,7 @@ const config = {
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testMatch: ["**/__tests__/**/*.test.ts"],
+  modulePathIgnorePatterns: ["<rootDir>/.next/"],
   transform: {
     "^.+\\.tsx?$": [
       "ts-jest",
