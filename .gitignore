@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+screenshot*.webp
+/opt/
 
 # debug
 npm-debug.log*

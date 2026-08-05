@@ -1,36 +1,48 @@
 import type { Metadata } from "next";
-// Monowire loaded via @font-face in globals.css
-import "@fontsource/fraunces/300.css";
-import "@fontsource/fraunces/300-italic.css";
-import "@fontsource/fraunces/400.css";
-import "@fontsource/fraunces/400-italic.css";
-import "@fontsource/fraunces/700.css";
-import "@fontsource/fraunces/700-italic.css";
+import { IBM_Plex_Mono, Source_Sans_3, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import StarCanvas from "@/components/StarCanvas";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-source-sans",
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.hixon.studio"),
+  metadataBase: new URL("https://demobro.video"),
   title: {
-    default: "Hixon.Studio",
-    // Pages set a bare title ("About"); this renders it as "About — Hixon.Studio".
-    template: "%s — Hixon.Studio",
+    default: "DemoBro",
+    template: "%s — DemoBro",
   },
-  description: "AI developer. Builder. Making things worth using.",
+  description:
+    "Turn a raw screen recording into a polished 60-second demo. Drop an MP4, paste a GitHub repo, generate.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Hixon.Studio",
-    description: "AI developer. Builder. Making things worth using.",
-    url: "https://www.hixon.studio",
-    siteName: "Hixon.Studio",
+    title: "DemoBro",
+    description:
+      "Turn a raw screen recording into a polished 60-second demo. Drop an MP4, paste a GitHub repo, generate.",
+    url: "https://demobro.video",
+    siteName: "DemoBro",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hixon.Studio",
-    description: "AI developer. Builder. Making things worth using.",
+    title: "DemoBro",
+    description:
+      "Turn a raw screen recording into a polished 60-second demo.",
   },
 };
 
@@ -40,15 +52,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen overflow-x-hidden">
-        <StarCanvas />
-        <Nav />
-        <main className="relative pt-20" style={{ zIndex: 10 }}>
-          {children}
-        </main>
-        <Footer />
-      </body>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${sourceSans.variable} ${ibmPlexMono.variable}`}
+    >
+      <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );
 }

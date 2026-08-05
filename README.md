@@ -1,30 +1,14 @@
-# hixon.studio
+# DemoBro
 
-> Personal site, projects, and notes.
+> [demobro.video](https://demobro.video) — turn a raw screen recording into a polished 60-second demo.
 
-**Live:** [hixon.studio](https://hixon.studio)
+Two inputs, no forms: an MP4 and a GitHub repo URL. Built for developers who just finished a hackathon project and have 90 minutes before the deadline.
 
-![hixon.studio landing](.github/screenshot.png)
+## Stack
 
-The home for everything I build. Portfolio, project log, blog, and the place I send people when they ask "what are you working on?"
-
-## Pages
-
-- `/` — landing
-- `/projects` — everything I've shipped, with write-ups
-- `/blog` — notes and essays, written in MDX
-- `/about` — who I am
-- `/contact` — form that actually reaches me (Resend)
-
-## Built with
-
-- **Next.js 16** (App Router) + **TypeScript**
-- **Tailwind CSS 4**
-- **GSAP** for scroll + entrance animation
-- **MDX** (`next-mdx-remote` + `gray-matter`) for blog content
-- **Resend** for contact form email
-- Custom typography: Fraunces, EB Garamond, Orbitron, Syncopate
-- Deployed on **Vercel**
+- **Next.js 15** (App Router) + TypeScript + Tailwind
+- **Supabase** — Postgres job queue + Storage
+- **Railway** — `web` + `worker` (ffmpeg) + hourly cleanup cron
 
 ## Run locally
 
@@ -33,7 +17,9 @@ npm install
 npm run dev     # http://localhost:3000
 ```
 
-```bash
-npm run build   # production build
-npm test        # Jest + Testing Library
-```
+## Design tokens
+
+- Background: `#FAF9F6`
+- Text: `#141414`
+- Accent: `#289ffa`
+- Headings / wordmark: Space Grotesk

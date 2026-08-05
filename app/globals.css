@@ -1,134 +1,42 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Monowire";
-  src: url("/fonts/MONOWIRE.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Fraunces", Georgia, serif;
-  --font-mono: "Courier New", monospace;
+  --color-canvas: #faf9f6;
+  --color-ink: #141414;
+  --color-ink-muted: #5c5c5c;
+  --color-ink-faint: #8a8a8a;
+  --color-accent: #289ffa;
+  --color-accent-hover: #1a8aeb;
+  --color-line: #e6e4df;
+  --color-danger: #b42318;
+  --color-surface: #ffffff;
+  --font-heading: var(--font-space-grotesk), ui-sans-serif, sans-serif;
+  --font-body: var(--font-source-sans), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 }
 
 html,
 body {
-  background-color: #060608;
-  color: #ffffff;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.prose-hixon {
-  max-width: 65ch;
-  font-family: "Fraunces", Georgia, serif;
-  font-size: 1.125rem;
-  line-height: 1.85;
-  color: rgba(255, 255, 255, 0.82);
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  color: var(--color-ink);
 }
 
-.prose-hixon h1,
-.prose-hixon h2,
-.prose-hixon h3 {
-  font-family: "Fraunces", Georgia, serif;
-  font-style: italic;
-  color: #fff;
-  margin-top: 2em;
-  margin-bottom: 0.5em;
-  line-height: 1.2;
+.font-heading {
+  font-family: var(--font-heading);
 }
 
-.prose-hixon p {
-  margin-bottom: 1.4em;
+.font-body {
+  font-family: var(--font-body);
 }
 
-.prose-hixon a {
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.prose-hixon code {
-  font-family: "Courier New", monospace;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  padding: 0.15em 0.4em;
-  font-size: 0.875em;
-}
-
-.prose-hixon pre {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-  overflow-x: auto;
-  margin: 1.5em 0;
-}
-
-.prose-hixon pre code {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.prose-hixon ul,
-.prose-hixon ol {
-  padding-left: 1.5em;
-  margin-bottom: 1.4em;
-}
-
-.prose-hixon li {
-  margin-bottom: 0.4em;
-}
-
-.prose-hixon strong {
-  color: #fff;
-  font-weight: 700;
-}
-
-.prose-hixon blockquote {
-  border-left: 2px solid rgba(255, 255, 255, 0.15);
-  padding-left: 1.25em;
-  margin: 1.5em 0;
-  color: rgba(255, 255, 255, 0.5);
-  font-style: italic;
-}
-
-@keyframes hixonCursor {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-@keyframes hixonPulse {
-  0%, 100% { opacity: 0.85; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
-}
-
-@keyframes hixonSentFade {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/*
- * Respect the OS "reduce motion" setting.
- *
- * Animations are collapsed to a single instant step rather than removed, so
- * anything that animates *into* its visible state still ends up visible.
- * Canvas backgrounds and GSAP are JS-driven and opt out separately via
- * lib/useReducedMotion.
- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.font-mono {
+  font-family: var(--font-mono);
 }
