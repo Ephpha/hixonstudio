@@ -9,6 +9,7 @@ import {
   MAX_UPLOAD_BYTES,
   MIN_DURATION_SECONDS,
 } from "@/lib/constraints";
+import type { RepoIngestResult, RepoIngestSuccess } from "@/lib/github-ingest";
 import {
   githubRepoDisplay,
   parseGithubRepoUrl,
@@ -25,10 +26,19 @@ type VideoState =
     }
   | { status: "error"; message: string };
 
+type IngestState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "ready"; data: RepoIngestSuccess }
+  | {
+      status: "fallback";
+      message: string;
+      manualTitle: string;
+    };
+
 function isMp4(file: File): boolean {
   const byType = file.type === "video/mp4" || file.type === "video/quicktime";
   const byName = file.name.toLowerCase().endsWith(".mp4");
-  // Accept MP4 primarily; some browsers leave type empty on drop.
   return byType || byName;
 }
 
@@ -74,13 +84,14 @@ async function validateVideoFile(file: File): Promise<VideoState> {
 export function UploadScreen() {
   const inputId = useId();
   const repoId = useId();
+  const manualTitleId = useId();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [video, setVideo] = useState<VideoState>({ status: "empty" });
   const [repoUrl, setRepoUrl] = useState("");
   const [repoTouched, setRepoTouched] = useState(false);
   const [dragging, setDragging] = useState(false);
-  const [generateNote, setGenerateNote] = useState<string | null>(null);
+  const [ingest, setIngest] = useState<IngestState>({ status: "idle" });
 
   const parsedRepo = parseGithubRepoUrl(repoUrl);
   const repoError =
@@ -89,10 +100,12 @@ export function UploadScreen() {
       : null;
 
   const canGenerate =
-    video.status === "ready" && parsedRepo !== null && !generateNote;
+    video.status === "ready" &&
+    parsedRepo !== null &&
+    ingest.status !== "loading";
 
   const applyFile = useCallback(async (file: File | undefined | null) => {
-    setGenerateNote(null);
+    setIngest({ status: "idle" });
     if (!file) return;
     setVideo({ status: "reading", file });
     const next = await validateVideoFile(file);
@@ -109,12 +122,37 @@ export function UploadScreen() {
     [applyFile],
   );
 
+  const runIngest = async () => {
+    if (!parsedRepo) return;
+    setIngest({ status: "loading" });
+    try {
+      const res = await fetch("/api/repo", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ url: repoUrl.trim() }),
+      });
+      const data = (await res.json()) as RepoIngestResult;
+      if (data.ok) {
+        setIngest({ status: "ready", data });
+        return;
+      }
+      setIngest({
+        status: "fallback",
+        message: data.message,
+        manualTitle: "",
+      });
+    } catch {
+      setIngest({
+        status: "fallback",
+        message: "Couldn't reach the repo ingest service. Enter a title to continue.",
+        manualTitle: "",
+      });
+    }
+  };
+
   const onGenerate = () => {
     if (!canGenerate || video.status !== "ready" || !parsedRepo) return;
-    // Checkpoint 1: UI + client validation only. Upload pipeline comes next.
-    setGenerateNote(
-      `Ready: ${video.file.name} (${formatDuration(video.durationSeconds)}) → ${githubRepoDisplay(parsedRepo.owner, parsedRepo.repo)}. Upload + job pipeline lands after this checkpoint.`,
-    );
+    void runIngest();
   };
 
   return (
@@ -239,7 +277,7 @@ export function UploadScreen() {
               value={repoUrl}
               onChange={(e) => {
                 setRepoUrl(e.target.value);
-                setGenerateNote(null);
+                setIngest({ status: "idle" });
               }}
               onBlur={() => setRepoTouched(true)}
               className={[
@@ -270,19 +308,71 @@ export function UploadScreen() {
             onClick={onGenerate}
             className="mt-6 w-full rounded-xl bg-[var(--color-accent)] px-4 py-3.5 font-heading text-base font-semibold text-white transition-colors enabled:hover:bg-[var(--color-accent-hover)] enabled:active:translate-y-px disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,var(--color-ink)_18%,transparent)] disabled:text-white/80"
           >
-            Generate
+            {ingest.status === "loading" ? "Reading repo…" : "Generate"}
           </button>
 
-          {generateNote && (
-            <p
-              className="mt-4 text-sm leading-relaxed text-[var(--color-ink-muted)]"
-              role="status"
-            >
-              {generateNote}
-            </p>
+          {ingest.status === "ready" && <RepoPreview data={ingest.data} />}
+
+          {ingest.status === "fallback" && (
+            <div className="mt-5 border-t border-[var(--color-line)] pt-5">
+              <p className="text-sm text-[var(--color-danger)]" role="alert">
+                {ingest.message}
+              </p>
+              <label
+                htmlFor={manualTitleId}
+                className="mb-1.5 mt-4 block text-sm font-medium text-[var(--color-ink)]"
+              >
+                Project title
+              </label>
+              <input
+                id={manualTitleId}
+                type="text"
+                value={ingest.manualTitle}
+                onChange={(e) =>
+                  setIngest({
+                    ...ingest,
+                    manualTitle: e.target.value,
+                  })
+                }
+                placeholder="What should we call this demo?"
+                className="w-full rounded-xl border border-[var(--color-line)] bg-[var(--color-canvas)] px-3.5 py-3 font-heading text-sm text-[var(--color-ink)] outline-none focus:border-[var(--color-accent)]"
+              />
+            </div>
           )}
         </section>
       </div>
     </main>
+  );
+}
+
+function RepoPreview({ data }: { data: RepoIngestSuccess }) {
+  return (
+    <div
+      className="mt-5 border-t border-[var(--color-line)] pt-5"
+      role="status"
+      aria-live="polite"
+    >
+      <p className="font-mono text-xs uppercase tracking-wide text-[var(--color-ink-faint)]">
+        From {data.owner}/{data.repo}
+      </p>
+      <h2 className="mt-2 font-heading text-xl font-semibold text-[var(--color-ink)]">
+        {data.title}
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+        {data.description}
+      </p>
+      {data.badges.length > 0 && (
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {data.badges.map((badge) => (
+            <li
+              key={badge}
+              className="rounded-md border border-[var(--color-line)] bg-[var(--color-canvas)] px-2.5 py-1 font-mono text-xs text-[var(--color-ink)]"
+            >
+              {badge}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
