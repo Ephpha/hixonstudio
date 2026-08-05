@@ -1,5 +1,5 @@
 {
-  "name": "hixonstudio",
+  "name": "demobro",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,20 +11,12 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@fontsource/eb-garamond": "^5.2.7",
-    "@fontsource/fraunces": "^5.2.9",
-    "@fontsource/orbitron": "^5.2.8",
-    "@fontsource/syncopate": "^5.2.8",
-    "@gsap/react": "^2.1.2",
-    "gray-matter": "^4.0.3",
-    "gsap": "^3.15.0",
-    "next": "16.2.4",
-    "next-mdx-remote": "^6.0.0",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "resend": "^6.12.4"
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -33,7 +25,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.4",
+    "eslint-config-next": "^15.5.2",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "tailwindcss": "^4",
