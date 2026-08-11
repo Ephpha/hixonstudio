@@ -36,8 +36,9 @@ export type GithubData = {
 };
 
 const FETCH_OPTS = {
-  cache: "force-cache" as const,
-  next: { revalidate: 3600 },
+  // Keep the activity strip current without spending GitHub's unauthenticated
+  // API allowance on every page view.
+  next: { revalidate: 300 },
   headers: {
     "User-Agent": "hixon.studio",
     Accept: "application/vnd.github+json",

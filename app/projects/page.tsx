@@ -3,7 +3,7 @@ import ProjectsClient from "@/components/ProjectsClient";
 
 const title = "Projects";
 const description =
-  "Things I've built and things I'm building — Hackyard, Ephpha, WhatColor, Noxservo, Pluit, So&So, and JotLabs.";
+  "Things I've built and things I'm building — Hackyard, DemoBro, Ephpha, WhatColor, Noxservo, Pluit, and So&So.";
 
 export const metadata: Metadata = {
   title,
