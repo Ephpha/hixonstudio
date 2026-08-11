@@ -15,7 +15,7 @@ export const projects: Project[] = [
     url: "https://hackyard.tech",
     logo: "/logos/hackyard.png",
     description:
-      "A hackathon platform for hosting, joining, and judging events — teams, submissions, and live judging all in one place.",
+      "Small, capped AI hackathons where builders get one theme and one weekend to ship something real with any open-source model they choose.",
     tags: ["Next.js", "Supabase", "Vercel"],
     status: "live",
   },
