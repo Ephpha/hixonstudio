@@ -20,6 +20,16 @@ export const projects: Project[] = [
     status: "live",
   },
   {
+    name: "DemoBro",
+    domain: "demobro.video",
+    url: "https://www.demobro.video",
+    logo: "/logos/demobro.png",
+    description:
+      "An AI demo-video maker that turns a live app and its GitHub repo into a polished product walkthrough — no manual screen recording required.",
+    tags: ["Next.js", "AI", "Playwright"],
+    status: "live",
+  },
+  {
     name: "Ephpha",
     domain: "ephpha.ai",
     url: "https://ephpha.ai",
@@ -67,16 +77,6 @@ export const projects: Project[] = [
     description:
       "A personal AI chatbot you tune with sliders instead of prompts — dial in its personality, tone, and depth to make it yours.",
     tags: ["Next.js", "Supabase", "Gemini"],
-    status: "in-progress",
-  },
-  {
-    name: "JotLabs",
-    domain: "jotlabs.vercel.app",
-    url: "https://jotlabs.vercel.app",
-    logo: "/logos/jotlabs.png",
-    description:
-      "A note-taking tool that builds a living concept graph from your writing using [[phrase]] syntax.",
-    tags: ["Next.js", "Supabase", "React Flow", "AI"],
     status: "in-progress",
   },
 ];
