@@ -8,19 +8,17 @@ import { prefersReducedMotion } from "@/lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const buildingTools = ["Claude Code", "GPT-5.5", "Next.js", "React", "TypeScript", "Tailwind", "Supabase", "GSAP", "Electron", "Python"];
+const buildingTools = ["Claude Code", "Cursor", "ChatGPT 5.6", "Next.js", "React", "TypeScript", "Tailwind", "Supabase", "GSAP", "Electron", "Python"];
 
 export default function AboutClient() {
   const heroRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLElement>(null);
-  const shiftRef = useRef<HTMLElement>(null);
-  const distributionRef = useRef<HTMLElement>(null);
   const stackRef = useRef<HTMLElement>(null);
   const elsewhereRef = useRef<HTMLElement>(null);
   const closingRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const sections = [storyRef, shiftRef, distributionRef, stackRef, elsewhereRef, closingRef];
+    const sections = [storyRef, stackRef, elsewhereRef, closingRef];
 
     // Sections start at opacity 0 for the reveal. If the user asked for reduced
     // motion, skip straight to the visible state rather than animating into it.
@@ -105,123 +103,56 @@ export default function AboutClient() {
         >
           <p>
             Back in February 2026, I started getting pulled deeper into AI and
-            the tech world in general. It started with curiosity. I was trying
-            to understand what OpenClaw was. That led me to API keys. Then
-            tokenization. Then agents. Then MiniMax. Then Claude. Then Claude
-            Code.
+            the tech world in general. It started with curiosity. I already knew
+            the basics — ChatGPT had been around for years, and like most people
+            around me, I leaned on it every day. But I wanted to understand what
+            was actually happening underneath it.
           </p>
           <p>
+            I don&apos;t come from a traditional software background. For over
+            six years I&apos;ve been a software production manager at Pump Peelz,
+            a company that makes custom, decorative patches and stickers for
+            insulin pumps and CGMs — turning medical devices people have no
+            choice but to wear into something that finally feels like their own.
+            I work with code there every day: building it into our software
+            files, uploading new products to the site, and keeping track of the
+            data behind all of it.
+          </p>
+          <p>
+            It&apos;s not the standard picture of a tech job — but I&apos;ve come
+            to believe there isn&apos;t one. There are countless paths to being
+            handed a problem inside a codebase or a website and finding your way
+            to a solution. AI has quietly collapsed the old idea that only a
+            small, select group of people are allowed to do these things.
+          </p>
+          <p>
+            Trying to figure out what OpenClaw was opened a wormhole. OpenClaw
+            pulled me into Claude Code. Claude Code pulled me into agents, then
+            Cursor, then everything after it. The deeper I went, the more I
+            realized this wasn&apos;t a gimmick — it was a real glimpse of where
+            the world could be heading, and a tool that could change my life and
+            a lot of other people&apos;s.
+          </p>
+          <p>
+            A lot of people still don&apos;t know what&apos;s genuinely possible
+            right now — through frontier models or open source. And open source
+            is catching up faster than most expected, which I think is a good
+            thing. It keeps the game fair and honest, instead of a handful of
+            labs deciding who does and doesn&apos;t get to use this kind of
+            intelligence.
+          </p>
+          <p
+            style={{
+              fontFamily: "Fraunces, Georgia, serif",
+              fontStyle: "italic",
+              color: "rgba(255,255,255,0.85)",
+              fontSize: "1.15em",
+            }}
+          >
             Somewhere in that rabbit hole, my entire perception of what is
-            possible changed.
-          </p>
-          <p>
-            I don&apos;t come from a traditional software background. I work a
-            software production job in the medical field. I had little real
-            experience with Python, full coding environments, or building
-            software from the ground up. So when I first started seeing what
-            these tools could do, it felt almost unrealistic.
-          </p>
-          <p
-            style={{
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              color: "rgba(255,255,255,0.85)",
-              fontSize: "1.15em",
-            }}
-          >
-            But Claude Code changed everything for me. It made the technical
-            side of building feel less like a locked door and more like a
-            language I could slowly learn how to speak.
-          </p>
-        </div>
-      </section>
-
-      {/* The shift */}
-      <section ref={shiftRef} className="mb-14 sm:mb-24" style={{ opacity: 0 }}>
-        <p
-          className="text-xs tracking-widest uppercase mb-5"
-          style={{ color: "rgba(255,255,255,0.22)" }}
-        >
-          What I&apos;ve learned
-        </p>
-        <div
-          className="w-8 h-px mb-8"
-          style={{ background: "rgba(255,255,255,0.18)" }}
-        />
-        <div
-          className="flex flex-col gap-5 text-base"
-          style={{ color: "rgba(255,255,255,0.62)", lineHeight: 1.85 }}
-        >
-          <p>
-            A lot of people call this &ldquo;vibe coding.&rdquo; I understand
-            why. But after months doing it every day, I don&apos;t think it&apos;s
-            simply easy or hard. It rewards patience. Clear thinking. Having an
-            actual vision for what you want to build, how you want it to work,
-            and how you want the end user to feel when they use it.
-          </p>
-          <p>
-            Prompting is communication. You have to understand how these models
-            interpret what you&apos;re asking, how they structure their output,
-            and how specific you need to be to get the result you actually
-            imagined.
-          </p>
-          <p
-            style={{
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              color: "rgba(255,255,255,0.85)",
-              fontSize: "1.15em",
-            }}
-          >
-            Anyone can generate code. Not everyone can decide what should exist,
-            why it should exist, who it&apos;s for, and what it should feel like.
-          </p>
-        </div>
-      </section>
-
-      {/* The other side */}
-      <section
-        ref={distributionRef}
-        className="mb-14 sm:mb-24"
-        style={{ opacity: 0 }}
-      >
-        <p
-          className="text-xs tracking-widest uppercase mb-5"
-          style={{ color: "rgba(255,255,255,0.22)" }}
-        >
-          The other side
-        </p>
-        <div
-          className="w-8 h-px mb-8"
-          style={{ background: "rgba(255,255,255,0.18)" }}
-        />
-        <div
-          className="flex flex-col gap-5 text-base"
-          style={{ color: "rgba(255,255,255,0.62)", lineHeight: 1.85 }}
-        >
-          <p>
-            It&apos;s a lot harder to get rich off a vibe-coded project than
-            people make it sound. Coding isn&apos;t always the hardest part
-            anymore.
-          </p>
-          <p>
-            The harder part is what comes after — getting people to notice it,
-            understand it, trust it, use it, and care enough to come back.
-          </p>
-          <p>
-            We could have millions of builders making useful, life-changing
-            products. But if they can&apos;t get them in front of people, a lot
-            of great ideas will still disappear.
-          </p>
-          <p
-            style={{
-              color: "rgba(255,255,255,0.85)",
-              fontFamily: "Fraunces, Georgia, serif",
-              fontStyle: "italic",
-              fontSize: "1.15em",
-            }}
-          >
-            Building is one side. Distribution is the other.
+            possible changed. Claude Code made the technical side of building
+            feel less like a locked door, and more like a language I could
+            slowly learn to speak.
           </p>
         </div>
       </section>
@@ -258,9 +189,9 @@ export default function AboutClient() {
           className="text-sm mt-6"
           style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.75 }}
         >
-          Claude Code daily for building, navigating codebases, and mapping out
-          projects. GPT-5.5 for visual direction, layouts, color, and helping
-          shape how things feel.
+          Claude Code and Cursor daily for building — writing code, navigating
+          codebases, and mapping out projects. ChatGPT 5.6 for visual direction,
+          layouts, coloring, and shaping how things feel.
         </p>
       </section>
 
