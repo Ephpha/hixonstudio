@@ -36,14 +36,20 @@ export default function HomeClient({
   const postsRef = useRef<HTMLElement>(null);
   const bottomCtaRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const heroEl = heroRef.current;
+    const chars = Array.from(
+      heroEl?.querySelectorAll<HTMLElement>(".hero-char") ?? []
+    );
+    const dot = heroEl?.querySelector<HTMLElement>(".hero-dot") ?? null;
+
+    // Reduced motion: reveal everything instantly — no scramble, no scroll
+    // reveals, no typewriter (buildCopy already resolves to the full text).
     if (prefersReducedMotion()) {
-      // Skip the word reveal, the typewriter, and the breathing glow — land
-      // directly on the finished state. The copy itself comes from `buildCopy`,
-      // which already resolves to the full text under reduced motion.
-      const words = Array.from(
-        heroRef.current?.querySelectorAll(".hero-word") ?? []
-      );
-      gsap.set([...words], { clipPath: "inset(0 0 0% 0)", opacity: 1, y: 0 });
+      chars.forEach((el) => {
+        el.textContent = el.dataset.final ?? "";
+        el.style.opacity = "1";
+      });
+      if (dot) dot.style.opacity = "1";
       gsap.set(
         [
           taglineRef.current,
@@ -55,51 +61,70 @@ export default function HomeClient({
         ],
         { opacity: 1, y: 0 }
       );
-
-      if (heroRef.current) {
-        // Fixed glow at the midpoint of what the breathe cycle would produce.
-        heroRef.current.style.textShadow = [
-          "0 0 8px  rgba(255, 255, 255, 0.28)",
-          "0 0 28px rgba(255, 255, 255, 0.12)",
-          "0 0 60px rgba(255, 255, 255, 0.05)",
-        ].join(", ");
-      }
       return;
     }
 
-    const ctx = gsap.context(() => {
-      // Hero word-by-word reveal
-      const words = heroRef.current?.querySelectorAll(".hero-word");
-      const tl = gsap.timeline({ delay: 0.1 });
+    // ── Wordmark decode: each letter flickers through random glyphs, then
+    //    locks into place left-to-right, like a terminal booting up. ──
+    const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*/";
+    const randGlyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
+    const PER_CHAR = 70; // ms of stagger between each letter locking
+    const WINDOW = 420; // ms a letter scrambles before it locks
+    const SWAP_EVERY = 45; // ms between glyph swaps while scrambling
 
-      if (words?.length) {
-        tl.fromTo(
-          words,
-          { clipPath: "inset(0 0 100% 0)", y: 16, opacity: 0 },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            y: 0,
-            opacity: 1,
-            stagger: 0.04,
-            duration: 0.55,
-            ease: "power3.out",
-          }
-        );
+    const t0 = performance.now();
+    let lastSwap = 0;
+    let raf = 0;
+    let revealed = false;
+
+    chars.forEach((el) => {
+      el.style.opacity = "1";
+      el.textContent = randGlyph();
+    });
+    if (dot) dot.style.opacity = "0";
+
+    const decode = (now: number) => {
+      const swap = now - lastSwap >= SWAP_EVERY;
+      if (swap) lastSwap = now;
+
+      let locked = 0;
+      chars.forEach((el, i) => {
+        const lockAt = t0 + i * PER_CHAR + WINDOW;
+        if (now >= lockAt) {
+          const final = el.dataset.final ?? "";
+          if (el.textContent !== final) el.textContent = final;
+          locked++;
+        } else if (swap) {
+          el.textContent = randGlyph();
+        }
+      });
+
+      if (locked < chars.length) {
+        raf = requestAnimationFrame(decode);
+        return;
       }
 
-      tl.fromTo(
-        taglineRef.current,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-        "-=0.2"
-      ).fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
-        "-=0.2"
-      );
+      if (!revealed) {
+        revealed = true;
+        // The dimmed dot pops in last, then the tagline + CTAs rise up.
+        if (dot) {
+          gsap.fromTo(
+            dot,
+            { opacity: 0, scale: 0.4 },
+            { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.2)" }
+          );
+        }
+        gsap.fromTo(
+          [taglineRef.current, ctaRef.current],
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: "power2.out" }
+        );
+      }
+    };
+    raf = requestAnimationFrame(decode);
 
-      // Scroll sections (skip aboutRef — typewriter handles its own reveal)
+    // ── Scroll-triggered reveals + the About typewriter (unchanged) ──
+    const ctx = gsap.context(() => {
       [githubRef, postsRef, bottomCtaRef].forEach((ref) => {
         gsap.fromTo(
           ref.current,
@@ -144,23 +169,9 @@ export default function HomeClient({
       }
     });
 
-    // Chromatic breathe — slow sine-wave RGB channel separation
-    const breathe = (time: number) => {
-      const el = heroRef.current;
-      if (!el) return;
-      // 0→1→0 cycle every ~8.4 s
-      const t = (Math.sin(time * 0.75) + 1) / 2;
-      el.style.textShadow = [
-        `0 0 8px  rgba(255, 255, 255, ${t * 0.55})`,
-        `0 0 28px rgba(255, 255, 255, ${t * 0.25})`,
-        `0 0 60px rgba(255, 255, 255, ${t * 0.10})`,
-      ].join(", ");
-    };
-    gsap.ticker.add(breathe);
-
     return () => {
+      cancelAnimationFrame(raf);
       ctx.revert();
-      gsap.ticker.remove(breathe);
     };
   }, []);
 
@@ -182,21 +193,34 @@ export default function HomeClient({
             lineHeight: 1.1,
             letterSpacing: "clamp(0.04em, 1vw, 0.18em)",
             whiteSpace: "nowrap",
+            textShadow:
+              "0 0 12px rgba(255,255,255,0.28), 0 0 40px rgba(255,255,255,0.12), 0 0 80px rgba(255,255,255,0.05)",
           }}
         >
-          {"Hixon.Studio".split("").map((char, i) => (
-            <span
-              key={i}
-              className="hero-word inline-block"
-              style={{ whiteSpace: "pre" }}
-            >
-              {char === "." ? (
-                <span style={{ color: "rgba(255,255,255,0.35)" }}>.</span>
-              ) : (
-                char
-              )}
-            </span>
-          ))}
+          {"Hixon.Studio".split("").map((char, i) =>
+            char === "." ? (
+              <span
+                key={i}
+                className="hero-dot inline-block"
+                style={{
+                  color: "rgba(255,255,255,0.35)",
+                  whiteSpace: "pre",
+                  opacity: 0,
+                }}
+              >
+                .
+              </span>
+            ) : (
+              <span
+                key={i}
+                className="hero-char inline-block"
+                data-final={char}
+                style={{ whiteSpace: "pre", opacity: 0 }}
+              >
+                {char}
+              </span>
+            )
+          )}
         </h1>
 
         <p
@@ -210,7 +234,7 @@ export default function HomeClient({
             opacity: 0,
           }}
         >
-          AI developer · Builder · Making things worth using
+          Building in public · Promoting builders · Figuring it out in the open
         </p>
 
         <div
