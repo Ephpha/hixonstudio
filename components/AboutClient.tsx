@@ -284,18 +284,22 @@ export default function AboutClient() {
             }}
           >
             <p>
-              AI lowered the cost of trying. It didn&apos;t remove the need for
-              taste, patience, direction, or persistence — it made those things
-              matter more.
+              Right now, most of what I&apos;m building points toward Hackyard —
+              small, community-driven hackathons where every project actually
+              gets seen. I&apos;m not just trying to launch a product; I&apos;m
+              trying to grow a community around it.
             </p>
             <p>
-              The question is no longer &ldquo;Can I build this?&rdquo; The
-              better question is: &ldquo;Am I willing to spend the time, tokens,
-              patience, and energy to figure it out?&rdquo;
+              A big part of that is promoting other builders — the ones who&apos;d
+              otherwise go unnoticed. If AI is going to let more people make real
+              things, then the least I can do is help make sure that work gets in
+              front of people instead of quietly disappearing.
             </p>
             <p>
-              That&apos;s what Hixon.Studio has become for me. A place to build,
-              test, learn, fail, improve, and share the process publicly.
+              I&apos;m figuring it out as I go, learning from my successes and my
+              failures at the same time. That&apos;s what Hixon.Studio is really
+              for — to build, test, learn, fail, improve, and share the whole
+              process out in the open.
             </p>
           </div>
           <p
