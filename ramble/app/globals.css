@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #5c5c5c;
+  --muted-2: #8a8a8a;
+  --border: #ececec;
+  --surface: #f7f8fa;
+  --brand-deep: #0b3d91;
+  --brand-mid: #1a6cff;
+  --brand-bright: #2ec5ff;
+  --brand-gradient: linear-gradient(135deg, #0b3d91 0%, #1a6cff 48%, #2ec5ff 100%);
+  --shadow-soft: 0 18px 50px rgba(15, 40, 100, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-mid: var(--brand-mid);
+  --color-brand-bright: var(--brand-bright);
+  --font-sans: var(--font-plus-jakarta);
+  --font-display: var(--font-instrument);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--brand-bright) 35%, white);
+  color: var(--foreground);
+}
+
+.brand-gradient {
+  background-image: var(--brand-gradient);
+}
+
+.brand-text {
+  background-image: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-shell {
+  position: relative;
+  width: 100%;
+  border-radius: 2rem;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: var(--shadow-soft);
+}
+
+/* MiroMiro-like bottom center notch */
+.hero-shell::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  transform: translateX(-50%);
+  width: min(42%, 280px);
+  height: 56px;
+  background: var(--background);
+  border-radius: 1.25rem 1.25rem 0 0;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .hero-shell {
+    border-radius: 2.5rem;
+  }
+
+  .hero-shell::after {
+    width: min(36%, 340px);
+    height: 72px;
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+}
+
+.cta-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  background-image: var(--brand-gradient);
+  box-shadow: 0 10px 28px rgba(26, 108, 255, 0.28);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.cta-pill:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: 0 14px 34px rgba(26, 108, 255, 0.34);
+}
+
+.cta-pill:active {
+  transform: translateY(0);
+}
+
+.fade-up {
+  animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fade-up-delay-1 {
+  animation-delay: 80ms;
+}
+
+.fade-up-delay-2 {
+  animation-delay: 160ms;
+}
+
+.fade-up-delay-3 {
+  animation-delay: 240ms;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+.listen-pulse {
+  position: absolute;
+  inset: -18%;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  animation: pulseRing 2.4s ease-out infinite;
+}
+
+.listen-pulse:nth-child(2) {
+  animation-delay: 0.8s;
+}
