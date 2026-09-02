@@ -37,3 +37,5 @@ npm run dev     # http://localhost:3000
 npm run build   # production build
 npm test        # Jest + Testing Library
 ```
+
+Local laptop agents live in [`harness/`](./harness). They are not part of the public site.
