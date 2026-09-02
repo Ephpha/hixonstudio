@@ -1,5 +1,6 @@
 import {
   AGENTS,
+  explainOllamaError,
   normalizeOllamaHost,
   resolveInstalledModel,
   siblingAgent,
@@ -114,12 +115,7 @@ export async function getHarnessStatus(): Promise<HarnessStatus> {
       },
     };
   } catch (err) {
-    const message =
-      err instanceof Error && err.name === "AbortError"
-        ? "Ollama did not answer. Start it, then refresh."
-        : err instanceof Error
-          ? err.message
-          : "Ollama is offline.";
+    const message = explainOllamaError(err);
 
     return {
       online: false,

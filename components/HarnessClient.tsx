@@ -9,7 +9,7 @@ import {
   type AgentId,
   type ChatMessage,
 } from "@/lib/harness/agents";
-import { prefersReducedMotion } from "@/lib/useReducedMotion";
+import { prefersReducedMotion, useReducedMotion } from "@/lib/useReducedMotion";
 import type { HarnessStatus } from "@/lib/harness/ollama";
 
 type StreamEvent =
@@ -26,7 +26,12 @@ function statusColor(ok: boolean, warn = false) {
   return "rgba(255,255,255,0.22)";
 }
 
-export default function HarnessClient() {
+export default function HarnessClient({
+  initialStatus,
+}: {
+  initialStatus: HarnessStatus;
+}) {
+  const reducedMotion = useReducedMotion();
   const [agentId, setAgentId] = useState<AgentId>("coder");
   const [threads, setThreads] = useState<Record<AgentId, ChatMessage[]>>({
     coder: [],
@@ -35,8 +40,9 @@ export default function HarnessClient() {
   const [draft, setDraft] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState("");
-  const [status, setStatus] = useState<HarnessStatus | null>(null);
+  const [status, setStatus] = useState<HarnessStatus>(initialStatus);
   const [typed, setTyped] = useState("");
+  const subhead = reducedMotion ? SUBHEAD : typed;
 
   const abortRef = useRef<AbortController | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -53,19 +59,23 @@ export default function HarnessClient() {
       if (!res.ok) throw new Error("Status failed.");
       setStatus((await res.json()) as HarnessStatus);
     } catch {
-      setStatus(null);
+      setStatus((prev) => ({
+        ...prev,
+        online: false,
+        error: "Ollama did not answer. Start it, then refresh.",
+      }));
     }
   }, []);
 
   useEffect(() => {
-    void loadStatus();
-    const id = window.setInterval(() => void loadStatus(), 12_000);
+    const id = window.setInterval(() => {
+      void loadStatus();
+    }, 12_000);
     return () => window.clearInterval(id);
   }, [loadStatus]);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
-      setTyped(SUBHEAD);
       gsap.set([heroRef.current, deskRef.current], { opacity: 1, y: 0 });
       return;
     }
@@ -224,7 +234,7 @@ export default function HarnessClient() {
             minHeight: "4.2em",
           }}
         >
-          {typed}
+          {subhead}
           <span
             aria-hidden="true"
             style={{
@@ -321,15 +331,13 @@ export default function HarnessClient() {
                         }}
                       />
                       <span style={{ color: "rgba(255,255,255,0.4)" }}>
-                        {!status
-                          ? "Checking"
-                          : !status.online
-                            ? "Offline"
-                            : state?.loaded
-                              ? "Loaded"
-                              : state?.installed
-                                ? "Ready"
-                                : "Missing"}
+                        {!status.online
+                          ? "Offline"
+                          : state?.loaded
+                            ? "Loaded"
+                            : state?.installed
+                              ? "Ready"
+                              : "Missing"}
                       </span>
                     </span>
                   </button>

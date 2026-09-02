@@ -102,6 +102,17 @@ export function resolveInstalledModel(
   return null;
 }
 
+export function explainOllamaError(err: unknown): string {
+  if (err instanceof Error && err.name === "AbortError") {
+    return "Ollama did not answer. Start it, then refresh.";
+  }
+  const raw = err instanceof Error ? err.message : "";
+  if (/fetch failed|ECONNREFUSED|ENOTFOUND/i.test(raw)) {
+    return "Ollama is offline. Start it on this machine, then refresh.";
+  }
+  return raw || "Ollama is offline.";
+}
+
 export function normalizeOllamaHost(raw: string | undefined): string {
   const fallback = HARNESS.defaultHost;
   if (!raw || !raw.trim()) return fallback;

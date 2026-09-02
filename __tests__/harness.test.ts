@@ -2,6 +2,7 @@ import {
   AGENTS,
   HARNESS,
   buildChatPayload,
+  explainOllamaError,
   getAgent,
   modelMatches,
   normalizeOllamaHost,
@@ -10,6 +11,22 @@ import {
   resolveInstalledModel,
   siblingAgent,
 } from "@/lib/harness/agents";
+
+describe("explainOllamaError", () => {
+  it("rewrites a raw fetch failure", () => {
+    expect(explainOllamaError(new Error("fetch failed"))).toBe(
+      "Ollama is offline. Start it on this machine, then refresh."
+    );
+  });
+
+  it("rewrites a timeout abort", () => {
+    const err = new Error("aborted");
+    err.name = "AbortError";
+    expect(explainOllamaError(err)).toBe(
+      "Ollama did not answer. Start it, then refresh."
+    );
+  });
+});
 
 describe("normalizeOllamaHost", () => {
   it("falls back to the local default", () => {

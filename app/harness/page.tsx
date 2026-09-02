@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import HarnessClient from "@/components/HarnessClient";
+import { getHarnessStatus } from "@/lib/harness/ollama";
+
+export const dynamic = "force-dynamic";
 
 const title = "Harness";
 const description =
@@ -19,6 +22,7 @@ export const metadata: Metadata = {
   twitter: { title: `${title} — Hixon.Studio`, description },
 };
 
-export default function HarnessPage() {
-  return <HarnessClient />;
+export default async function HarnessPage() {
+  const initialStatus = await getHarnessStatus();
+  return <HarnessClient initialStatus={initialStatus} />;
 }
