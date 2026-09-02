@@ -1,10 +1,13 @@
-/** @type {import("jest").Config} */
-module.exports = {
+import type { Config } from "jest";
+
+const config: Config = {
   preset: "ts-jest",
   testEnvironment: "node",
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  testMatch: ["**/__tests__/**/*.test.ts"],
+  testMatch: ["<rootDir>/__tests__/**/*.test.ts"],
 };
+
+export default config;

@@ -2,8 +2,8 @@ import {
   buildChatPayload,
   parseChatRequest,
   parseOllamaChatLine,
-} from "@/lib/harness/agents";
-import { ollamaChatUrl, unloadSibling } from "@/lib/harness/ollama";
+} from "@/lib/agents";
+import { ollamaChatUrl, unloadSibling } from "@/lib/ollama";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;

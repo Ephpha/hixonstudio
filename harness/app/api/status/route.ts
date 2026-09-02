@@ -1,4 +1,4 @@
-import { getHarnessStatus } from "@/lib/harness/ollama";
+import { getHarnessStatus } from "@/lib/ollama";
 
 export const dynamic = "force-dynamic";
 

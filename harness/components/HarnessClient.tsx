@@ -8,9 +8,9 @@ import {
   HARNESS,
   type AgentId,
   type ChatMessage,
-} from "@/lib/harness/agents";
+} from "@/lib/agents";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/useReducedMotion";
-import type { HarnessStatus } from "@/lib/harness/ollama";
+import type { HarnessStatus } from "@/lib/ollama";
 
 type StreamEvent =
   | { type: "delta"; text: string }
@@ -55,7 +55,7 @@ export default function HarnessClient({
 
   const loadStatus = useCallback(async () => {
     try {
-      const res = await fetch("/api/harness/status", { cache: "no-store" });
+      const res = await fetch("/api/status", { cache: "no-store" });
       if (!res.ok) throw new Error("Status failed.");
       setStatus((await res.json()) as HarnessStatus);
     } catch {
@@ -137,7 +137,7 @@ export default function HarnessClient({
     abortRef.current = ctrl;
 
     try {
-      const res = await fetch("/api/harness/chat", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ agent: agentId, messages: nextMessages }),

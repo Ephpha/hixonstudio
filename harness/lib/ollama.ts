@@ -6,7 +6,7 @@ import {
   siblingAgent,
   type AgentId,
   type AgentProfile,
-} from "@/lib/harness/agents";
+} from "@/lib/agents";
 
 const FETCH_MS = 2500;
 

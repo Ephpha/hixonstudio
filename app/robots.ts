@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/harness"],
+      disallow: "/api/",
     },
     sitemap: "https://www.hixon.studio/sitemap.xml",
   };
